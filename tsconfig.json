@@ -21,18 +21,16 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "types": ["vite/client"],
-    "removeComments": true,
-    "paths": {
-      "@/*": ["src/*"],
-    }
+    "removeComments": true
+    // "paths": {
+    //   "@/*": ["src/*"],
+    // }
   },
   "vueCompilerOptions": {
     "plugins": [
       "@vue-macros/volar/define-models",
       "@vue-macros/volar/define-slots"
     ]
-  },  
+  },
   "exclude": ["dist", "node_modules", "cypress", "**/*.js"]
 }
-
-

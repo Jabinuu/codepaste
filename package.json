@@ -44,13 +44,14 @@
     "simple-git-hooks": "^2.8.1",
     "start-server-and-test": "^2.0.0",
     "typescript": "~5.0.4",
+    "unocss": "^0.53.1",
     "vite": "^4.3.9",
     "vitest": "^0.32.0",
     "vue-tsc": "^1.6.5"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged",
-    "commit-msg":"npx --no -- commitlint --edit ${1}"
+    "commit-msg": "npx --no -- commitlint --edit ${1}"
   },
   "lint-staged": {
     "*": "eslint --fix"
