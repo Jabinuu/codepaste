@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const modelValue = defineModel()
-const a = 1;
-console.log(  a);
 </script>
 
 <template>
@@ -16,5 +14,5 @@ console.log(  a);
     bg="transparent"
     border="~ rounded gray-200 dark:gray-700"
     outline="none active:none"
-  />
+  >
 </template>
