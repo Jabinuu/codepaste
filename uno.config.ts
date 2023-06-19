@@ -8,6 +8,7 @@ export default defineConfig({
   ],
   rules: [
     ['mr-2', { 'margin-right': '2px' }],
+    ['mb-30', { 'margin-bottom': '30px' }],
     ['mlf-8', { margin: '0 8px' }],
     ['pr-20', { 'padding-right': '20px' }],
     ['body-0', { margin: '0px', padding: '0' }],

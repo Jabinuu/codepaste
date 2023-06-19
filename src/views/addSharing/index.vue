@@ -1,20 +1,21 @@
 <script setup lang="ts">
-
+import '@/views/addSharing/components/ContentInput.vue'
 </script>
 
 <template>
-  <div>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti, architecto!
-    Odit nesciunt natus aliquid et, aut asperiores fugit exercitationem alias?
-    Dolorum cupiditate laudantium quo aperiam similique alias minus. Eligendi, repudiandae?
-    Amet illum praesentium ipsa similique, aut quia non optio voluptatem!
-    Porro reiciendis consectetur magnam aut optio incidunt, totam consequuntur sequi!
-    Impedit cupiditate modi totam id ea consectetur quia tempora maxime.
-    Laborum ad magnam enim necessitatibus quae quisquam, ea nostrum modi.
-    Tempore possimus sit recusandae ullam, nostrum nam velit assumenda iste!
-    Incidunt id deleniti at delectus voluptatibus? Maxime molestias laborum reprehenderit.
-    Et vero ullam reprehenderit omnis nam facilis ipsa natus sint!
-  </div>
+  <ContentInput />
+
+  <h3>可选的设置选项</h3>
+  <hr>
+  <!--
+      标题/名称
+      分类=>纯文本,markdown,代码,默认代码
+      如果是代码,则有语言选择
+      文本有效期
+      文本暴露属性:公共的\私有的
+      如果是私有的,则有密码设置
+
+     -->
 </template>
 
 <style lang="less" scoped>

@@ -37,7 +37,7 @@ const value = ref<string>('')
 
       <a-menu-item key="4">
         <router-link to="/">
-          分享
+          新增分享
         </router-link>
       </a-menu-item>
     </a-menu>
