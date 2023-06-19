@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+// import { ref } from 'vue'
+import layout from '@/layout/index.vue'
 </script>
 
 <template>
-  <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125">
   <div>
-    <RouterLink to="/" class="a-noline">
+    <layout />
+    <!-- <RouterLink to="/" class="a-noline">
       分享
     </RouterLink>
     <RouterLink to="/introduction" class="a-noline">
@@ -17,9 +18,9 @@ import { RouterLink } from 'vue-router'
 
     <RouterLink to="/questions" class="a-noline">
       问题
-    </RouterLink>
+    </RouterLink> -->
 
-    <router-view />
+    <!-- <router-view /> -->
   </div>
 </template>
 
