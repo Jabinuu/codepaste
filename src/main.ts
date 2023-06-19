@@ -1,12 +1,18 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import App from '@/App.vue'
 import 'virtual:uno.css'
-import App from './App.vue'
-import router from './router'
+import { setupStore } from '@/stores'
+import { setupRouter } from '@/router'
 
-const app = createApp(App)
+function bootstarp() {
+  const app = createApp(App)
+  // 配置路由
+  setupRouter(app)
 
-app.use(createPinia())
-app.use(router)
+  // 配置pinia状态管理
+  setupStore(app)
 
-app.mount('#app')
+  app.mount('#app')
+}
+
+bootstarp()

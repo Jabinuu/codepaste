@@ -21,10 +21,10 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "types": ["vite/client"],
-    "removeComments": true
-    // "paths": {
-    //   "@/*": ["src/*"],
-    // }
+    "removeComments": true,
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "vueCompilerOptions": {
     "plugins": [

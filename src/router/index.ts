@@ -1,3 +1,4 @@
+import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -6,14 +7,26 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue'),
+      component: () => import('@/views/addSharing/index.vue'),
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue'),
+      path: '/introduction',
+      name: 'introduction',
+      component: () => import('@/views/introduction/index.vue'),
+    },
+    {
+      path: '/community',
+      name: 'community',
+      component: () => import('@/views/community/index.vue'),
+    },
+    {
+      path: '/questions',
+      name: 'questions',
+      component: () => import('@/views/questions/index.vue'),
     },
   ],
 })
 
-export default router
+export function setupRouter(app: App<Element>) {
+  app.use(router)
+}
