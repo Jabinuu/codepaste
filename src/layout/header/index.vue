@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { markRaw, reactive, ref } from 'vue'
+import useUserStore from '@/store/modules/user'
+import NavigateMenu from '@/layout/header/components/NavigateMenu.vue'
+import LoginGroup from '@/layout/header/components/LoginGroup.vue'
+import UserAvatar from '@/layout/header/components/UserAvatar.vue'
 
-const selectedKeys = ref<string[]>(['4'])
+const userStore = useUserStore()
 const value = ref<string>('')
+const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
 </script>
 
 <template>
@@ -11,36 +16,7 @@ const value = ref<string>('')
     <router-link to="/">
       <span class="logo-font pr-20 text-font1">PASTECODE</span>
     </router-link>
-
-    <a-menu
-      v-model:selectedKeys="selectedKeys"
-      mode="horizontal"
-      class="text-font2 pr-20"
-      style="lineHeight: 60px;border:none;"
-    >
-      <a-menu-item key="1">
-        <router-link to="/introduction">
-          简介
-        </router-link>
-      </a-menu-item>
-
-      <a-menu-item key="2">
-        <router-link to="/community">
-          社区
-        </router-link>
-      </a-menu-item>
-      <a-menu-item key="3">
-        <router-link to="/questions">
-          问题
-        </router-link>
-      </a-menu-item>
-
-      <a-menu-item key="4">
-        <router-link to="/">
-          新增分享
-        </router-link>
-      </a-menu-item>
-    </a-menu>
+    <NavigateMenu />
     <a-input-search
       v-model:value="value"
       placeholder="输入搜索关键词"
@@ -48,20 +24,9 @@ const value = ref<string>('')
       @search="() => {}"
     />
   </div>
-  <!-- <a-avatar size="large">
-        <template #icon>
-          <UserOutlined />
-        </template>
-      </a-avatar> -->
-  <div>
-    <a-button type="primary">
-      登录
-    </a-button>
-    <span class="mlf-8" style="font-size: 10px;">或</span>
-    <a-button>
-      注册
-    </a-button>
-  </div>
+  <keep-alive>
+    <component :is="tabs[userStore.loginComponentId]" />
+  </keep-alive>
 </template>
 
 <style lang="less" scoped>

@@ -24,6 +24,11 @@ const router = createRouter({
       name: 'questions',
       component: () => import('@/views/questions/index.vue'),
     },
+    {
+      path: '/individual',
+      name: 'individual',
+      component: () => import('@/views/individualCenter/index.vue'),
+    },
   ],
 })
 
