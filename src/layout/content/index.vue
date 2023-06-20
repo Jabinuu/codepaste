@@ -3,15 +3,8 @@
 </script>
 
 <template>
-  <div class="content-container">
-    <router-view />
-  </div>
+  <router-view />
 </template>
 
 <style lang="less" scoped>
-.content-container{
-  background: #fff;
-  padding: 24px;
-  min-height: 600px;
-}
 </style>

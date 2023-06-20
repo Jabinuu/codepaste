@@ -50,7 +50,7 @@ const settingsState = reactive<SettingOption<string | undefined>>({
 </script>
 
 <template>
-  <h3 class="settingsTitle">
+  <h3 class="settingsTitle mb-30">
     设置选项
   </h3>
   <a-form :model="settingsState" autocomplete="off" :label-col="{ style: { width: '90px' } }" :wrapper-col="{ span: 10 }">

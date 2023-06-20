@@ -6,7 +6,7 @@ const content = ref<string>('')
 
 <template>
   <h3>新增代码段</h3>
-  <a-textarea :value="content" placeholder="输入你的内容..." :rows="16" class="mb-30" />
+  <a-textarea v-model:value="content" placeholder="输入你的内容..." :rows="16" class="mb-30" />
 </template>
 
 <style lang="less" scoped>
