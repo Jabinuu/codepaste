@@ -3,8 +3,9 @@ import useUserStore from '@/store/modules/user'
 import { LogincComponent } from '@/enums/loginComponent'
 
 const userStore = useUserStore()
-function onClick() {
+async function onClick() {
   userStore.loginComponentId = LogincComponent.USERAVATAR
+  console.log(await userStore.getCodeInfo())
 }
 </script>
 

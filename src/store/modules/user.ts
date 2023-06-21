@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-
+import { reqGetCodeInfo, reqUploadCode } from '@/services/api/codeContent'
 import { LogincComponent } from '@/enums/loginComponent'
 
 interface userStoreState {
@@ -13,7 +13,12 @@ export default defineStore('user', {
     }
   },
   actions: {
-
+    async uploadCode() {
+      return await reqUploadCode()
+    },
+    async getCodeInfo() {
+      return await reqGetCodeInfo()
+    },
   },
   getters: {
 

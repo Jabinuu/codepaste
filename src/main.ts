@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from '@/App.vue'
 import 'virtual:uno.css'
+import '@/mock'
 import { setupStore } from '@/store'
 import { setupRouter } from '@/router'
 
