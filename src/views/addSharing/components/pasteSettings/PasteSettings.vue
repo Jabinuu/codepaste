@@ -44,14 +44,6 @@ useMitt()
       </a-button>
     </a-form-item>
   </a-form>
-  <!--
-      标题/名称  input
-      分类=>纯文本,markdown,代码,默认代码  xiala
-      如果是代码,则有语言选择     xiala
-      文本有效期                 xiala
-      文本暴露属性:公共的\私有的  xiala
-      是否加密   input
-     -->
 </template>
 
 <style lang="less" scoped>

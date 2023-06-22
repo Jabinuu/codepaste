@@ -1,29 +1,29 @@
+import { EnumCategories, EnumExpirations, EnumHighlightLang } from '@/enums/codeContent'
+
 interface SelectorOption {
   label: string
   value: string
 }
 
 export const categories: SelectorOption[] = [
-  { label: '代码', value: 'code' },
-  { label: '纯文本', value: 'text' },
-  { label: 'MarkDown', value: 'richText' },
+  { label: '代码', value: EnumCategories.CODE },
+  { label: '纯文本', value: EnumCategories.TXT },
+  { label: 'MarkDown', value: EnumCategories.MARKDOWN },
 ]
 export const highlightLang: SelectorOption[] = [
-  { label: 'C/C++', value: 'C/C++' },
-  { label: 'JAVA', value: 'JAVA' },
-  { label: 'JavaScript', value: 'JavaScript' },
-  { label: 'Python', value: 'Python' },
-  { label: 'CSS', value: 'CSS' },
-  { label: 'HTML', value: 'HTML' },
-  { label: 'other', value: '其他语言(暂不支持语法高亮)' },
+  { label: 'C/C++', value: EnumHighlightLang.C },
+  { label: 'JAVA', value: EnumHighlightLang.JAVA },
+  { label: 'JavaScript', value: EnumHighlightLang.JAVASCRIPT },
+  { label: 'Python', value: EnumHighlightLang.PYTHON },
+  { label: 'CSS', value: EnumHighlightLang.CSS },
+  { label: 'HTML', value: EnumHighlightLang.HTML },
+  { label: 'other', value: EnumHighlightLang.OTHER },
 ]
 export const expirations: SelectorOption[] = [
-  { label: '永久', value: 'never' },
-  { label: '10分钟', value: '10-M' },
-  { label: '1小时', value: '1-H' },
-  { label: '3小时', value: '3-H' },
-  { label: '1天', value: '1-D' },
-  { label: '1周', value: '1-W' },
-  { label: '1个月', value: '1-Mon' },
-  { label: '6个月', value: '6-Mon' },
+  { label: '永久', value: EnumExpirations.NEVER },
+  { label: '10分钟', value: EnumExpirations.M10 },
+  { label: '1小时', value: EnumExpirations.H1 },
+  { label: '1天', value: EnumExpirations.D1 },
+  { label: '1周', value: EnumExpirations.W1 },
+  { label: '1个月', value: EnumExpirations.MON1 },
 ]
