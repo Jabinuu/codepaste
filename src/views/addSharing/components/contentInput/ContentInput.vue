@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import mitt from 'mitt'
+import mitt from '@/utils/mitt'
 
-const emitter = mitt()
 const content = ref<string>('')
 function onBlur() {
-  console.log(111)
-
-  emitter.emit('jiabin', content.value)
+  mitt.emit('jiabin', content.value)
 }
 </script>
 

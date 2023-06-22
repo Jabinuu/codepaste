@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import mitt from 'mitt'
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import mitt from '@/utils/mitt'
 import type { SettingOption } from '@/types/codeContentInfo'
 import useUserStore from '@/store/modules/user'
 
-const emitter = mitt()
 const userStore = useUserStore()
 const content = ref<string>('')
-emitter.on('jiabin', (val: string) => {
-  console.log(val)
-  content.value = val
+
+onMounted(() => {
+  mitt.on('jiabin', (val: string) => content.value = val)
 })
-// onUnmounted(() => {
-//   emitter.off('jiabin')
-// })
+
+onUnmounted(() => {
+  mitt.off('jiabin')
+})
 interface SelectorOption {
   label: string
   value: string
@@ -51,8 +51,8 @@ const settingsState = reactive<SettingOption>({
   exposure: undefined,
   isCrypto: false,
 })
-function createNewPaste() {
-  userStore.uploadCode({ ...settingsState, content: content.value })
+async function createNewPaste() {
+  await userStore.uploadCode({ ...settingsState, content: content.value })
 }
 </script>
 
