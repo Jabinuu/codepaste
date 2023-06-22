@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import mitt from 'mitt'
+import type { SettingOption } from '@/types/codeContentInfo'
+import useUserStore from '@/store/modules/user'
 
-interface SettingOption<T> {
-  title: T
-  language: T
-  expiration: T
-  password: T
-  category: T
-  exposure: T
-  isCrypto: T
-}
+const emitter = mitt()
+const userStore = useUserStore()
+const content = ref<string>('')
+emitter.on('jiabin', (val: string) => {
+  console.log(val)
+  content.value = val
+})
+// onUnmounted(() => {
+//   emitter.off('jiabin')
+// })
 interface SelectorOption {
   label: string
   value: string
@@ -38,15 +42,18 @@ const expirations: SelectorOption[] = [
   { label: '1个月', value: '1-Mon' },
   { label: '6个月', value: '6-Mon' },
 ]
-const settingsState = reactive<SettingOption<string | undefined>>({
+const settingsState = reactive<SettingOption>({
   title: undefined,
   language: undefined,
   expiration: undefined,
   password: undefined,
   category: 'code',
   exposure: undefined,
-  isCrypto: undefined,
+  isCrypto: false,
 })
+function createNewPaste() {
+  userStore.uploadCode({ ...settingsState, content: content.value })
+}
 </script>
 
 <template>
@@ -55,7 +62,7 @@ const settingsState = reactive<SettingOption<string | undefined>>({
   </h3>
   <a-form :model="settingsState" autocomplete="off" :label-col="{ style: { width: '90px' } }" :wrapper-col="{ span: 10 }">
     <a-form-item label="文本标题">
-      <a-input v-model="settingsState.title" placeholder="输入文本标题" />
+      <a-input v-model:value="settingsState.title" placeholder="输入文本标题" />
     </a-form-item>
     <a-form-item label="文本属性">
       <a-select v-model:value="settingsState.category" :options="categories" placeholder="支持编程语言与富文本" />
@@ -80,10 +87,10 @@ const settingsState = reactive<SettingOption<string | undefined>>({
       <a-switch v-model:checked="settingsState.isCrypto" />
     </a-form-item>
     <a-form-item v-if="settingsState.isCrypto" label="访问密码">
-      <a-input v-model="settingsState.password" placeholder="输入访问密码" />
+      <a-input v-model:value="settingsState.password" placeholder="输入访问密码" />
     </a-form-item>
-    <a-form-item :wrapper-col="{ span: 14, offset: 2 }">
-      <a-button type="primary">
+    <a-form-item :wrapper-col="{ span: 14, offset: 3 }">
+      <a-button type="primary" @click="createNewPaste">
         创建粘贴文本
       </a-button>
     </a-form-item>

@@ -1,7 +1,10 @@
 import Mock from 'mockjs'
-import codesData from '@/mock/modules/codeContent'
+import codesInfo from '@/mock/modules/codeContent'
 
-Mock.mock('/mock/getCodeInfo', codesData)
-// Mock.mock('/mock/upLoadCode', 'post', (_:any,_:any,body:string) => {
+// Mock.mock('/mock/getCodeInfo', codesData)
+Mock.mock('/mock/uploadCode', 'post', (options) => {
+  console.log(options.body)
 
-// })
+  codesInfo.push(JSON.parse(options.body))
+  console.log(codesInfo)
+})

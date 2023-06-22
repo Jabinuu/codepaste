@@ -5,7 +5,6 @@ import { LogincComponent } from '@/enums/loginComponent'
 const userStore = useUserStore()
 async function onClick() {
   userStore.loginComponentId = LogincComponent.USERAVATAR
-  console.log(await userStore.getCodeInfo())
 }
 </script>
 
