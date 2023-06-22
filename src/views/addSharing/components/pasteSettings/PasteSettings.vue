@@ -1,59 +1,8 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, ref } from 'vue'
-import mitt from '@/utils/mitt'
-import type { SettingOption } from '@/types/codeContentInfo'
-import useUserStore from '@/store/modules/user'
+import { createNewPaste, settingsState, useMitt } from './hook'
+import { categories, expirations, highlightLang } from './constant'
 
-const userStore = useUserStore()
-const content = ref<string>('')
-
-onMounted(() => {
-  mitt.on('jiabin', (val: string) => content.value = val)
-})
-
-onUnmounted(() => {
-  mitt.off('jiabin')
-})
-interface SelectorOption {
-  label: string
-  value: string
-}
-const categories: SelectorOption[] = [
-  { label: '代码', value: 'code' },
-  { label: '纯文本', value: 'text' },
-  { label: 'MarkDown', value: 'richText' },
-]
-const highlightLang: SelectorOption[] = [
-  { label: 'C/C++', value: 'C/C++' },
-  { label: 'JAVA', value: 'JAVA' },
-  { label: 'JavaScript', value: 'JavaScript' },
-  { label: 'Python', value: 'Python' },
-  { label: 'CSS', value: 'CSS' },
-  { label: 'HTML', value: 'HTML' },
-  { label: 'other', value: '其他语言(暂不支持语法高亮)' },
-]
-const expirations: SelectorOption[] = [
-  { label: '永久', value: 'never' },
-  { label: '10分钟', value: '10-M' },
-  { label: '1小时', value: '1-H' },
-  { label: '3小时', value: '3-H' },
-  { label: '1天', value: '1-D' },
-  { label: '1周', value: '1-W' },
-  { label: '1个月', value: '1-Mon' },
-  { label: '6个月', value: '6-Mon' },
-]
-const settingsState = reactive<SettingOption>({
-  title: undefined,
-  language: undefined,
-  expiration: undefined,
-  password: undefined,
-  category: 'code',
-  exposure: undefined,
-  isCrypto: false,
-})
-async function createNewPaste() {
-  await userStore.uploadCode({ ...settingsState, content: content.value })
-}
+useMitt()
 </script>
 
 <template>
