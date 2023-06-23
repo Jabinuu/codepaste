@@ -2,7 +2,7 @@
 import { UserOutlined } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
 import useUserStore from '@/store/modules/user'
-import { LogincComponent } from '@/enums/loginComponent'
+import { LogincComponent } from '@/enums/loginCompEnum'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -40,3 +40,4 @@ function goHomePage() {
 <style lang="less" scoped>
 
 </style>
+@/enums/loginCompEnum

@@ -1,10 +1,10 @@
-export enum EnumCategories {
+export enum CategoriesEnum {
   CODE = 'code',
   TXT = 'text',
   MARKDOWN = 'richText',
 }
 
-export enum EnumHighlightLang {
+export enum HighlightLangEnum {
   C = 'C/C++',
   JAVA = 'JAVA',
   JAVASCRIPT = 'JavaScript',
@@ -14,7 +14,7 @@ export enum EnumHighlightLang {
   OTHER = 'other',
 }
 
-export enum EnumExpirations {
+export enum ExpirationsEnum {
   NEVER = 'never',
   M10 = '10-M',
   H1 = '1-H',

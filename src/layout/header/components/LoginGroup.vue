@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useUserStore from '@/store/modules/user'
-import { LogincComponent } from '@/enums/loginComponent'
+import { LogincComponent } from '@/enums/loginCompEnum'
 
 const userStore = useUserStore()
 async function onClick() {
@@ -23,3 +23,4 @@ async function onClick() {
 <style lang="less" scoped>
 
 </style>
+@/enums/loginCompEnum

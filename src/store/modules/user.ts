@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { reqGetCodeInfo, reqUploadCode } from '@/services/api/codeContent'
-import { LogincComponent } from '@/enums/loginComponent'
+import { LogincComponent } from '@/enums/loginCompEnum'
 import type { codeAllFromData } from '@/types/codeContentInfo'
 
 interface userStoreState {

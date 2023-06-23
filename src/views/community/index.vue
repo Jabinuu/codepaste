@@ -1,19 +1,12 @@
 <script setup lang="ts">
-
+import CodeList from './components/codeList/CodeList.vue'
+import LangCategories from './components/LangCategories.vue'
 </script>
 
 <template>
-  <div>
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit, nostrum.
-    Veritatis aperiam amet quis quaerat dignissimos, quasi molestiae est unde.
-    Officiis odit nisi deserunt quaerat accusamus itaque dolorem rerum a?
-    Cumque officia excepturi natus aliquid blanditiis nesciunt, numquam consectetur ad?
-    Reiciendis ut debitis tempore voluptas iste, unde sed placeat corrupti.
-    Ut, sapiente aliquam eveniet corrupti doloremque temporibus saepe sint. Beatae?
-    Ipsam vero dolore incidunt. Dolore sequi doloribus dicta beatae similique!
-    Veritatis quae est consequuntur quasi quod eius optio, expedita aliquam?
-    Libero consequuntur maxime vero recusandae non, deserunt corporis mollitia iste.
-    Qui facere tempora eos reprehenderit sed odio repellendus doloribus cumque.
+  <div class="flex">
+    <CodeList class="flex-1 mr-40 bdr-4" />
+    <LangCategories />
   </div>
 </template>
 
