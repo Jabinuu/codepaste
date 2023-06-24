@@ -24,7 +24,7 @@ for (let i = 0; i < 23; i++) {
       'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
   })
 }
-
+const isCrypto = ref<boolean>(true)
 const current = ref<string[]>(['hot'])
 </script>
 
@@ -53,6 +53,15 @@ const current = ref<string[]>(['hot'])
     <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
       <template #renderItem="{ item }">
         <a-list-item key="item.title">
+          <div class="mb-16">
+            <span style="color:#aea79d">游客1</span>
+            <a-divider type="vertical" style="border-width: 2px;" />
+            <span style="color:rgb(64, 158, 255)">公开</span>
+            <a-divider type="vertical" style="border-width: 2px;" />
+            <a-tag v-if="isCrypto" color="red" style="font-size: 13px;">
+              加密
+            </a-tag>
+          </div>
           <template #actions>
             <span v-for="{ type, text } in actions" :key="type">
               <component :is="type" style="margin-right: 8px" />
