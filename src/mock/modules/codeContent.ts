@@ -1,101 +1,44 @@
-// export default {
-//   status: 200,
-//   message: '请求成功',
-//   data: '@paragraph',
-// }
-import type { CodeContentInfo } from '@/types/codeContentInfo'
+import Mock from 'mockjs'
+import { CategoriesEnum, ExpirationsEnum, HighlightLangEnum } from '@/enums/codeEnum'
 
-const codes: CodeContentInfo[] = [
-  {
-    id: 10000,
-    title: 'initiative title1',
-    language: 'C/C++',
-    expiration: '永久',
-    password: '123',
-    isCrypto: true,
-    category: 'code',
-    exposure: 'public',
-  },
-  {
-    id: 10001,
-    title: 'initiative title2',
-    language: 'JAVA',
-    expiration: '1小时',
-    password: undefined,
-    isCrypto: false,
-    category: 'code',
-    exposure: 'private',
-  },
-  {
-    id: 10002,
-    title: 'initiative title2',
-    language: 'Javascript',
-    expiration: '10分钟',
-    password: '123666',
-    isCrypto: true,
-    category: 'code',
-    exposure: 'public',
-  },
-  {
-    id: 10003,
-    title: 'initiative title3',
-    language: 'C/C++',
-    expiration: '3小时',
-    password: '1999',
-    isCrypto: true,
-    category: 'code',
-    exposure: 'public',
-  },
-  {
-    id: 10004,
-    title: 'initiative title4',
-    language: 'Python',
-    expiration: '1天',
-    password: '1541223',
-    isCrypto: true,
-    category: 'code',
-    exposure: 'public',
-  },
-  {
-    id: 10005,
-    title: 'initiative title5',
-    language: undefined,
-    expiration: '永久',
-    password: '3314621',
-    isCrypto: true,
-    category: '纯文本',
-    exposure: 'public',
-  },
-  {
-    id: 10006,
-    title: 'initiative title6',
-    language: 'MarkDown',
-    expiration: '1周',
-    password: undefined,
-    isCrypto: false,
-    category: 'code',
-    exposure: 'public',
-  },
-  {
-    id: 10007,
-    title: 'initiative title7',
-    language: 'CSS',
-    expiration: '1个月',
-    password: '1252133',
-    isCrypto: true,
-    category: 'code',
-    exposure: 'public',
-  },
-  {
-    id: 10008,
-    title: 'initiative title8',
-    language: 'HTML',
-    expiration: '永久',
-    password: '123',
-    isCrypto: true,
-    category: 'code',
-    exposure: 'public',
-  },
-]
+const langSet = [HighlightLangEnum.C, HighlightLangEnum.CSS, HighlightLangEnum.HTML, HighlightLangEnum.JAVA, HighlightLangEnum.JAVASCRIPT, HighlightLangEnum.OTHER, HighlightLangEnum.PYTHON]
+const expirationSet = [ExpirationsEnum.D1, ExpirationsEnum.H1, ExpirationsEnum.M10, ExpirationsEnum.MON1, ExpirationsEnum.NEVER, ExpirationsEnum.W1]
+const categorySet = [CategoriesEnum.CODE, CategoriesEnum.MARKDOWN, CategoriesEnum.TXT]
+const exposureSet = ['public', 'private']
+export default {
+  status: 200,
+  message: '请求成功',
+  data: Mock.mock({
+    'array|100': [
+      {
+        'id': '@increment(1)',
+        'href': './codeDetail',
+        'author': '@name',
+        'title': '@ctitle(4, 8)',
+        'expiration|1': expirationSet,
+        'isCrypto|1': true,
+        'category|1': categorySet,
+        'exposure|1': exposureSet,
+        'content': '@',
+        'language|1': langSet,
+        'date|1': ['1月前', '2月前', '3天前', '4月前', '10分钟前'],
+        'size|1-10000': 1,
+        'views|1-1000': 1,
+      },
+    ],
+  }),
+}
 
-export default codes
+/*
+  所有代码信息
+  id: number
+  href: string
+  author: string
+  title: string
+  content: string
+  language: string
+  expiration: string
+  isCrypto: boolean
+  category: string
+  exposure: public
+ */

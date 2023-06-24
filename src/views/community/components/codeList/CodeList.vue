@@ -21,10 +21,8 @@ for (let i = 0; i < 23; i++) {
   listData.push({
     href: 'https://www.antdv.com/',
     title: `ant design vue part ${i}`,
-    description:
+    desc:
       'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
   })
 }
 </script>
@@ -38,10 +36,10 @@ for (let i = 0; i < 23; i++) {
           <ItemProperty />
           <a-list-item-meta>
             <template #title>
-              <a :href="item.href">{{ item.title }}</a>
+              <a :href="item.href" target="_blank">{{ item.title }}</a>
             </template>
             <template #description>
-              {{ item.description }}
+              {{ item.desc }}
             </template>
           </a-list-item-meta>
           <CodeInfoBar />
