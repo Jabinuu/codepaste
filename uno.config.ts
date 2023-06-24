@@ -13,7 +13,7 @@ export default defineConfig({
     ['mlf-8', { margin: '0 8px' }],
     ['pr-20', { 'padding-right': '20px' }],
     ['p-24', { padding: '24px' }],
-    ['body-0', { margin: '0px', padding: '0' }],
+    ['pt-10', { 'padding-top': '10px' }],
     ['a-noline', { 'text-decoration': 'none' }],
     ['bdr-4', { 'border-radius': '4px' }],
     ['text-font1', { color: 'rgb(50,50,50)' }],
