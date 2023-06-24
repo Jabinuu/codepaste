@@ -1,7 +1,14 @@
 <script setup lang="ts">
-import { ClockCircleOutlined, FireOutlined, LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons-vue'
-import { ref } from 'vue'
+import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons-vue'
+import ItemProperty from './components/ItemProperty.vue'
+import ListMenu from './components/ListMenu.vue'
+import CodeInfoBar from './components/CodeInfoBar.vue'
 
+const actions: Record<string, any>[] = [
+  { type: StarOutlined, text: '156' },
+  { type: LikeOutlined, text: '60' },
+  { type: MessageOutlined, text: '2' },
+]
 const listData: Record<string, string>[] = []
 const pagination = {
   onChange: (page: number) => {
@@ -9,11 +16,7 @@ const pagination = {
   },
   pageSize: 8,
 }
-const actions: Record<string, any>[] = [
-  { type: StarOutlined, text: '156' },
-  { type: LikeOutlined, text: '156' },
-  { type: MessageOutlined, text: '2' },
-]
+
 for (let i = 0; i < 23; i++) {
   listData.push({
     href: 'https://www.antdv.com/',
@@ -24,50 +27,15 @@ for (let i = 0; i < 23; i++) {
       'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
   })
 }
-const isCrypto = ref<boolean>(true)
-const current = ref<string[]>(['hot'])
 </script>
 
 <template>
   <div class="list-container bg-w p-24">
-    <a-menu v-model:selectedKeys="current" mode="horizontal">
-      <a-menu-item key="hot">
-        <template #icon>
-          <FireOutlined />
-        </template>
-        最热
-      </a-menu-item>
-      <a-menu-item key="new">
-        <template #icon>
-          <ClockCircleOutlined />
-        </template>
-        最新
-      </a-menu-item>
-      <a-menu-item key="quality">
-        <template #icon>
-          <LikeOutlined />
-        </template>
-        精选
-      </a-menu-item>
-    </a-menu>
+    <ListMenu />
     <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
       <template #renderItem="{ item }">
         <a-list-item key="item.title">
-          <div class="mb-16">
-            <span style="color:#aea79d">游客1</span>
-            <a-divider type="vertical" style="border-width: 2px;" />
-            <span style="color:rgb(64, 158, 255)">公开</span>
-            <a-divider type="vertical" style="border-width: 2px;" />
-            <a-tag v-if="isCrypto" color="red" style="font-size: 13px;">
-              加密
-            </a-tag>
-          </div>
-          <template #actions>
-            <span v-for="{ type, text } in actions" :key="type">
-              <component :is="type" style="margin-right: 8px" />
-              {{ text }}
-            </span>
-          </template>
+          <ItemProperty />
           <a-list-item-meta>
             <template #title>
               <a :href="item.href">{{ item.title }}</a>
@@ -76,17 +44,13 @@ const current = ref<string[]>(['hot'])
               {{ item.description }}
             </template>
           </a-list-item-meta>
-          <div>
-            <div>
-              <span>
-                <Icon name="icon-javascript" size="16px" />
-                JavaScript</span>
-              <a-divider type="vertical" style="border-width: 2px;" />
-              <span>1天前</span>
-              <a-divider type="vertical" style="border-width: 2px;" />
-              <span>1.2 KB</span>
-            </div>
-          </div>
+          <CodeInfoBar />
+          <template #actions>
+            <span v-for="{ type, text } in actions" :key="type">
+              <component :is="type" style="margin-right: 4px" />
+              {{ text }}
+            </span>
+          </template>
         </a-list-item>
       </template>
     </a-list>
