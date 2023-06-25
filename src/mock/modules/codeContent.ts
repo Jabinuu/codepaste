@@ -1,11 +1,7 @@
 import Mock from 'mockjs'
-import { CategoriesEnum, ExpirationsEnum, HighlightLangEnum } from '@/enums/codeEnum'
+import { codeSet, dates, expirationSet, exposureSet } from './constant'
 
-const langSet = [HighlightLangEnum.C, HighlightLangEnum.CSS, HighlightLangEnum.HTML, HighlightLangEnum.JAVA, HighlightLangEnum.JAVASCRIPT, HighlightLangEnum.OTHER, HighlightLangEnum.PYTHON]
-const expirationSet = [ExpirationsEnum.D1, ExpirationsEnum.H1, ExpirationsEnum.M10, ExpirationsEnum.MON1, ExpirationsEnum.NEVER, ExpirationsEnum.W1]
-const categorySet = [CategoriesEnum.CODE, CategoriesEnum.MARKDOWN, CategoriesEnum.TXT]
-const exposureSet = ['public', 'private']
-export default {
+export const codesInfo = {
   status: 200,
   message: '请求成功',
   data: Mock.mock({
@@ -17,28 +13,13 @@ export default {
         'title': '@ctitle(4, 8)',
         'expiration|1': expirationSet,
         'isCrypto|1': true,
-        'category|1': categorySet,
+        // 'category|1': categorySet,
         'exposure|1': exposureSet,
-        'content': '@',
-        'language|1': langSet,
-        'date|1': ['1月前', '2月前', '3天前', '4月前', '10分钟前'],
+        'code|1': codeSet,
+        'date|1': dates,
         'size|1-10000': 1,
         'views|1-1000': 1,
       },
     ],
   }),
 }
-
-/*
-  所有代码信息
-  id: number
-  href: string
-  author: string
-  title: string
-  content: string
-  language: string
-  expiration: string
-  isCrypto: boolean
-  category: string
-  exposure: public
- */

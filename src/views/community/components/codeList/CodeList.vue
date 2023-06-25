@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons-vue'
+import { onMounted } from 'vue'
 import ItemProperty from './components/ItemProperty.vue'
 import ListMenu from './components/ListMenu.vue'
 import CodeInfoBar from './components/CodeInfoBar.vue'
+import useCodesStore from '@/store/modules/codes'
+
+const codesStore = useCodesStore()
 
 const actions: Record<string, any>[] = [
   { type: StarOutlined, text: '156' },
@@ -16,6 +20,11 @@ const pagination = {
   },
   pageSize: 8,
 }
+
+onMounted(async () => {
+  await codesStore.getCodeInfo()
+  console.log(codesStore.codesInfo)
+})
 
 for (let i = 0; i < 23; i++) {
   listData.push({

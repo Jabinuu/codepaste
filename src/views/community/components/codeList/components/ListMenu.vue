@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ClockCircleOutlined, FireOutlined } from '@ant-design/icons-vue'
+import { ClockCircleOutlined, FireOutlined, LikeOutlined } from '@ant-design/icons-vue'
 
 const current = ref<string[]>(['hot'])
 </script>
