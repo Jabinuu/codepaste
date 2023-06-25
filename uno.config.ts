@@ -20,5 +20,6 @@ export default defineConfig({
     ['text-font1', { color: 'rgb(50,50,50)' }],
     ['text-font2', { color: '#515767' }],
     ['bg-w', { background: '#fff' }],
+    ['bw-2', { 'border-width': '2px' }],
   ],
 })

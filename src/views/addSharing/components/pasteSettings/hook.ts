@@ -1,18 +1,18 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import type { SettingOption } from '@/types/codeContentInfo'
-import useUserStore from '@/store/modules/user'
+import useCodeStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
 
 export const content = ref<string>('')
-export const userStore = useUserStore()
+export const codeStore = useCodeStore()
 export const settingsState = reactive<SettingOption>({
-  title: undefined,
+  title: '',
   language: undefined,
-  expiration: undefined,
-  password: undefined,
+  expiration: 'never',
+  password: '',
   category: 'code',
   exposure: undefined,
-  isCrypto: false,
+  encrypt: false,
 })
 
 export function useMitt() {
@@ -26,5 +26,5 @@ export function useMitt() {
 }
 
 export async function createNewPaste() {
-  await userStore.uploadCode({ ...settingsState, content: content.value })
+  await codeStore.uploadCode({ ...settingsState, content: content.value })
 }

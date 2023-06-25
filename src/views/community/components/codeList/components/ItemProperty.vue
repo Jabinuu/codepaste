@@ -1,21 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { exposureMap } from '@/views/community/components/codeList/constant'
 
-const isCrypto = ref<boolean>(true)
+const props = defineProps<{
+  encrypt: boolean
+  author: string
+  exposure: string
+}>()
 </script>
 
 <template>
   <div class="mb-16">
-    <span style="color:#aea79d">游客1</span>
-    <a-divider type="vertical" style="border-width: 2px;" />
-    <span style="color:rgb(64, 158, 255)">公开</span>
-    <a-divider type="vertical" style="border-width: 2px;" />
-    <a-tag v-if="isCrypto" color="red" style="font-size: 13px;">
-      加密
-    </a-tag>
+    <span>{{ props.author }}</span>
+    <a-divider type="vertical" class="bw-2" />
+    <span>{{ exposureMap.get(props.exposure) }}</span>
+    <template v-if="props.encrypt">
+      <a-divider type="vertical" class="bw-2" />
+      <a-tag color="red" style="font-size: 13px;">
+        加密
+      </a-tag>
+    </template>
   </div>
 </template>
 
 <style lang="less" scoped>
-
+  span:first-child{
+    color:#aea79d
+  }
+  span:nth-child(2){
+    color:rgb(64, 158, 255)
+  }
 </style>

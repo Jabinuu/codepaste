@@ -1,17 +1,29 @@
 export interface SettingOption {
-  title: string | undefined
+  title: string
   language: string | undefined
-  expiration: string | undefined
-  password: string | undefined
-  category: string | undefined
+  expiration: string
+  password: string
+  category: string
   exposure: string | undefined
-  isCrypto: boolean | undefined
+  encrypt: boolean
 }
-
-export interface CodeContentInfo extends SettingOption {
-  id: number
-}
-
-export interface codeAllFromData extends SettingOption {
+export interface CodeFromData extends SettingOption {
   content: string
+}
+
+export interface CodeSet {
+  category: string
+  lang: string
+  content: string
+}
+
+export interface CodeList extends Pick<SettingOption, 'title' | 'expiration' | 'category' | 'encrypt'> {
+  id: number
+  href: string
+  author: string
+  code: CodeSet
+  date: string
+  size: number
+  viewNum: number
+  commentNum: number
 }

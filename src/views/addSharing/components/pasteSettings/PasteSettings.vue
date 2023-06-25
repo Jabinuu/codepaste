@@ -14,13 +14,13 @@ useMitt()
       <a-input v-model:value="settingsState.title" placeholder="输入文本标题" />
     </a-form-item>
     <a-form-item label="文本属性">
-      <a-select v-model:value="settingsState.category" :options="categories" placeholder="支持编程语言与富文本" />
+      <a-select v-model:value="settingsState.category" :options="categories" />
     </a-form-item>
     <a-form-item v-if="settingsState.category === 'code'" label="选择语言">
       <a-select v-model:value="settingsState.language" :options="highlightLang" placeholder="选择合适的语言" />
     </a-form-item>
     <a-form-item label="有效时长">
-      <a-select v-model:value="settingsState.expiration" :options="expirations" placeholder="选择文本有效时长(过期将被销毁)" />
+      <a-select v-model:value="settingsState.expiration" :options="expirations" />
     </a-form-item>
     <a-form-item label="公开状态">
       <a-radio-group v-model:value="settingsState.exposure">
@@ -33,9 +33,9 @@ useMitt()
       </a-radio-group>
     </a-form-item>
     <a-form-item label="是否加密">
-      <a-switch v-model:checked="settingsState.isCrypto" />
+      <a-switch v-model:checked="settingsState.encrypt" />
     </a-form-item>
-    <a-form-item v-if="settingsState.isCrypto" label="访问密码">
+    <a-form-item v-if="settingsState.encrypt" label="访问密码">
       <a-input v-model:value="settingsState.password" placeholder="输入访问密码" />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 3 }">

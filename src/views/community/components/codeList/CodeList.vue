@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons-vue'
-import { onMounted } from 'vue'
+import { EyeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons-vue'
+import { computed, onMounted } from 'vue'
 import ItemProperty from './components/ItemProperty.vue'
 import ListMenu from './components/ListMenu.vue'
 import CodeInfoBar from './components/CodeInfoBar.vue'
 import useCodesStore from '@/store/modules/codes'
 
 const codesStore = useCodesStore()
-
 const actions: Record<string, any>[] = [
-  { type: StarOutlined, text: '156' },
-  { type: LikeOutlined, text: '60' },
-  { type: MessageOutlined, text: '2' },
+  { type: EyeOutlined, id: '1' },
+  { type: MessageOutlined, id: '2' },
+  { type: StarOutlined, id: '3' },
 ]
-const listData: Record<string, string>[] = []
+const listData = computed(() => codesStore.codesList)
 const pagination = {
   onChange: (page: number) => {
     console.log(page)
@@ -21,18 +20,12 @@ const pagination = {
   pageSize: 8,
 }
 
-onMounted(async () => {
-  await codesStore.getCodeInfo()
-  console.log(codesStore.codesInfo)
+onMounted(() => {
+  codesStore.getCodeInfo()
 })
 
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'https://www.antdv.com/',
-    title: `ant design vue part ${i}`,
-    desc:
-      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-  })
+function getCodeDesc(item) {
+  return item.code.content.slice(0, 100)
 }
 </script>
 
@@ -41,21 +34,23 @@ for (let i = 0; i < 23; i++) {
     <ListMenu />
     <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
       <template #renderItem="{ item }">
-        <a-list-item key="item.title">
-          <ItemProperty />
+        <a-list-item :key="item.id">
+          <ItemProperty :encrypt="item.encrypt" :author="item.author" :exposure="item.exposure" />
           <a-list-item-meta>
             <template #title>
               <a :href="item.href" target="_blank">{{ item.title }}</a>
             </template>
             <template #description>
-              {{ item.desc }}
+              {{ getCodeDesc(item) }}
             </template>
           </a-list-item-meta>
           <CodeInfoBar />
           <template #actions>
-            <span v-for="{ type, text } in actions" :key="type">
+            <span v-for="{ type, id } in actions" :key="id">
               <component :is="type" style="margin-right: 4px" />
-              {{ text }}
+              <span v-if="type === EyeOutlined">{{ item.viewNum }}</span>
+              <span v-else-if="type === MessageOutlined">{{ item.commentNum }}</span>
+              <span v-else>收藏</span>
             </span>
           </template>
         </a-list-item>
