@@ -291,7 +291,7 @@ export const codeSet: CodeSet[] = [
 
   {
     category: CategoriesEnum.TXT,
-    lang: HighlightLangEnum.OTHER,
+    lang: HighlightLangEnum.TXT,
     content: `反向代理和开发时的 Webpack 代理都是用来解决跨域问题的方法，但两者的应用场景和原理有所不同。
     Webpack 代理是在开发阶段使用的一种解决跨域问题的方法，通常在本地开发环境中使用。它的原理是在 Webpack 中设置代理服务器，将请求转发到真正的服务端地址。例如，在前端代码中发起了一个请求，Webpack 代理服务器会拦截该请求，并将其转发到指定的服务端地址，从而解决跨域问题。Webpack 代理适用于本地开发环境，能够快速地搭建起一个虚拟的服务器，方便开发和调试。
     反向代理则是在项目部署阶段使用的一种解决跨域问题的方法。它的原理是在服务器端设置一个代理服务器，客户端发送的请求会先被代理服务器拦截，代理服务器再将请求转发到真正的服务端地址。例如，将 Nginx 作为反向代理服务器，可以将客户端请求转发到不同的后端服务地址，从而实现多个服务的聚合和负载均衡。反向代理适用于项目部署阶段，可以对请求进行分发和转发，提高服务器的性能和可靠性。
@@ -299,7 +299,7 @@ export const codeSet: CodeSet[] = [
   },
   {
     category: CategoriesEnum.MARKDOWN,
-    lang: HighlightLangEnum.OTHER,
+    lang: HighlightLangEnum.MARKDOWN,
     content: `# 一级标题
 
     ## 二级标题

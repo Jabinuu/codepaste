@@ -11,7 +11,9 @@ export enum HighlightLangEnum {
   PYTHON = 'Python',
   CSS = 'CSS',
   HTML = 'HTML',
-  OTHER = 'other',
+  TXT = 'Text',
+  MARKDOWN = 'Markdown',
+  OTHER = 'Other',
 }
 
 export enum ExpirationsEnum {

@@ -26,7 +26,8 @@ const props = defineProps<{
   span:first-child{
     color:#aea79d
   }
-  span:nth-child(2){
+  span:nth-child(3){
+    font-weight: 600;
     color:rgb(64, 158, 255)
   }
 </style>

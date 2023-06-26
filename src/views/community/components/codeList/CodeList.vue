@@ -44,9 +44,9 @@ function getCodeDesc(item) {
               {{ getCodeDesc(item) }}
             </template>
           </a-list-item-meta>
-          <CodeInfoBar />
+          <CodeInfoBar :lang="item.code.lang" :date="item.date" :size="item.size" />
           <template #actions>
-            <span v-for="{ type, id } in actions" :key="id">
+            <span v-for="{ type, id } in actions" :key="id" class="hover">
               <component :is="type" style="margin-right: 4px" />
               <span v-if="type === EyeOutlined">{{ item.viewNum }}</span>
               <span v-else-if="type === MessageOutlined">{{ item.commentNum }}</span>
@@ -66,5 +66,10 @@ function getCodeDesc(item) {
   .ant-menu-horizontal{
     border-bottom: 2px solid #f0f0f0;
     margin-bottom: 20px;
+  }
+
+  .hover:hover{
+    cursor:pointer;
+    color: #409eff;;
   }
 </style>
