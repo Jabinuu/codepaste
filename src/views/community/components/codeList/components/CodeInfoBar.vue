@@ -10,7 +10,7 @@ const props = defineProps<{
 const computedSize = useComputedSzie(props.size)
 const iconName = computed(() => {
   if (props.lang.includes('++'))
-    return 'c++'
+    return 'cpp'
   else
     return props.lang.toLocaleLowerCase()
 })

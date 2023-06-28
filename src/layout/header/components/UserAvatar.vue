@@ -40,4 +40,3 @@ function goHomePage() {
 <style lang="less" scoped>
 
 </style>
-@/enums/loginCompEnum

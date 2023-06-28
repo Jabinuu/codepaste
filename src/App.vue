@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import layout from '@/layout/index.vue'
+import Layout from '@/layout/index.vue'
 </script>
 
 <template>
-  <layout />
+  <Layout />
 </template>
 
 <style lang="less" scoped>

@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
-const selectedKeys = ref<string[]>(['4'])
+const route = useRoute()
+const selectedKeys = ref<string[]>([route.path.replace('/', '')])
+watch(route, (newVal) => {
+  selectedKeys.value = [newVal.path.replace('/', '')]
+})
 </script>
 
 <template>
@@ -11,25 +16,25 @@ const selectedKeys = ref<string[]>(['4'])
     class="text-font2 pr-20"
     style="lineHeight: 60px;border:none;"
   >
-    <a-menu-item key="1">
+    <a-menu-item key="introduction">
       <router-link to="/introduction">
         简介
       </router-link>
     </a-menu-item>
 
-    <a-menu-item key="2">
+    <a-menu-item key="community">
       <router-link to="/community">
         社区
       </router-link>
     </a-menu-item>
-    <a-menu-item key="3">
+    <a-menu-item key="questions">
       <router-link to="/questions">
         问题
       </router-link>
     </a-menu-item>
 
-    <a-menu-item key="4">
-      <router-link to="/">
+    <a-menu-item key="add">
+      <router-link to="/add">
         新增分享
       </router-link>
     </a-menu-item>

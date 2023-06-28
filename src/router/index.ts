@@ -5,8 +5,8 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: '/add',
+      name: 'add',
       component: () => import('@/views/addSharing/index.vue'),
     },
     {
@@ -28,6 +28,10 @@ const router = createRouter({
       path: '/individual',
       name: 'individual',
       component: () => import('@/views/individualCenter/index.vue'),
+    },
+    {
+      path: '/',
+      redirect: 'add',
     },
   ],
 })

@@ -23,4 +23,3 @@ async function onClick() {
 <style lang="less" scoped>
 
 </style>
-@/enums/loginCompEnum
