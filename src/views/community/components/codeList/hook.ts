@@ -1,5 +1,7 @@
 import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import useCodesStore from '@/store/modules/codes'
+
 import type { CodeList } from '@/types/codeContentInfo'
 
 export function useShowCodeList() {
@@ -30,4 +32,13 @@ export function useSwitchList(rule: string) {
   const codesStore = useCodesStore()
   codesStore.getCodeInfo(rule)
   console.log(rule)
+}
+
+export function useGoCodeDetail() {
+  const router = useRouter()
+  return {
+    goCodeDetail(url: string) {
+      router.push(url)
+    },
+  }
 }

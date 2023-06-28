@@ -7,7 +7,7 @@ export const codesInfo = Mock.mock({
   'data|100': [
     {
       'id': '@increment(1)',
-      'href': './codeDetail',
+      'href': './post',
       'author': '@name',
       'title': '@ctitle(4, 8)',
       'expiration|1': expirationSet,
