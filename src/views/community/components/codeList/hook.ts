@@ -13,7 +13,7 @@ export function useShowCodeList() {
   }
 
   onMounted(() => {
-    codesStore.getCodeInfo()
+    codesStore.getCodeInfo('hot')
   })
 
   function getCodeDesc(item: CodeList) {
@@ -24,4 +24,10 @@ export function useShowCodeList() {
     pagination,
     getCodeDesc,
   }
+}
+
+export function useSwitchList(rule: string) {
+  const codesStore = useCodesStore()
+  codesStore.getCodeInfo(rule)
+  console.log(rule)
 }

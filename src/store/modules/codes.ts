@@ -12,9 +12,11 @@ export default defineStore('codes', {
     async uploadCode(formData: CodeFromData) {
       return await reqUploadCode(formData)
     },
-    async getCodeInfo() {
+    // 此方法应接收一个参数，按热度（默认），时间，精选对codeList排序
+    async getCodeInfo(rule: string) {
       const { data } = await reqGetCodeInfo()
       this.codesList = data
+      return rule
     },
   },
   getters: {
