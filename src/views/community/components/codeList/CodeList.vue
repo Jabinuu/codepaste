@@ -1,32 +1,12 @@
 <script setup lang="ts">
-import { EyeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons-vue'
-import { computed, onMounted } from 'vue'
+import { EyeOutlined, MessageOutlined } from '@ant-design/icons-vue'
 import ItemProperty from './components/ItemProperty.vue'
 import ListMenu from './components/ListMenu.vue'
 import CodeInfoBar from './components/CodeInfoBar.vue'
-import useCodesStore from '@/store/modules/codes'
+import { actions } from './constant'
+import { useShowCodeList } from './hook'
 
-const codesStore = useCodesStore()
-const actions: Record<string, any>[] = [
-  { type: EyeOutlined, id: '1' },
-  { type: MessageOutlined, id: '2' },
-  { type: StarOutlined, id: '3' },
-]
-const listData = computed(() => codesStore.codesList)
-const pagination = {
-  onChange: (page: number) => {
-    console.log(page)
-  },
-  pageSize: 8,
-}
-
-onMounted(() => {
-  codesStore.getCodeInfo()
-})
-
-function getCodeDesc(item) {
-  return item.code.content.slice(0, 100)
-}
+const { pagination, listData, getCodeDesc } = useShowCodeList()
 </script>
 
 <template>
