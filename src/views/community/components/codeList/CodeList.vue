@@ -18,7 +18,9 @@ const { pagination, listData, getCodeDesc } = useShowCodeList()
           <ItemProperty :encrypt="item.encrypt" :author="item.author" :exposure="item.exposure" />
           <a-list-item-meta>
             <template #title>
-              <a :href="`${item.href}/id1111111`" target="_blank">{{ item.title }}</a>
+              <router-link :to="`${item.href}/id1111111`" target="_blank">
+                {{ item.title }}
+              </router-link>
             </template>
             <template #description>
               {{ getCodeDesc(item) }}
