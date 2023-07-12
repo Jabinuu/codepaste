@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { CodeFromData, CodeList } from '@/types/codeContentInfo'
-import { reqGetCodeInfo, reqUploadCode } from '@/services/api/codeContent'
+import { reqGetCodeInfo, reqGetDetailById, reqUploadCode } from '@/services/api/codeContent'
 
 export default defineStore('codes', {
   state() {
@@ -17,6 +17,10 @@ export default defineStore('codes', {
       const { data } = await reqGetCodeInfo()
       this.codesList = data
       return rule
+    },
+    async getDetailById(): Promise<CodeList> {
+      const { data } = await reqGetDetailById()
+      return data
     },
   },
   getters: {

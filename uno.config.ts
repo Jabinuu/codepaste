@@ -9,6 +9,7 @@ export default defineConfig({
   rules: [
     ['mr-2', { 'margin-right': '2px' }],
     ['mr-40', { 'margin-right': '40px' }],
+    ['mr-20', { 'margin-right': '20px' }],
     ['mb-30', { 'margin-bottom': '30px' }],
     ['mb-16', { 'margin-bottom': '16px' }],
     ['mlf-8', { margin: '0 8px' }],

@@ -40,8 +40,6 @@ function findSvgFile(dir: string): string[] {
           if (!hasViewBox.test($2))
             content += `viewBox="0 0 ${width} ${height}"`
 
-          console.log(idPerfix)
-
           return `<symbol id="${idPerfix}-${dirent.name.replace(
             '.svg',
             '',

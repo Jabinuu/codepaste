@@ -1,5 +1,6 @@
 import defHttp from '@/services/http'
-import type { codeAllFromData } from '@/types/codeContentInfo'
+import type { CodeFromData } from '@/types/codeContentInfo'
 
 export const reqGetCodeInfo = () => defHttp.get('/getCodeInfo')
-export const reqUploadCode = (data: codeAllFromData) => defHttp.post('/uploadCode', data)
+export const reqUploadCode = (data: CodeFromData) => defHttp.post('/uploadCode', data)
+export const reqGetDetailById = () => defHttp.get('/getDetailById')

@@ -17,7 +17,7 @@ export interface CodeSet {
   content: string
 }
 
-export interface CodeList extends Pick<SettingOption, 'title' | 'expiration' | 'category' | 'encrypt'> {
+export interface CodeList extends Pick<SettingOption, 'title' | 'expiration' | 'encrypt'> {
   id: number
   href: string
   author: string
@@ -25,5 +25,6 @@ export interface CodeList extends Pick<SettingOption, 'title' | 'expiration' | '
   date: string
   size: number
   viewNum: number
+  exposure: string
   commentNum: number
 }
