@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import useComputedSzie from '@/hooks/useComputeSize'
+import useIconLanngName from '@/hooks/useIconLangName'
 
 const props = defineProps<{
   lang: string
@@ -8,12 +8,7 @@ const props = defineProps<{
   size: number
 }>()
 const computedSize = useComputedSzie(props.size)
-const iconName = computed(() => {
-  if (props.lang.includes('++'))
-    return 'cpp'
-  else
-    return props.lang.toLocaleLowerCase()
-})
+const iconName = useIconLanngName(props.lang)
 </script>
 
 <template>

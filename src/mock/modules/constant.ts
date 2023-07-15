@@ -1,5 +1,5 @@
 import { CategoriesEnum, ExpirationsEnum, HighlightLangEnum } from '@/enums/codeEnum'
-import type { CodeList, CodeSet } from '@/types/codeContentInfo'
+import type { CodeSet } from '@/types/codeContentInfo'
 
 export const exposureSet: Array<string> = ['public', 'private']
 export const expirationSet: string[] = [ExpirationsEnum.D1, ExpirationsEnum.H1, ExpirationsEnum.M10, ExpirationsEnum.MON1, ExpirationsEnum.NEVER, ExpirationsEnum.W1]
@@ -367,18 +367,21 @@ export const codeSet: CodeSet[] = [
     \`\`\``,
   },
 ]
-export const detailById: CodeList = {
-  id: 1111111,
-  href: './post',
-  author: 'jiabin',
-  title: '一段试验代码',
-  expiration: ExpirationsEnum.D1,
-  encrypt: false,
-  exposure: 'public',
-  code: {
-    category: CategoriesEnum.CODE,
-    lang: HighlightLangEnum.C,
-    content: `class Solution {
+export const detailById = {
+  status: 200,
+  message: '请求成功',
+  data: {
+    id: 1111111,
+    href: './post',
+    author: 'jiabin',
+    title: '一段试验代码',
+    expiration: ExpirationsEnum.D1,
+    encrypt: false,
+    exposure: 'public',
+    code: {
+      category: CategoriesEnum.CODE,
+      lang: HighlightLangEnum.C,
+      content: `class Solution {
       public:
           int getKthElement(const vector<int>& nums1, const vector<int>& nums2, int k) {
               /* 主要思路：要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1] 和 pivot2 = nums2[k/2-1] 进行比较
@@ -434,9 +437,10 @@ export const detailById: CodeList = {
               }
           }
       };`,
+    },
+    date: '2023-01-30 18:35',
+    size: 4672,
+    viewNum: 54,
+    commentNum: 3,
   },
-  date: '2023-01-30 18:35',
-  size: 4672,
-  viewNum: 54,
-  commentNum: 3,
 }

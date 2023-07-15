@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, provide, ref } from 'vue'
 
 import CodeArea from './components/codeArea/index.vue'
 import CommentsArea from './components/commentsArea/index.vue'
@@ -8,13 +8,15 @@ import useCodeStore from '@/store/modules/codes'
 import type { CodeList } from '@/types/codeContentInfo'
 
 const codeStore = useCodeStore()
-let currentCode: CodeList
+const currentCode = ref<CodeList>()
+provide('currentCode', currentCode)
+
 onMounted(() => {
   getDetailById()
 })
 
 async function getDetailById() {
-  currentCode = await codeStore.getDetailById()
+  currentCode.value = await codeStore.getDetailById()
 }
 </script>
 

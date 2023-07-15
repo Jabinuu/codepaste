@@ -20,6 +20,7 @@ export default defineStore('codes', {
     },
     async getDetailById(): Promise<CodeList> {
       const { data } = await reqGetDetailById()
+
       return data
     },
   },

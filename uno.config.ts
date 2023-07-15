@@ -7,7 +7,7 @@ export default defineConfig({
     // ...custom presets
   ],
   rules: [
-    ['mr-2', { 'margin-right': '2px' }],
+    ['mr-10', { 'margin-right': '10px' }],
     ['mr-40', { 'margin-right': '40px' }],
     ['mr-20', { 'margin-right': '20px' }],
     ['mb-30', { 'margin-bottom': '30px' }],
