@@ -16,7 +16,7 @@ const expirationMap = new Map([
 </script>
 
 <template>
-  <div class="header-container flex justify-between flex-items-center">
+  <div class="header-container flex justify-between flex-items-center p-24">
     <div class="avatar mr-20" />
     <div class="header-info flex-1">
       <div class="header-title">
@@ -57,7 +57,6 @@ const expirationMap = new Map([
   height: 50px;
   border-bottom: 1px solid #000;
   margin-bottom: 16px;
-
   .avatar {
     width: 40px;
     height: 40px;
@@ -65,9 +64,6 @@ const expirationMap = new Map([
   }
 
   .header-info {
-    // height: 46px;
-    // background-color: skyblue;
-
     .header-title h1 {
       display: inline;
       font-size: 1.25em;
