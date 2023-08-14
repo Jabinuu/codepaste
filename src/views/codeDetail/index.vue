@@ -8,6 +8,7 @@ import useCodeStore from '@/store/modules/codes'
 import type { CodeList } from '@/types/codeContentInfo'
 
 const codeStore = useCodeStore()
+// provide可以是响应式的
 const currentCode = ref<CodeList>()
 provide('currentCode', currentCode)
 
