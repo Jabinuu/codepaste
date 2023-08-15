@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <h1>全部评论</h1>
   <div>CommentList</div>
 </template>
 

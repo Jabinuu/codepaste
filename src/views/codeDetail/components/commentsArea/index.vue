@@ -4,7 +4,6 @@ import CommentsList from './CommentsList.vue'
 </script>
 
 <template>
-  <h1>评论区</h1>
   <div class="bg-w p-24 mr-40">
     <CommentsInput />
     <CommentsList />

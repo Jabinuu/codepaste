@@ -27,7 +27,7 @@ watch(toRef(currentCode), () => {
 </script>
 
 <template>
-  <div v-highlight>
+  <div>
     <pre>
       <code>
         {{ currentCode?.code.content }}
