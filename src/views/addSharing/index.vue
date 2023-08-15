@@ -5,8 +5,8 @@ import PublicCode from '@/components/PublicCode.vue'
 </script>
 
 <template>
-  <div class="flex">
-    <div class="bg-w p-24 mr-40 flex-1 bdr-4">
+  <div class="flex justify-center">
+    <div class="bg-w p-24 mr-40 bdr-4 left">
       <ContentInput />
       <PasteSettings />
     </div>
@@ -15,5 +15,7 @@ import PublicCode from '@/components/PublicCode.vue'
 </template>
 
 <style lang="less" scoped>
-
+.left{
+  width: 58%;
+}
 </style>

@@ -381,9 +381,10 @@ export const detailById = {
     code: {
       category: CategoriesEnum.CODE,
       lang: HighlightLangEnum.C,
-      content: `class Solution {
-      public:
-          int getKthElement(const vector<int>& nums1, const vector<int>& nums2, int k) {
+      content: `
+class Solution {
+    public:
+        int getKthElement(const vector<int>& nums1, const vector<int>& nums2, int k) {
               /* 主要思路：要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1] 和 pivot2 = nums2[k/2-1] 进行比较
                * 这里的 "/" 表示整除
                * nums1 中小于等于 pivot1 的元素有 nums1[0 .. k/2-2] 共计 k/2-1 个

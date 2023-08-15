@@ -16,7 +16,7 @@ const expirationMap = new Map([
 </script>
 
 <template>
-  <div class="header-container flex justify-between flex-items-center p-24">
+  <div class="header-container flex justify-between flex-items-center">
     <div class="avatar mr-20" />
     <div class="header-info flex-1">
       <div class="header-title">
@@ -55,7 +55,8 @@ const expirationMap = new Map([
 <style lang="less" scoped>
 .header-container {
   height: 50px;
-  border-bottom: 1px solid #000;
+  padding: 0 24px 10px;
+  border-bottom: .8px solid #D3D3D3;
   margin-bottom: 16px;
   .avatar {
     width: 40px;

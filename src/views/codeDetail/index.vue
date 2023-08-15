@@ -22,8 +22,8 @@ async function getDetailById() {
 </script>
 
 <template>
-  <div class="codeDetail flex justify-between">
-    <div class="flex-1 bdr-4">
+  <div class="codeDetail flex justify-center">
+    <div class="bdr-4 left">
       <CodeArea />
       <CommentsArea />
     </div>
@@ -34,5 +34,8 @@ async function getDetailById() {
 <style lang="less" scoped>
   .codeDetail{
     padding: 0 50px;
+  }
+  .left{
+    width: 68%;
   }
 </style>
