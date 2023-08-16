@@ -6,7 +6,7 @@ import DetailInfo from './DetailInfo.vue'
 </script>
 
 <template>
-  <div class="codeArea-container mr-40 bg-w mb-30">
+  <div class="codeArea-container mr-40 bg-w mb-30 bdr-4">
     <DetailHeader />
     <div class="flex justify-between padding-mid">
       <DetailInfo />
@@ -18,7 +18,7 @@ import DetailInfo from './DetailInfo.vue'
 
 <style lang="less" scoped>
 .codeArea-container{
-  padding-top: 10px;
+  padding-top: 24px;
   .padding-mid{
     padding: 0 24px;
   }

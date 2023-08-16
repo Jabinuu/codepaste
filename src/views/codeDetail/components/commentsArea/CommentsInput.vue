@@ -27,7 +27,7 @@ function submitComment() {
   <div v-clickOutside="onBlur" class="input-container">
     <h1>评论</h1>
     <div class="comment-form flex">
-      <div class="avatar" />
+      <a-avatar src="http://cdn.zutjlx.site/image/202210031742845.png" :size="40" />
       <div
         class="input-box flex-1" :class="{ focused: isFocused, empty: isEmpty }"
         placeholder="输入评论 (Enter换行)" contenteditable="true" @focus="isFocused = true" @input="changeInputBox"
@@ -46,14 +46,6 @@ function submitComment() {
   margin-bottom: 60px;
 
   .comment-form {
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 20px;
-      margin-right: 20px;
-      background: no-repeat url(http://cdn.zutjlx.site/image/202210031742845.png) center/cover;
-    }
-
     .input-box {
       position: relative;
       transition: all .3s;
@@ -61,6 +53,7 @@ function submitComment() {
       outline: none;
       background-color: #f2f3f5;
       padding: 8px 12px;
+      margin-left: 26px;
       color: #252933;
       box-sizing: border-box;
       line-height: 22px;

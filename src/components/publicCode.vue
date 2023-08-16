@@ -29,7 +29,7 @@ const data: DataItem[] = [
 </script>
 
 <template>
-  <div class="list-contariner bdr-4">
+  <div class="list-contariner">
     <a-card title="最近公开" :bordered="false">
       <a-list item-layout="horizontal" :data-source="data">
         <template #renderItem="{ item }">
@@ -53,21 +53,28 @@ const data: DataItem[] = [
 </template>
 
 <style lang="less" scoped>
-.list-contariner{
+.list-contariner {
   width: 240px;
   height: 100%;
-  background: #fff;
 }
-:deep(.ant-card-body){
+
+.ant-card {
+  border-radius: 4px;
+}
+
+:deep(.ant-card-body) {
   padding: 0 24px 24px;
 }
-:deep(.ant-list-item){
+
+:deep(.ant-list-item) {
   padding: 8px 0;
 }
-:deep(.ant-list-item-meta-description){
+
+:deep(.ant-list-item-meta-description) {
   line-height: 1;
 }
-:deep(.ant-list-item-meta-title){
+
+:deep(.ant-list-item-meta-title) {
   line-height: 1;
 }
 </style>
