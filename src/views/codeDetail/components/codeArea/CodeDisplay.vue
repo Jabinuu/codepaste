@@ -18,12 +18,6 @@ watch(toRef(currentCode), () => {
     })
   })
 })
-// onUpdated(() => {
-//   const blocks = document.querySelectorAll('pre code')
-//   blocks.forEach((block: any) => {
-//     hljs.highlightBlock(block)
-//   })
-// })
 </script>
 
 <template>
