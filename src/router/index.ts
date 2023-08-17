@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: '/individual',
       name: 'individual',
-      component: () => import('@/views/individualCenter/index.vue'),
+      component: () => import('@/views/individual/index.vue'),
     },
     {
       path: '/post/:id',
