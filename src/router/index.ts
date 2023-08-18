@@ -28,6 +28,28 @@ const router = createRouter({
       path: '/individual',
       name: 'individual',
       component: () => import('@/views/individual/index.vue'),
+      children: [
+        {
+          path: 'info',
+          component: () => import('@/views/individual/userInfo/index.vue'),
+        },
+        {
+          path: 'codes',
+          component: () => import('@/views/individual/userCode/index.vue'),
+        },
+        {
+          path: 'comments',
+          component: () => import('@/views/individual/userComment/index.vue'),
+        },
+        {
+          path: 'star',
+          component: () => import('@/views/individual/userFavorite/index.vue'),
+        },
+        {
+          path: 'footprint',
+          component: () => import('@/views/individual/userFootprint/index.vue'),
+        },
+      ],
     },
     {
       path: '/post/:id',

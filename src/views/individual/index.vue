@@ -6,16 +6,27 @@ import {
   InfoCircleOutlined,
   StarOutlined,
 } from '@ant-design/icons-vue'
-import { ref } from 'vue'
+
+import { onMounted, ref } from 'vue'
 
 const collapsed = ref<boolean>(false)
 const selectedKeys = ref<string[]>(['1'])
+onMounted(() => {
+  const collapseTrigger = document.querySelector('.ant-layout-sider-trigger') as HTMLElement
+  const layoutContnt = document.querySelector('.content') as HTMLElement
+  collapseTrigger.addEventListener('click', () => {
+    if (collapsed.value)
+      layoutContnt.style.marginLeft = '80px'
+    else
+      layoutContnt.style.marginLeft = '200px'
+  })
+})
 </script>
 
 <template>
   <div class="container">
     <a-layout style="min-height: 100vh">
-      <a-layout-sider v-model:collapsed="collapsed" collapsible :style="{ position: 'fixed', height: '100vh', background: '#fff' }">
+      <a-layout-sider v-model:collapsed="collapsed" collapsible :style="{ position: 'fixed', top: '58px', left: 0, height: '100vh', background: '#fff' }">
         <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
           <a-menu-item key="1">
             <template #icon>
@@ -49,7 +60,11 @@ const selectedKeys = ref<string[]>(['1'])
           </a-menu-item>
         </a-menu>
       </a-layout-sider>
-      <a-layout-content style="margin: 0 16px" />
+      <a-layout-content>
+        <div class="content">
+          Bill is a cat.
+        </div>
+      </a-layout-content>
     </a-layout>
   </div>
 </template>
@@ -61,5 +76,11 @@ const selectedKeys = ref<string[]>(['1'])
 :deep(.ant-layout-sider-trigger){
   color: #002140;
   background: #fafafa;
+}
+.content{
+  transition: all .2s;
+  margin-left: 200px;
+  padding: 24px;
+  height: 100vh;
 }
 </style>
