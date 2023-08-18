@@ -16,14 +16,18 @@ const collapsed = ref<boolean>(false)
 const selectedKeys = ref<string[]>([route.path.replace('/individual/', '')])
 
 onMounted(() => {
+  changeLayoutContent()
+})
+
+watch(route, newVal => selectedKeys.value = [newVal.name as string])
+
+function changeLayoutContent() {
   const collapseTrigger = document.querySelector('.ant-layout-sider-trigger') as HTMLElement
   const layoutContnt = document.querySelector('.content') as HTMLElement
   collapseTrigger.addEventListener('click', () => {
     layoutContnt.style.marginLeft = collapsed.value ? '80px' : '200px'
   })
-})
-
-watch(route, newVal => selectedKeys.value = [newVal.name as string])
+}
 </script>
 
 <template>
@@ -66,7 +70,7 @@ watch(route, newVal => selectedKeys.value = [newVal.name as string])
       </a-layout-sider>
       <a-layout-content>
         <div class="content">
-          Bill is a cat.
+          <router-view />
         </div>
       </a-layout-content>
     </a-layout>
