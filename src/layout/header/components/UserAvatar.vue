@@ -7,7 +7,7 @@ import { LogincComponent } from '@/enums/loginCompEnum'
 const userStore = useUserStore()
 const router = useRouter()
 function gocustomerCenter() {
-  router.push('/individual')
+  router.push('/individual/info')
 }
 function goHomePage() {
   userStore.loginComponentId = LogincComponent.LOGINGROUP

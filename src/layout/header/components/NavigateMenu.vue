@@ -4,9 +4,7 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const selectedKeys = ref<string[]>([route.path.replace('/', '')])
-watch(route, (newVal) => {
-  selectedKeys.value = [newVal.path.replace('/', '')]
-})
+watch(route, newVal => selectedKeys.value = [newVal.path.replace('/', '')])
 </script>
 
 <template>

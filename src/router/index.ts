@@ -30,22 +30,27 @@ const router = createRouter({
       component: () => import('@/views/individual/index.vue'),
       children: [
         {
+          name: 'info',
           path: 'info',
           component: () => import('@/views/individual/userInfo/index.vue'),
         },
         {
+          name: 'codes',
           path: 'codes',
           component: () => import('@/views/individual/userCode/index.vue'),
         },
         {
+          name: 'comments',
           path: 'comments',
           component: () => import('@/views/individual/userComment/index.vue'),
         },
         {
+          name: 'star',
           path: 'star',
           component: () => import('@/views/individual/userFavorite/index.vue'),
         },
         {
+          name: 'foorprint',
           path: 'footprint',
           component: () => import('@/views/individual/userFootprint/index.vue'),
         },
