@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import descriptions from './descriptions.vue'
-import infoForm from './infoForm.vue'
+import descriptions from './Descriptions.vue'
+import infoForm from './InfoForm.vue'
 
 const tabs = [descriptions, infoForm]
 const currentTab = ref(0)
@@ -13,7 +13,7 @@ function onChange(e: any) {
 
 <template>
   <div>
-    <a-card class="top-card">
+    <a-card class="top-card bdr-4">
       <a-row>
         <a-col :span="2">
           <a-avatar src="http://cdn.zutjlx.site/image/202210031742845.png" :size="64" />
@@ -32,7 +32,7 @@ function onChange(e: any) {
       </a-row>
     </a-card>
     <keep-alive>
-      <component :is="tabs[currentTab]" class="bottom-card" @change="onChange" />
+      <component :is="tabs[currentTab]" class="bottom-card bdr-4" @change="onChange" />
     </keep-alive>
   </div>
 </template>

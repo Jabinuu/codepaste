@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useComputedSzie from '@/hooks/useComputeSize'
-import useIconLanngName from '@/hooks/useIconLangName'
+import useIconLangName from '@/hooks/useIconLangName'
 
 const props = defineProps<{
   lang: string
@@ -8,7 +8,7 @@ const props = defineProps<{
   size: number
 }>()
 const computedSize = useComputedSzie(props.size)
-const iconName = useIconLanngName(props.lang)
+const iconName = useIconLangName(props.lang)
 </script>
 
 <template>
