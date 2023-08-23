@@ -46,7 +46,7 @@ function showDeleteConfirm() {
 </script>
 
 <template>
-  <a-card title="我发表的评论">
+  <a-card title="我发表的评论" style="margin:0 140px 0;">
     <a-list item-layout="horizontal" :data-source="data" @mouseleave="curItem = -1">
       <template #renderItem="{ item }">
         <a-list-item @mouseenter="curItem = item.id">

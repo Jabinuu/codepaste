@@ -12,7 +12,7 @@ function onChange(e: any) {
 </script>
 
 <template>
-  <div>
+  <div class="info-wrap">
     <a-card class="top-card bdr-4">
       <a-row>
         <a-col :span="2">
@@ -38,22 +38,27 @@ function onChange(e: any) {
 </template>
 
 <style lang="less" scoped>
-.top-card{
-  width: 100%;
-  .username{
-    font-size: 18px;
-    font-weight: 600;
-    margin-right: 20px;
-  }
-  .info-content{
-    font-size: 12px;
-  }
-}
+.info-wrap {
+  margin: 0 140px 0;
 
-.bottom-card{
-  margin-top: 20px;
-  :deep(.ant-descriptions-item-label){
-    margin-right: 6px;
+  .top-card {
+    .username {
+      font-size: 18px;
+      font-weight: 600;
+      margin-right: 20px;
+    }
+
+    .info-content {
+      font-size: 12px;
+    }
+  }
+
+  .bottom-card {
+    margin-top: 20px;
+
+    :deep(.ant-descriptions-item-label) {
+      margin-right: 6px;
+    }
   }
 }
 </style>
