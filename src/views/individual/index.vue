@@ -12,7 +12,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
-const collapsed = ref<boolean>(false)
+const collapsed = ref<boolean>(true)
 const selectedKeys = ref<string[]>([route.path.replace('/individual/', '')])
 
 onMounted(() => {
@@ -87,7 +87,7 @@ function changeLayoutContent() {
 }
 .content{
   transition: all .2s;
-  margin-left: 200px;
+  margin-left: 80px;
   padding: 24px;
   height: 100vh;
 }
