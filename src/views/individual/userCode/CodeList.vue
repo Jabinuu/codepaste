@@ -116,6 +116,11 @@ function showDeleteConfirm(id: string) {
           <Icon :name="`icon-${iconName}`" size="16px" />
           {{ record.lang }}
         </template>
+        <template v-else-if="column.dataIndex === 'status'">
+          <a-tag color="blue">
+            {{ record.status }}
+          </a-tag>
+        </template>
         <template v-else-if="column.key === 'action'">
           <div class="action-btn">
             <a-button type="link" style="color:#67c23a" @click="mitt.emit('openEditor', false)">
