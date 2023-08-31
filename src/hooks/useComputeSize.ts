@@ -8,13 +8,13 @@ function myToFixed(num: number | string, digit: number): string {
   return (Math.round((num + Number.EPSILON) * 10 ** digit) / 10 ** digit).toFixed(digit)
 }
 
-export default function useComputedSzie(bytes: number): Ref<string> {
+export default function useComputedSzie(props): Ref<string> {
   return computed((): string => {
     let size: string
-    if (bytes > 1024)
-      size = `${myToFixed(bytes / 1024, 2)} KB`
+    if (props.size > 1024)
+      size = `${myToFixed(props.size / 1024, 2)} KB`
     else
-      size = `${bytes}字节`
+      size = `${props.size}字节`
     return size
   })
 }

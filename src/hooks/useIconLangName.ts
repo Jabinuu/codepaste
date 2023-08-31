@@ -1,10 +1,12 @@
 import { computed } from 'vue'
 
-export default function useIconLangName(lang: string) {
+export default function useIconLangName(lang) {
   return computed(() => {
-    if (lang.includes('++'))
+    console.log(11)
+
+    if (lang.value.includes('++'))
       return 'cpp'
     else
-      return lang.toLocaleLowerCase()
+      return lang.value.toLocaleLowerCase()
   })
 }
