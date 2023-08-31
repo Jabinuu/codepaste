@@ -18,13 +18,14 @@ export interface CodeSet {
 }
 
 export interface CodeList extends Pick<SettingOption, 'title' | 'expiration' | 'encrypt'> {
-  id: number
-  href: string
+  cid: number
   author: string
-  code: CodeSet
-  date: string
+  lang: string
+  content: string
+  category: string
+  date: number
   size: number
   viewNum: number
-  exposure: string
+  exposure: number
   commentNum: number
 }

@@ -2,9 +2,9 @@
 import { exposureMap } from '@/views/community/components/codeList/constant'
 
 const props = defineProps<{
-  encrypt: boolean
+  encrypt: number
   author: string
-  exposure: string
+  exposure: number
 }>()
 </script>
 

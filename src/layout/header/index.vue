@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { markRaw, reactive, ref } from 'vue'
+import { markRaw, reactive, ref, watch } from 'vue'
 import useUserStore from '@/store/modules/user'
 import NavigateMenu from '@/layout/header/components/NavigateMenu.vue'
 import LoginGroup from '@/layout/header/components/LoginGroup.vue'
 import UserAvatar from '@/layout/header/components/UserAvatar.vue'
+import mitt from '@/utils/mitt'
 
 const userStore = useUserStore()
-const value = ref<string>('')
+const kw = ref<string>('')
 const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
+
+watch(kw, (newVal) => {
+  mitt.emit('searchValue', newVal)
+})
 </script>
 
 <template>
@@ -18,7 +23,7 @@ const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
     </router-link>
     <NavigateMenu />
     <a-input-search
-      v-model:value="value"
+      v-model:value="kw"
       placeholder="输入搜索关键词"
       style="width: 250px;"
       @search="() => {}"

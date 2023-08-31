@@ -4,7 +4,7 @@ import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 const defHttp = axios.create({
-  baseURL: '/mock',
+  baseURL: '/api',
   timeout: 3000,
 })
 

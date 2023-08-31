@@ -1,26 +1,42 @@
 import { defineStore } from 'pinia'
 import type { CodeFromData, CodeList } from '@/types/codeContentInfo'
-import { reqGetCodeInfo, reqGetDetailById, reqUploadCode } from '@/services/api/codeContent'
+import type { CodeRequestBody } from '@/types/http'
+import { reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist } from '@/services/api/codeContent'
 
 export default defineStore('codes', {
   state() {
     return {
       codesList: [] as CodeList[],
+      recommendlist: [] as CodeList[],
     }
   },
   actions: {
-    async uploadCode(formData: CodeFromData) {
-      return await reqUploadCode(formData)
+    async createCode(formData: CodeFromData) {
+      return await reqCreateCode(formData)
     },
-    // 此方法应接收一个参数，按热度（默认），时间，精选对codeList排序
-    async getCodeInfo(rule: string) {
-      const { data } = await reqGetCodeInfo()
-      this.codesList = data
-      return rule
-    },
-    async getDetailById(): Promise<CodeList> {
-      const { data } = await reqGetDetailById()
 
+    async getHotlist(body: CodeRequestBody) {
+      const data: any = await reqGetHotlist(body) // fix：泛型约束，要配置不同请求响应的类型
+      this.codesList = data
+    },
+
+    async getNewlist(body: CodeRequestBody) {
+      const data: any = await reqGetNewlist(body)
+      this.codesList = data
+    },
+
+    async getQualitylist(body: CodeRequestBody) {
+      const data: any = await reqGetQualitylist(body)
+      this.codesList = data
+    },
+
+    async getRecommendlist() {
+      const data: any = await reqGetRecommedlist()
+      this.recommendlist = data
+    },
+
+    async getDetailById(cid: string): Promise<CodeList> {
+      const data: any = await reqGetDetailById(cid)
       return data
     },
   },

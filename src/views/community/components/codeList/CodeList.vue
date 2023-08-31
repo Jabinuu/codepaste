@@ -18,7 +18,7 @@ const { pagination, listData, getCodeDesc } = useShowCodeList()
           <ItemProperty :encrypt="item.encrypt" :author="item.author" :exposure="item.exposure" />
           <a-list-item-meta>
             <template #title>
-              <router-link :to="`${item.href}/id1111111`" target="_blank">
+              <router-link :to="`./post/${item.cid}`" target="_blank">
                 {{ item.title }}
               </router-link>
             </template>
@@ -26,7 +26,7 @@ const { pagination, listData, getCodeDesc } = useShowCodeList()
               {{ getCodeDesc(item) }}
             </template>
           </a-list-item-meta>
-          <CodeInfoBar :lang="item.code.lang" :date="item.date" :size="item.size" />
+          <CodeInfoBar :lang="item.lang" :date="item.date" :size="item.size" />
           <template #actions>
             <span v-for="{ type, id } in actions" :key="id" class="hover">
               <component :is="type" style="margin-right: 4px" />

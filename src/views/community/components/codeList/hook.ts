@@ -1,8 +1,16 @@
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import useCodesStore from '@/store/modules/codes'
-
+import mitt from '@/utils/mitt'
 import type { CodeList } from '@/types/codeContentInfo'
+import type { CodeRequestBody } from '@/types/http'
+
+export const queryParam: CodeRequestBody = {
+  kw: '',
+  languages: [],
+  pn: 1,
+  ps: 8,
+}
 
 export function useShowCodeList() {
   const codesStore = useCodesStore()
@@ -15,12 +23,20 @@ export function useShowCodeList() {
   }
 
   onMounted(() => {
-    codesStore.getCodeInfo('hot')
+    mitt.on('searchValue', (val: string) => {
+      queryParam.kw = val
+    })
+    codesStore.getHotlist(queryParam)
+  })
+
+  onUnmounted(() => {
+    mitt.off('searchValue')
   })
 
   function getCodeDesc(item: CodeList) {
-    return item.code.content.slice(0, 100)
+    return item.content.slice(0, 100)
   }
+
   return {
     listData,
     pagination,
@@ -28,10 +44,18 @@ export function useShowCodeList() {
   }
 }
 
-export function useSwitchList(rule: string) {
+export async function useSwitchList(rule: string) {
   const codesStore = useCodesStore()
-  codesStore.getCodeInfo(rule)
-  console.log(rule)
+  if (rule === 'hot') {
+    console.log('hot')
+    await codesStore.getHotlist(queryParam)
+  }
+  else if (rule === 'new') {
+    await codesStore.getNewlist(queryParam)
+  }
+  else if (rule === 'quality') {
+    await codesStore.getQualitylist(queryParam)
+  }
 }
 
 export function useGoCodeDetail() {
