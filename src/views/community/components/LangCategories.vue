@@ -1,7 +1,27 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import { highlightLang } from '@/views/addSharing/components/pasteSettings/constant'
+import { HighlightLangEnum } from '@/enums/codeEnum'
+import mitt from '@/utils/mitt'
 
-const langFilter = Array(highlightLang.length)
+const langFilter = ref(Array(highlightLang.length))
+watch(langFilter, (newVal) => {
+  const languages = computeLanguages(newVal)
+  mitt.emit('langFilter', languages)
+}, { deep: true })
+
+function computeLanguages(filter: string[]) {
+  const res: string[] = []
+  filter.forEach((elem, index) => {
+    if (elem) {
+      if (highlightLang[index].value !== HighlightLangEnum.OTHER)
+        res.push(highlightLang[index].value)
+      else
+        res.push(HighlightLangEnum.TXT, HighlightLangEnum.MARKDOWN)
+    }
+  })
+  return res
+}
 </script>
 
 <template>

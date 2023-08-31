@@ -12,7 +12,7 @@ export const categories: SelectorOption[] = [
 ]
 export const highlightLang: SelectorOption[] = [
   { label: 'C/C++', value: HighlightLangEnum.C },
-  { label: 'JAVA', value: HighlightLangEnum.JAVA },
+  { label: 'Java', value: HighlightLangEnum.JAVA },
   { label: 'JavaScript', value: HighlightLangEnum.JAVASCRIPT },
   { label: 'Python', value: HighlightLangEnum.PYTHON },
   { label: 'CSS', value: HighlightLangEnum.CSS },

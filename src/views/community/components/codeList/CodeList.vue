@@ -6,13 +6,13 @@ import CodeInfoBar from './components/CodeInfoBar.vue'
 import { actions } from './constant'
 import { useShowCodeList } from './hook'
 
-const { pagination, listData, getCodeDesc } = useShowCodeList()
+const { pagination, listData, queryParam, getCodeDesc, onSwitchList } = useShowCodeList()
 </script>
 
 <template>
   <div class="list-container bg-w p-24">
-    <ListMenu />
-    <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
+    <ListMenu :query="queryParam" @switch-list="onSwitchList" />
+    <a-list item-layout="vertical" size="large" :data-source="listData.codeList">
       <template #renderItem="{ item }">
         <a-list-item :key="item.id">
           <ItemProperty :encrypt="item.encrypt" :author="item.author" :exposure="item.exposure" />
@@ -38,6 +38,10 @@ const { pagination, listData, getCodeDesc } = useShowCodeList()
         </a-list-item>
       </template>
     </a-list>
+    <a-pagination
+      v-model:current="pagination.current" :total="pagination.total"
+      :page-size="pagination.pageSize" class="flex justify-end" @change="pagination.onChange"
+    />
   </div>
 </template>
 

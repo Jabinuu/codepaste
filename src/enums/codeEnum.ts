@@ -6,7 +6,7 @@ export enum CategoriesEnum {
 
 export enum HighlightLangEnum {
   C = 'C/C++',
-  JAVA = 'JAVA',
+  JAVA = 'Java',
   JAVASCRIPT = 'JavaScript',
   PYTHON = 'Python',
   CSS = 'CSS',

@@ -3,10 +3,14 @@ import type { CodeFromData, CodeList } from '@/types/codeContentInfo'
 import type { CodeRequestBody } from '@/types/http'
 import { reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist } from '@/services/api/codeContent'
 
+interface CodeResponse {
+  codeList: CodeList[]
+  total: number
+}
 export default defineStore('codes', {
   state() {
     return {
-      codesList: [] as CodeList[],
+      listData: { total: 0, codeList: [] } as CodeResponse,
       recommendlist: [] as CodeList[],
     }
   },
@@ -17,17 +21,17 @@ export default defineStore('codes', {
 
     async getHotlist(body: CodeRequestBody) {
       const data: any = await reqGetHotlist(body) // fix：泛型约束，要配置不同请求响应的类型
-      this.codesList = data
+      this.listData = data
     },
 
     async getNewlist(body: CodeRequestBody) {
       const data: any = await reqGetNewlist(body)
-      this.codesList = data
+      this.listData = data
     },
 
     async getQualitylist(body: CodeRequestBody) {
       const data: any = await reqGetQualitylist(body)
-      this.codesList = data
+      this.listData = data
     },
 
     async getRecommendlist() {
