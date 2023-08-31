@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import useCodesStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
@@ -14,7 +14,7 @@ export function useShowCodeList() {
   // 分页器数据
   const pagination = ref({
     current: 1,
-    total: listData.value.total,
+    total: computed(() => codesStore.listData.total),
     pageSize: 3,
     onChange(page: number) {
       pagination.value.current = page
@@ -28,11 +28,6 @@ export function useShowCodeList() {
     pn: pagination.value.current,
     ps: pagination.value.pageSize,
   }
-
-  // 监听codeStore仓库数据变化，当请求完成时，更新total值
-  watch(listData, (newVal) => {
-    pagination.value.total = newVal.total
-  })
 
   // 监听页码变化，并更新queryParam的pn值
   watchEffect(() => {
