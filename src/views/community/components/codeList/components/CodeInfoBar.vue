@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import useComputedSzie from '@/hooks/useComputeSize'
 import useIconLangName from '@/hooks/useIconLangName'
+import { relativeTime } from '@/utils/relativeTime'
 
 const props = defineProps<{
   lang: string
-  date: string
+  date: number
   size: number
 }>()
 const computedSize = useComputedSzie(props.size)
@@ -17,7 +18,7 @@ const iconName = useIconLangName(props.lang)
       <Icon :name="`icon-${iconName}`" size="16px" />
       {{ props.lang }}</span>
     <a-divider type="vertical" style="border-width: 2px;" />
-    <span>{{ date }}</span>
+    <span>{{ relativeTime(date) }}</span>
     <a-divider type="vertical" style="border-width: 2px;" />
     <span>{{ computedSize }}</span>
   </div>
