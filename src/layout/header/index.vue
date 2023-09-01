@@ -9,10 +9,6 @@ import mitt from '@/utils/mitt'
 const userStore = useUserStore()
 const kw = ref<string>('')
 const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
-
-// watch(kw, (newVal) => {
-//   mitt.emit('searchValue', newVal)
-// })
 </script>
 
 <template>

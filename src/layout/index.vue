@@ -29,7 +29,11 @@ import LayoutFooter from '@/layout/footer/index.vue'
 }
 
 .ant-layout-content{
-  // padding: 0 20px;
   margin-top: 84px ;
+  margin-bottom: 20px;
+  min-height: calc(100vh - 184px);
+}
+.ant-layout-footer{
+  padding: 0;
 }
 </style>

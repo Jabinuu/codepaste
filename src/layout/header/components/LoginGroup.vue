@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import useUserStore from '@/store/modules/user'
-import { LogincComponent } from '@/enums/loginCompEnum'
+import { useRouter } from 'vue-router'
 
-const userStore = useUserStore()
-async function onClick() {
-  userStore.loginComponentId = LogincComponent.USERAVATAR
+const router = useRouter()
+
+function onClickLogin() {
+  router.push('/login')
+}
+
+function onClickRegister() {
+  router.push('/register')
 }
 </script>
 
 <template>
   <div>
-    <a-button type="primary" @click="onClick">
+    <a-button type="primary" @click="onClickLogin">
       登录
     </a-button>
     <span class="mlf-8" style="font-size: 10px;">或</span>
-    <a-button>
+    <a-button @click="onClickRegister">
       注册
     </a-button>
   </div>
