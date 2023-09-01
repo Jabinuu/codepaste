@@ -3,6 +3,7 @@ import { inject } from 'vue'
 import { CalendarOutlined, ClockCircleOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons-vue'
 import type { CodeList } from '@/types/codeContentInfo'
 import { ExpirationsEnum } from '@/enums/codeEnum'
+import { formatDate } from '@/utils/date'
 
 const currentCode: CodeList | undefined = inject('currentCode')
 const expirationMap = new Map([
@@ -33,7 +34,7 @@ const expirationMap = new Map([
           <span class="header-icon">
             <CalendarOutlined />
           </span>
-          <span>{{ currentCode?.date }}</span>
+          <span>{{ formatDate(currentCode?.date) }}</span>
         </div>
         <div>
           <span class="header-icon">

@@ -2,7 +2,7 @@
 import { toRef } from 'vue'
 import useComputedSzie from '@/hooks/useComputeSize'
 import useIconLangName from '@/hooks/useIconLangName'
-import { relativeTime } from '@/utils/relativeTime'
+import { relativeTime } from '@/utils/date'
 
 const props = defineProps<{
   lang: string
@@ -10,7 +10,7 @@ const props = defineProps<{
   size: number
 }>()
 
-const computedSize = useComputedSzie(props)
+const computedSize = useComputedSzie(toRef(() => props.size))
 const iconName = useIconLangName(toRef(() => props.lang))
 </script>
 

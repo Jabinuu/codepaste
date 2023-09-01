@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { inject, ref, toRef, watch } from 'vue'
+import { inject, toRef, watch } from 'vue'
 
 import useIconLangName from '@/hooks/useIconLangName'
 import useComputedSzie from '@/hooks/useComputeSize'
 import type { CodeList } from '@/types/codeContentInfo'
 
 const currentCode = inject<Ref<CodeList>>('currentCode')
-const iconName = ref()
+let iconName: Ref<string>
 let computedSize: Ref<string>
 watch(toRef(currentCode), () => {
-  iconName.value = useIconLangName(currentCode?.value.code.lang as string).value
-  computedSize = useComputedSzie(currentCode?.value.size as number)
+  iconName = useIconLangName(toRef(currentCode?.value.lang))
+  computedSize = useComputedSzie(toRef(currentCode?.value.size))
 })
 </script>
 
@@ -19,7 +19,7 @@ watch(toRef(currentCode), () => {
   <div>
     <span>
       <Icon :name="`icon-${iconName}`" size="16px" />
-      {{ currentCode?.code.lang }}
+      {{ currentCode?.lang }}
     </span>
     <a-divider type="vertical" />
     <span>

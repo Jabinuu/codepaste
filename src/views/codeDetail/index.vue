@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, provide, ref } from 'vue'
-
+import { useRoute } from 'vue-router'
 import CodeArea from './components/codeArea/index.vue'
 import CommentsArea from './components/commentsArea/index.vue'
 import PublicCode from '@/components/PublicCode.vue'
@@ -8,6 +8,7 @@ import useCodeStore from '@/store/modules/codes'
 import type { CodeList } from '@/types/codeContentInfo'
 
 const codeStore = useCodeStore()
+const route = useRoute()
 // provide可以是响应式的
 const currentCode = ref<CodeList>()
 provide('currentCode', currentCode)
@@ -17,7 +18,8 @@ onMounted(() => {
 })
 
 async function getDetailById() {
-  currentCode.value = await codeStore.getDetailById()
+  const [data] = await codeStore.getDetailById(route.params.id as string)
+  currentCode.value = data
 }
 </script>
 
