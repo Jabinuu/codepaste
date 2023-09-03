@@ -18,7 +18,7 @@ const { pagination, listData, queryParam, getCodeDesc, onSwitchList } = useShowC
           <ItemProperty :encrypt="item.encrypt" :author="item.author" :exposure="item.exposure" />
           <a-list-item-meta>
             <template #title>
-              <router-link :to="`./post/${item.cid}`" target="_blank">
+              <router-link :to="`./post/${item.id}`" target="_blank">
                 {{ item.title }}
               </router-link>
             </template>

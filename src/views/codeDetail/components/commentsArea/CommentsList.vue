@@ -1,21 +1,11 @@
 <script setup lang="ts">
-interface DataItem {
-  title: string
-}
-const data: DataItem[] = [
-  {
-    title: 'dasasf',
-  },
-  {
-    title: 'jiakefsf',
-  },
-  {
-    title: 'dasgf',
-  },
-  {
-    title: 'bar',
-  },
-]
+import { computed } from 'vue'
+import useCommentStore from '@/store/modules/comment'
+import type { CommentList } from '@/types/comment'
+import { relativeTime } from '@/utils/date'
+
+const commentStore = useCommentStore()
+const data = computed<CommentList[]>(() => commentStore.codeComment)
 </script>
 
 <template>
@@ -24,16 +14,16 @@ const data: DataItem[] = [
     <a-list item-layout="horizontal" :data-source="data" :split="false">
       <template #renderItem="{ item }">
         <a-list-item>
-          <a-avatar src="http://cdn.zutjlx.site/image/202210031742845.png" :size="40" />
+          <a-avatar :src="item.avatarUrl" :size="40" />
           <div class="right flex-1">
             <div class="comment-username flex justify-between">
-              <div>{{ item.title }}</div>
+              <div>{{ item.username }}</div>
               <div class="time">
-                刚刚
+                {{ relativeTime(item.date) }}
               </div>
             </div>
             <div class="comment-content">
-              啊好喜欢这段代码
+              {{ item.content }}
             </div>
           </div>
         </a-list-item>

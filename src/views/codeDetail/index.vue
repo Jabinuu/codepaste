@@ -5,21 +5,27 @@ import CodeArea from './components/codeArea/index.vue'
 import CommentsArea from './components/commentsArea/index.vue'
 import PublicCode from '@/components/PublicCode.vue'
 import useCodeStore from '@/store/modules/codes'
+import useCommentStore from '@/store/modules/comment'
 import type { CodeList } from '@/types/codeContentInfo'
 
 const codeStore = useCodeStore()
+const commentStore = useCommentStore()
 const route = useRoute()
-// provide可以是响应式的
+// provide可以是响应式的,父组件更改，子组件也会更新
 const currentCode = ref<CodeList>()
 provide('currentCode', currentCode)
 
 onMounted(() => {
   getDetailById()
+  getCommentList()
 })
 
 async function getDetailById() {
   const [data] = await codeStore.getDetailById(route.params.id as string)
   currentCode.value = data
+}
+function getCommentList() {
+  commentStore.getCodeComment(Number.parseInt(route.params.id[0]))
 }
 </script>
 
