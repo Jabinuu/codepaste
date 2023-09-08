@@ -3,7 +3,7 @@ import type { Ref } from 'vue'
 import { inject, nextTick, toRef, watch } from 'vue'
 import hljs from 'highlight.js'
 
-import type { CodeList } from '@/types/codeContentInfo'
+import type { CodeList } from '@/types/codeContentInfo.type'
 
 import 'highlight.js/styles/monokai-sublime.css' // 导入代码高亮样式
 
@@ -31,4 +31,3 @@ watch(toRef(currentCode), () => {
 <style lang="less" scoped>
 
 </style>
-@/types/codeContentInfo.type

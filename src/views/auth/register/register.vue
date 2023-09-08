@@ -1,26 +1,38 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { message } from 'ant-design-vue'
 
-interface FormState {
-  username: string
-  password: string
-  email: string
-  repeat: string
-}
+// import useUserStore from '@/store/modules/user'
+import type { RegisterFormState } from '@/types/auth.type'
 
 const tabList = [{
   tab: '注册',
   key: 'register',
 }]
 const curTab = 'register'
-const formData = ref<FormState>({
+const formData = ref<RegisterFormState>({
   username: '',
   password: '',
   email: '',
-  repeat: '',
+  rePassword: '',
 })
 const router = useRouter()
+// const userStore = useUserStore()
+
+async function register() {
+  message.success('注册成功!')
+  // const res: any = await userStore.userRegister({
+  //   username: formData.value.username,
+  //   password: formData.value.password,
+  //   rePassword: formData.value.rePassword,
+  //   email: formData.value.email,
+  // })
+  // 注册成功
+  // if (res.code === 100)
+  // message.success('注册成功!')
+  // router.push('/login')
+}
 </script>
 
 <template>
@@ -28,7 +40,7 @@ const router = useRouter()
     <a-card
       :tab-list="tabList"
       :active-tab-key="curTab"
-      class="inline-block bdr-4"
+      class="inline-block "
     >
       <a-form
         :model="formData"
@@ -61,10 +73,10 @@ const router = useRouter()
         </a-form-item>
         <a-form-item
           label="重复密码"
-          name="repeat"
+          name="rePassword"
           :rules="[{ required: true, message: '请重复输入密码!' }]"
         >
-          <a-input v-model:value="formData.repeat" placeholder="请重复输入密码" />
+          <a-input v-model:value="formData.rePassword" placeholder="请重复输入密码" />
         </a-form-item>
         <a-form-item :wrapper-col="{ offset: 5, span: 19 }">
           已经注册过账号？
@@ -73,7 +85,7 @@ const router = useRouter()
           </a-button>
         </a-form-item>
         <a-form-item :wrapper-col="{ offset: 5, span: 19 }">
-          <a-button type="primary" style="width:100%">
+          <a-button type="primary" style="width:100%" @click="register">
             注册
           </a-button>
         </a-form-item>

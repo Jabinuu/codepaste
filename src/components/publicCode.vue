@@ -70,11 +70,7 @@ const data: DataItem[] = [
   padding: 8px 0;
 }
 
-:deep(.ant-list-item-meta-description) {
-  line-height: 1;
-}
-
-:deep(.ant-list-item-meta-title) {
-  line-height: 1;
+:deep(.ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title) {
+  line-height: 1 ;
 }
 </style>

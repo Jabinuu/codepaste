@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
-interface FormState {
-  username: string
-  password: string
-
-}
+import Cookies from 'js-cookie'
+import type { LoginFormState } from '@/types/auth.type'
+import useUserStore from '@/store/modules/user'
 
 const router = useRouter()
 const curTab = ref('login')
+const userStore = useUserStore()
 
-const formState = ref<FormState>({
+const formState = ref<LoginFormState>({
   username: '',
   password: '',
 })
@@ -21,6 +19,18 @@ const tabList = [{
   tab: '密码登录',
 },
 ]
+
+async function login() {
+  const res: any = await userStore.userLogin({
+    username: formState.value.username,
+    password: formState.value.password,
+  })
+  // 登录成功
+  if (res.code === 100) {
+    Cookies.set('X-Token', res.data.token)
+    localStorage.setItem('user_store', JSON.stringify(userStore.current))
+  }
+}
 </script>
 
 <template>
@@ -28,7 +38,7 @@ const tabList = [{
     <a-card
       :tab-list="tabList"
       :active-tab-key="curTab"
-      class="inline-block bdr-4"
+      class="inline-block "
     >
       <a-form
         :model="formState"
@@ -65,7 +75,7 @@ const tabList = [{
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 4, span: 20 }">
-          <a-button type="primary" style="width:100%">
+          <a-button type="primary" style="width:100%" @click="login">
             登录
           </a-button>
         </a-form-item>

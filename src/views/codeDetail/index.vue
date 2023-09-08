@@ -6,7 +6,7 @@ import CommentsArea from './components/commentsArea/index.vue'
 import PublicCode from '@/components/PublicCode.vue'
 import useCodeStore from '@/store/modules/codes'
 import useCommentStore from '@/store/modules/comment'
-import type { CodeList } from '@/types/codeContentInfo'
+import type { CodeList } from '@/types/codeContentInfo.type'
 
 const codeStore = useCodeStore()
 const commentStore = useCommentStore()
@@ -31,7 +31,7 @@ function getCommentList() {
 
 <template>
   <div class="codeDetail flex justify-center">
-    <div class="bdr-4 left">
+    <div class="left">
       <CodeArea />
       <CommentsArea />
     </div>

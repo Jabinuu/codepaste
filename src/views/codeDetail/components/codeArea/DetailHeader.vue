@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { CalendarOutlined, ClockCircleOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons-vue'
-import type { CodeList } from '@/types/codeContentInfo'
+import type { CodeList } from '@/types/codeContentInfo.type'
 import { ExpirationsEnum } from '@/enums/codeEnum'
 import { formatDate } from '@/utils/date'
 

@@ -3,6 +3,7 @@ import { toRef } from 'vue'
 import useComputedSzie from '@/hooks/useComputeSize'
 import useIconLangName from '@/hooks/useIconLangName'
 import { relativeTime } from '@/utils/date'
+import Icon from '@/components/Icon/Icon.vue'
 
 const props = defineProps<{
   lang: string

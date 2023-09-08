@@ -45,7 +45,7 @@ function handleChange(value: string) {
   <div class="code-filter">
     <a-form layout="inline" :model="formState">
       <a-form-item label="关键词">
-        <a-input v-model:value="formState.keyword" placeholder="输入标题关键词" class="bdr-6" />
+        <a-input v-model:value="formState.keyword" placeholder="输入标题关键词" />
       </a-form-item>
       <a-form-item label="编程语言">
         <a-select
@@ -59,10 +59,10 @@ function handleChange(value: string) {
         />
       </a-form-item>
       <a-form-item>
-        <a-button type="primary" style="margin: 0 20px;" class="bdr-6">
+        <a-button type="primary" style="margin: 0 20px;">
           <SearchOutlined />查询
         </a-button>
-        <a-button class="bdr-6">
+        <a-button>
           <DeleteOutlined />重置
         </a-button>
       </a-form-item>

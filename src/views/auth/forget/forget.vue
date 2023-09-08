@@ -1,24 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
-interface FormState {
-  username: string
-  password: string
-  email: string
-  repeat: string
-}
+import type { ChangePasswordFormState } from '@/types/auth.type'
 
 const tabList = [{
   tab: '重置密码',
   key: 'forget',
 }]
 const curTab = 'forget'
-const formData = ref<FormState>({
+const formData = ref<ChangePasswordFormState>({
   username: '',
   password: '',
   email: '',
-  repeat: '',
+  rePassword: '',
 })
 const router = useRouter()
 </script>
@@ -28,7 +22,7 @@ const router = useRouter()
     <a-card
       :tab-list="tabList"
       :active-tab-key="curTab"
-      class="inline-block bdr-4"
+      class="inline-block"
     >
       <a-form
         :model="formData"
@@ -61,10 +55,10 @@ const router = useRouter()
         </a-form-item>
         <a-form-item
           label="重复密码"
-          name="repeat"
+          name="rePassword"
           :rules="[{ required: true, message: '请重复输入密码!' }]"
         >
-          <a-input v-model:value="formData.repeat" placeholder="请重复输入密码" />
+          <a-input v-model:value="formData.rePassword" placeholder="请重复输入密码" />
         </a-form-item>
         <a-form-item :wrapper-col="{ offset: 5, span: 19 }">
           <a-button type="primary" class="mr-40">

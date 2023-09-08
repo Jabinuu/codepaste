@@ -5,7 +5,7 @@ import LangCategories from './components/LangCategories.vue'
 
 <template>
   <div class="flex justify-center">
-    <CodeList class="left mr-40 bdr-4" />
+    <CodeList class="left mr-40" />
     <LangCategories />
   </div>
 </template>

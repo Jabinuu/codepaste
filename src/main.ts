@@ -1,9 +1,16 @@
 import { createApp } from 'vue'
-import App from '@/App.vue'
 import 'virtual:uno.css'
 import '@/mock'
+import {
+  Avatar, Button, Card, Checkbox, Descriptions, Divider, Drawer, Dropdown,
+  Form, Input, Layout, List, Menu, Modal, Pagination, Radio, Select,
+  Switch, Table, Tabs, Tag, Timeline, Tooltip,
+} from 'ant-design-vue'
+
+import 'ant-design-vue/dist/reset.css'
 import { setupStore } from '@/store'
 import { setupRouter } from '@/router'
+import App from '@/App.vue'
 
 function bootstrap() {
   const app = createApp(App)
@@ -31,6 +38,10 @@ function bootstrap() {
   // 配置pinia状态管理
   setupStore(app)
 
+  app.use(Button).use(Divider).use(Layout).use(Dropdown).use(Menu).use(Pagination)
+    .use(Form).use(Radio).use(Select).use(Switch).use(Avatar).use(Card).use(Descriptions)
+    .use(List).use(Table).use(Tabs).use(Tag).use(Timeline).use(Tooltip).use(Drawer)
+    .use(Modal).use(Input).use(Checkbox)
   app.mount('#app')
 }
 

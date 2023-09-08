@@ -6,7 +6,7 @@ import DetailInfo from './DetailInfo.vue'
 </script>
 
 <template>
-  <div class="codeArea-container mr-40 bg-w mb-30 bdr-4">
+  <div class="codeArea-container mr-40 bg-w mb-30">
     <DetailHeader />
     <div class="flex justify-between padding-mid">
       <DetailInfo />
