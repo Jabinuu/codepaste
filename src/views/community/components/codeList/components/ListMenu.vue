@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { ClockCircleOutlined, FireOutlined, LikeOutlined } from '@ant-design/icons-vue'
 import { useSwitchList } from '../hook'
-import type { CodeRequestBody } from '@/types/http'
+import type { CodeRequestBody } from '@/types/http.type'
 
 defineProps<{
   query: CodeRequestBody
@@ -38,4 +38,3 @@ const current = ref<string[]>(['hot'])
 <style lang="less" scoped>
 
 </style>
-@/types/http.type

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import useCommentStore from '@/store/modules/comment'
-import type { CommentList } from '@/types/comment'
+import type { CommentList } from '@/types/comment.type'
 import { relativeTime } from '@/utils/date'
 
 const commentStore = useCommentStore()
@@ -60,4 +60,3 @@ const data = computed<CommentList[]>(() => commentStore.codeComment)
   }
 }
 </style>
-@/types/comment.type

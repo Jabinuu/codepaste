@@ -33,4 +33,3 @@ watch(toRef(currentCode), () => {
 <style lang="less" scoped>
 
 </style>
-@/types/codeContentInfo.type

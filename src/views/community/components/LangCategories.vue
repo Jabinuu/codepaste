@@ -47,6 +47,6 @@ function computeLanguages(filter: string[]) {
   background: #fff;
 }
 :deep(.ant-card-body){
-  padding: 0 24px 24px;
+  padding: 0 0 24px;
 }
 </style>

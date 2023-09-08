@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 
-// import useUserStore from '@/store/modules/user'
+import useUserStore from '@/store/modules/user'
 import type { RegisterFormState } from '@/types/auth.type'
 
 const tabList = [{
@@ -18,20 +18,20 @@ const formData = ref<RegisterFormState>({
   rePassword: '',
 })
 const router = useRouter()
-// const userStore = useUserStore()
+const userStore = useUserStore()
 
 async function register() {
-  message.success('注册成功!')
-  // const res: any = await userStore.userRegister({
-  //   username: formData.value.username,
-  //   password: formData.value.password,
-  //   rePassword: formData.value.rePassword,
-  //   email: formData.value.email,
-  // })
+  const res: any = await userStore.userRegister({
+    username: formData.value.username,
+    password: formData.value.password,
+    rePassword: formData.value.rePassword,
+    email: formData.value.email,
+  })
   // 注册成功
-  // if (res.code === 100)
-  // message.success('注册成功!')
-  // router.push('/login')
+  if (res.code === 100) {
+    message.success('注册成功!')
+    router.push('/login')
+  }
 }
 </script>
 
