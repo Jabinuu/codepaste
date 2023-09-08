@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { reqGetCodeComment, reqGetUserComment } from '@/services/api/comment'
-import type { CommentList } from '@/types/comment'
+import type { CommentList } from '@/types/comment.type'
 
 export default defineStore('comment', {
   state() {
@@ -11,10 +11,12 @@ export default defineStore('comment', {
   },
   actions: {
     async getCodeComment(cid: number) {
-      this.codeComment = await reqGetCodeComment({ cid })
+      const { data }: any = await reqGetCodeComment({ cid })
+      this.codeComment = data
     },
     async getUserComment(uid: number) {
-      this.userComment = await reqGetUserComment({ uid })
+      const { data }: any = await reqGetUserComment({ uid })
+      this.userComment = data
     },
   },
   getters: {

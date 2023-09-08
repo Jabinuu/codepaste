@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import type { CodeFromData, CodeList } from '@/types/codeContentInfo'
-import type { CodeRequestBody } from '@/types/http'
+import type { CodeFromData, CodeList } from '@/types/codeContentInfo.type'
+import type { CodeRequestBody } from '@/types/http.type'
 import { reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist } from '@/services/api/codeContent'
 
 interface CodeResponse {
@@ -16,31 +16,31 @@ export default defineStore('codes', {
   },
   actions: {
     async createCode(formData: CodeFromData) {
-      return await reqCreateCode(formData)
+      await reqCreateCode(formData)
     },
 
     async getHotlist(body: CodeRequestBody) {
-      const data: any = await reqGetHotlist(body) // fix：泛型约束，要配置不同请求响应的类型
+      const { data }: any = await reqGetHotlist(body) // fix：泛型约束，要配置不同请求响应的类型
       this.listData = data
     },
 
     async getNewlist(body: CodeRequestBody) {
-      const data: any = await reqGetNewlist(body)
+      const { data }: any = await reqGetNewlist(body)
       this.listData = data
     },
 
     async getQualitylist(body: CodeRequestBody) {
-      const data: any = await reqGetQualitylist(body)
+      const { data }: any = await reqGetQualitylist(body)
       this.listData = data
     },
 
     async getRecommendlist() {
-      const data: any = await reqGetRecommedlist()
+      const { data }: any = await reqGetRecommedlist()
       this.recommendlist = data
     },
 
     async getDetailById(id: string): Promise<CodeList[]> {
-      const data: any = await reqGetDetailById({ id })
+      const { data }: any = await reqGetDetailById({ id })
       return data
     },
   },

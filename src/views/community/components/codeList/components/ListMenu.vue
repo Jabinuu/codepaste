@@ -38,3 +38,4 @@ const current = ref<string[]>(['hot'])
 <style lang="less" scoped>
 
 </style>
+@/types/http.type

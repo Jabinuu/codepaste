@@ -47,3 +47,4 @@ function getCommentList() {
     width: 68%;
   }
 </style>
+@/types/codeContentInfo.type

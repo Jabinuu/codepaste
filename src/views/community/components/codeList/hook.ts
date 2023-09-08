@@ -3,8 +3,8 @@ import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import useCodesStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
-import type { CodeList } from '@/types/codeContentInfo'
-import type { CodeRequestBody } from '@/types/http'
+import type { CodeList } from '@/types/codeContentInfo.type'
+import type { CodeRequestBody } from '@/types/http.type'
 
 export function useShowCodeList() {
   const codesStore = useCodesStore()

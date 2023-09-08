@@ -60,3 +60,4 @@ const data = computed<CommentList[]>(() => commentStore.codeComment)
   }
 }
 </style>
+@/types/comment.type

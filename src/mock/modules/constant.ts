@@ -1,5 +1,5 @@
 import { CategoriesEnum, ExpirationsEnum, HighlightLangEnum } from '@/enums/codeEnum'
-import type { CodeSet } from '@/types/codeContentInfo'
+import type { CodeSet } from '@/types/codeContentInfo.type'
 
 export const exposureSet: Array<string> = ['public', 'private']
 export const expirationSet: string[] = [ExpirationsEnum.D1, ExpirationsEnum.H1, ExpirationsEnum.M10, ExpirationsEnum.MON1, ExpirationsEnum.NEVER, ExpirationsEnum.W1]

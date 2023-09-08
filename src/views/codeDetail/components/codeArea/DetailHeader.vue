@@ -88,3 +88,4 @@ const expirationMap = new Map([
 
 }
 </style>
+@/types/codeContentInfo.type

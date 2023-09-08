@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
-import type { SettingOption } from '@/types/codeContentInfo'
+import type { SettingOption } from '@/types/codeContentInfo.type'
 import useCodeStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
 

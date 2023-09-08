@@ -1,6 +1,6 @@
 import defHttp from '@/services/http'
-import type { CodeFromData } from '@/types/codeContentInfo'
-import type { CodeRequestBody } from '@/types/http'
+import type { CodeFromData } from '@/types/codeContentInfo.type'
+import type { CodeRequestBody } from '@/types/http.type'
 
 export const reqGetHotlist = (data: CodeRequestBody) => defHttp.post('./code/hotlist', data)
 export const reqGetNewlist = (data: CodeRequestBody) => defHttp.post('./code/newlist', data)
