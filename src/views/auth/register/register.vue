@@ -27,11 +27,12 @@ async function register() {
     rePassword: formData.value.rePassword,
     email: formData.value.email,
   })
-  // 注册成功
-  if (res.code === 100) {
-    message.success('注册成功!')
-    router.push('/login')
-  }
+  // 注册失败
+  if (res.code !== 100)
+    return message.error(res.msg)
+
+  message.success('注册成功!')
+  router.push('/login')
 }
 </script>
 

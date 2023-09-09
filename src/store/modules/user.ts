@@ -1,15 +1,7 @@
 import { defineStore } from 'pinia'
 import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
-import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
-
-interface CurrentUser {
-  id: number
-  username: string
-  email: string
-  role: number
-  avatarUrl: string
-}
+import type { ChangePasswordFormState, CurrentUser, LoginFormState, RegisterFormState } from '@/types/auth.type'
 
 interface userStoreState {
   loginComponentId: number

@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import Cookies from 'js-cookie'
+import { message } from 'ant-design-vue'
+import { setToken } from '@/utils/auth'
 import type { LoginFormState } from '@/types/auth.type'
 import useUserStore from '@/store/modules/user'
 
@@ -20,16 +21,19 @@ const tabList = [{
 },
 ]
 
-async function login() {
+async function onClickLogin() {
   const res: any = await userStore.userLogin({
     username: formState.value.username,
     password: formState.value.password,
   })
-  // 登录成功
-  if (res.code === 100) {
-    Cookies.set('X-Token', res.data.token)
-    localStorage.setItem('user_store', JSON.stringify(userStore.current))
-  }
+  // 登录失败
+  if (res.code !== 100)
+    return message.error(res.msg)
+  message.success(res.msg)
+  setToken(res.data.token)
+  localStorage.setItem('user_store', JSON.stringify(userStore.current))
+  userStore.loginComponentId = 1
+  router.push('/')
 }
 </script>
 
@@ -75,7 +79,7 @@ async function login() {
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 4, span: 20 }">
-          <a-button type="primary" style="width:100%" @click="login">
+          <a-button type="primary" style="width:100%" @click="onClickLogin">
             登录
           </a-button>
         </a-form-item>

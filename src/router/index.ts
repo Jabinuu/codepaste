@@ -84,11 +84,6 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from) => {
-
-  // Modal.destroyAll()
-})
-
 export function setupRouter(app: App<Element>) {
   app.use(router)
 }

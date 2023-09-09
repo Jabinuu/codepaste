@@ -80,7 +80,4 @@ function handleChange(value: string) {
   .ant-input{
     width:200px;
   }
-  :deep(.ant-select-selector){
-    border-radius: 6px !important
-  }
 </style>
