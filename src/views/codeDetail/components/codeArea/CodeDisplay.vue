@@ -29,5 +29,7 @@ watch(toRef(currentCode), () => {
 </template>
 
 <style lang="less" scoped>
-
+pre code.hljs{
+  line-height: 1.5;
+}
 </style>
