@@ -70,14 +70,14 @@ async function register() {
           name="password"
           :rules="[{ required: true, message: '请输入密码!' }]"
         >
-          <a-input v-model:value="formData.password" placeholder="请输入密码" />
+          <a-input-password v-model:value="formData.password" placeholder="请输入密码" />
         </a-form-item>
         <a-form-item
           label="重复密码"
           name="rePassword"
           :rules="[{ required: true, message: '请重复输入密码!' }]"
         >
-          <a-input v-model:value="formData.rePassword" placeholder="请重复输入密码" />
+          <a-input-password v-model:value="formData.rePassword" placeholder="请重复输入密码" />
         </a-form-item>
         <a-form-item :wrapper-col="{ offset: 5, span: 19 }">
           已经注册过账号？

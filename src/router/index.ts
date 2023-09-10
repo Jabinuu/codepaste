@@ -1,5 +1,6 @@
 import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { createPermissionGuard } from './permission'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,7 @@ const router = createRouter({
     {
       path: '/individual',
       name: 'individual',
+      redirect: '/individual/info',
       component: () => import('@/views/individual/index.vue'),
       children: [
         {
@@ -86,4 +88,5 @@ const router = createRouter({
 
 export function setupRouter(app: App<Element>) {
   app.use(router)
+  createPermissionGuard(router)
 }

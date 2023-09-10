@@ -1,24 +1,29 @@
 <script setup lang="ts">
+import { useRoute, useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
 import { UserOutlined } from '@ant-design/icons-vue'
-import { useRouter } from 'vue-router'
-import useUserStore from '@/store/modules/user'
-import { LogincComponent } from '@/enums/loginCompEnum'
+import { userLogout, whiteList } from '@/hooks/useAuth'
+import { getAvatarUrl } from '@/utils/local'
 
-const userStore = useUserStore()
 const router = useRouter()
+const route = useRoute()
 function gocustomerCenter() {
-  router.push('/individual/info')
+  router.push('/individual')
 }
-function goHomePage() {
-  userStore.loginComponentId = LogincComponent.LOGINGROUP
-  router.push('/')
+function handleLogout() {
+  userLogout()
+  if (!whiteList.includes(route.path))
+    router.push('/')
 }
+const avatarUrl = ref<string>(getAvatarUrl())
+const isHaveAvatar = computed(() => avatarUrl.value !== '')
 </script>
 
 <template>
   <a-dropdown>
     <a class="ant-dropdown-link" @click.prevent>
-      <a-avatar size="large">
+      <a-avatar v-if="isHaveAvatar" size="large" :src="avatarUrl" />
+      <a-avatar v-else size="large">]
         <template #icon>
           <UserOutlined />
         </template>
@@ -30,7 +35,7 @@ function goHomePage() {
           <a @click="gocustomerCenter">个人中心</a>
         </a-menu-item>
         <a-menu-item>
-          <a @click="goHomePage">退出登录</a>
+          <a @click="handleLogout">退出登录</a>
         </a-menu-item>
       </a-menu>
     </template>

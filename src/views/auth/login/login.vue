@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { setToken } from '@/utils/auth'
 import type { LoginFormState } from '@/types/auth.type'
 import useUserStore from '@/store/modules/user'
 
 const router = useRouter()
+const route = useRoute()
 const curTab = ref('login')
 const userStore = useUserStore()
 
@@ -29,11 +30,13 @@ async function onClickLogin() {
   // 登录失败
   if (res.code !== 100)
     return message.error(res.msg)
+  // 登录成功，持久化存储token,并跳转首页
   message.success(res.msg)
-  setToken(res.data.token)
-  localStorage.setItem('user_store', JSON.stringify(userStore.current))
-  userStore.loginComponentId = 1
-  router.push('/')
+  setToken(userStore.token as string)
+  if (route.query.redirect)
+    router.push(route.query.redirect as string)
+  else
+    router.push('/')
 }
 </script>
 

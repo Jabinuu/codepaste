@@ -26,7 +26,7 @@ const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
     />
   </div>
   <keep-alive>
-    <component :is="tabs[userStore.loginComponentId]" />
+    <component :is="tabs[userStore.getLoginComponentId]" />
   </keep-alive>
 </template>
 

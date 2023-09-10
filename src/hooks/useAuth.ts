@@ -1,8 +1,13 @@
-import { LogincComponent } from '@/enums/loginCompEnum'
 import useUserStore from '@/store/modules/user'
+import { deleteToken, deleteUserInfoLocal } from '@/utils/auth'
 
-const userStore = useUserStore()
-export function success() {
-  // 登录成功后切换为header的用户头像
-  userStore.loginComponentId = LogincComponent.USERAVATAR
+export function userLogout() {
+  const userStore = useUserStore()
+  userStore.initUserInfo()
+  userStore.initToken()
+  deleteToken()
+  deleteUserInfoLocal()
 }
+
+// 白名单：不需要登录认证即可放行的路由
+export const whiteList = ['/login', '/register', '/forget', '/add', '/', '/introduction', '/community', '/questions', '/post']

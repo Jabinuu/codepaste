@@ -32,11 +32,12 @@ function bootstrap() {
       delete el.__click_outside__
     },
   })
-  // 配置路由
-  setupRouter(app)
 
   // 配置pinia状态管理
   setupStore(app)
+
+  // 配置路由
+  setupRouter(app)
 
   app.use(Button).use(Divider).use(Layout).use(Dropdown).use(Menu).use(Pagination)
     .use(Form).use(Radio).use(Select).use(Switch).use(Avatar).use(Card).use(Descriptions)
