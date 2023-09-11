@@ -6,7 +6,7 @@ import Icon from '@/components/Icon/Icon.vue'
 import useIconLangName from '@/hooks/useIconLangName'
 import mitt from '@/utils/mitt'
 
-const iconName = useIconLangName('JavaScript')
+const iconName = useIconLangName({ value: 'JavaScript' })
 const columns = [
   {
     title: '编号',

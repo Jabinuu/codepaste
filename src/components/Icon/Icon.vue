@@ -6,7 +6,7 @@ interface Props {
   // 图标文件名
   name: string
   // 图标大小
-  size: string
+  size?: string
   // 图标颜色
   // color:string
 

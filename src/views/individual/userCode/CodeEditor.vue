@@ -4,10 +4,10 @@ import type { SelectProps } from 'ant-design-vue'
 import mitt from '@/utils/mitt'
 
 const isEdit = ref()
-const visible = ref<boolean>(false)
+const open = ref<boolean>(false)
 onMounted(() => {
   mitt.on('openEditor', (e: boolean) => {
-    visible.value = true
+    open.value = true
     isEdit.value = e
   })
 })
@@ -49,7 +49,7 @@ const options1 = ref<SelectProps['options']>([
 <template>
   <div>
     <a-drawer
-      v-model:visible="visible"
+      v-model:open="open"
       class="custom-class"
       root-class-name="root-class-name"
       :root-style="{ color: 'blue' }"
