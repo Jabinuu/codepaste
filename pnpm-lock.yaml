@@ -17,6 +17,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.9
     version: 1.11.9
+  element-china-area-data:
+    specifier: ^6.0.2
+    version: 6.0.2
   highlight.js:
     specifier: ^11.8.0
     version: 11.8.0
@@ -2048,6 +2051,10 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
+  /china-division@2.6.1:
+    resolution: {integrity: sha512-Iq9YCEWqPcSrD7/7McKpN9QHNbn2iibLmg1NEAxLacijqJzLbytr0sLuKJNY4Exd0LA77N18Pwr9JGgU1p5S6w==}
+    dev: false
+
   /chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
@@ -2584,6 +2591,12 @@ packages:
       semver: 5.7.1
       sigmund: 1.0.1
     dev: true
+
+  /element-china-area-data@6.0.2:
+    resolution: {integrity: sha512-LGVp0crOnXrcQqNc5RHwPiR8AV2qUrDl4UgZ/Qn2n/izLqMcn924gcJ/pTRPnuT74AFin2SUyMtmmcoe5PDfQQ==}
+    dependencies:
+      china-division: 2.6.1
+    dev: false
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}

@@ -1,5 +1,16 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import useUserStore from '@/store/modules/user'
+import { formatDate } from '@/utils/date'
+
 defineEmits(['change'])
+
+const userStore = useUserStore()
+
+const { email, hobby, introduction, job, location, registerTime, tel } = userStore.getUserInfo()
+const profile = ref({ email, hobby, introduction, job, location, registerTime, tel })
+const _location = computed(() => profile.value.location.replace(/\//g, ' '))
+const _registerTime = computed(() => formatDate(profile.value.registerTime))
 </script>
 
 <template>
@@ -9,27 +20,27 @@ defineEmits(['change'])
     </template>
     <a-descriptions :column="1">
       <a-descriptions-item label="简介">
-        暂无
+        {{ profile.introduction }}
       </a-descriptions-item>
       <a-descriptions-item label="电话号码">
-        1810000000
+        {{ profile.tel }}
       </a-descriptions-item>
       <a-descriptions-item label="兴趣">
-        编程、羽毛球、健身
+        {{ profile.hobby }}
       </a-descriptions-item>
       <a-descriptions-item label="现地址">
-        河南省 郑州市
+        {{ _location }}
       </a-descriptions-item>
       <a-descriptions-item label="职业">
         <a-tag color="blue">
-          在校生
+          {{ profile.job }}
         </a-tag>
       </a-descriptions-item>
       <a-descriptions-item label="邮箱地址">
-        1123565780@qq.com
+        {{ profile.email }}
       </a-descriptions-item>
       <a-descriptions-item label="注册时间">
-        2023-06-19 09:22
+        {{ _registerTime }}
       </a-descriptions-item>
     </a-descriptions>
   </a-card>

@@ -2,10 +2,12 @@
 import { ref } from 'vue'
 import descriptions from './Descriptions.vue'
 import infoForm from './InfoForm.vue'
+import useUserStore from '@/store/modules/user'
 
 const tabs = [descriptions, infoForm]
 const currentTab = ref(0)
-
+const userStore = useUserStore()
+const { avatarUrl, username, role } = userStore.getUserInfo()
 function onChange(e: any) {
   currentTab.value = e
 }
@@ -16,13 +18,13 @@ function onChange(e: any) {
     <a-card class="top-card bdr-4">
       <a-row>
         <a-col :span="2">
-          <a-avatar src="http://cdn.zutjlx.site/image/202210031742845.png" :size="64" />
+          <a-avatar :src="avatarUrl" :size="64" />
         </a-col>
         <a-col :span="22">
           <p>
-            <span class="username">Jabinuu</span>
+            <span class="username">{{ username }}</span>
             <a-tag color="green">
-              V1
+              V{{ role }}
             </a-tag>
           </p>
           <p class="info-content">
