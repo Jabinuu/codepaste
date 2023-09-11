@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { LogincComponent } from '@/enums/loginCompEnum'
-import { reqChangePassword, reqGetUserInfo, reqLogin, reqRegister } from '@/services/api/auth'
-import type { ChangePasswordFormState, CurrentUser, LoginFormState, RegisterFormState } from '@/types/auth.type'
-import { getToken, getUserInfoFromLocal } from '@/utils/auth'
+import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
+import { reqChangeProfile, reqGetUserInfo } from '@/services/api/user'
+import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
+import type { ChangeProfileReq, CurrentUser } from '@/types/user.type'
+import { getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
 
 interface userStoreState {
   loginComponentId: number
@@ -22,20 +24,24 @@ export default defineStore('user', {
     async userRegister(data: RegisterFormState) {
       return await reqRegister(data)
     },
+
     async userLogin(data: LoginFormState) {
       const res: any = await reqLogin(data)
       this.token = res.data.token || ''
       return res
     },
+
     async changePassword(data: ChangePasswordFormState) {
       return await reqChangePassword(data)
     },
+
     async getUserInfoAction() {
       const res: any = await reqGetUserInfo()
       return new Promise((resolve, reject) => {
         // 如果请求到用户信息
         if (Object.keys(res.data).length !== 0) {
           this.current = res.data
+          persistStoreUserInfo(this.getUserInfo())
           resolve(res)
         }
         else {
@@ -44,9 +50,22 @@ export default defineStore('user', {
         }
       })
     },
+
+    async changeUserProfile(data: ChangeProfileReq) {
+      const res: any = await reqChangeProfile(data)
+      await this.getUserInfoAction()
+      return new Promise<void>((resolve, reject) => {
+        if (res.code === 100)
+          resolve(res)
+        else
+          reject(new Error(res))
+      })
+    },
+
     initUserInfo() {
       this.current = null
     },
+
     initToken() {
       this.token = undefined
     },

@@ -2,7 +2,6 @@ import type { Router } from 'vue-router'
 import { message } from 'ant-design-vue'
 import type { JointContent } from 'ant-design-vue/es/message/interface'
 import useUserStore from '@/store/modules/user'
-import { persistStoreUserInfo } from '@/utils/auth'
 import { store } from '@/store'
 import { userLogout, whiteList } from '@/hooks/useAuth'
 
@@ -28,7 +27,6 @@ export function createPermissionGuard(router: Router) {
       try {
         // 发起请求获得userinfo 然后存入store并持久化存储
         await userStore.getUserInfoAction()
-        persistStoreUserInfo(userStore.getUserInfo())
       }
       // 用promise的reject触发catch
       catch (e) {

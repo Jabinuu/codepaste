@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import useUserStore from '@/store/modules/user'
+import { computed } from 'vue'
 import { formatDate } from '@/utils/date'
+import useUserStore from '@/store/modules/user'
 
 defineEmits(['change'])
 
 const userStore = useUserStore()
+const profile = computed(() => userStore.getUserInfo())
 
-const { email, hobby, introduction, job, location, registerTime, tel } = userStore.getUserInfo()
-const profile = ref({ email, hobby, introduction, job, location, registerTime, tel })
 const _location = computed(() => profile.value.location.replace(/\//g, ' '))
 const _registerTime = computed(() => formatDate(profile.value.registerTime))
 </script>

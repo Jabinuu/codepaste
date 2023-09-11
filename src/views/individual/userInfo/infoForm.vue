@@ -1,27 +1,25 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import type { UnwrapRef } from 'vue'
 import { pcTextArr } from 'element-china-area-data'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
 import type { UploadChangeParam } from 'ant-design-vue'
+import type { ChangeProfileFormState } from '@/types/user.type'
+import useUserStore from '@/store/modules/user'
 
-interface FormState {
-  introdction: string
-  tel: string
-  hobby: string
-  location: string
-  job: string
-  mail: string
-}
-defineEmits(['change'])
-const formState: UnwrapRef<FormState> = reactive({
-  introdction: '',
-  tel: '',
-  hobby: '',
-  location: '',
-  job: '',
-  mail: '',
+const emit = defineEmits(['change'])
+const userStore = useUserStore()
+const defaultInfo = computed(() => userStore.getUserInfo())
+
+const formState: UnwrapRef<ChangeProfileFormState> = reactive({
+  tel: defaultInfo.value.tel,
+  hobby: defaultInfo.value.hobby,
+  location: defaultInfo.value.location,
+  job: defaultInfo.value.job,
+  email: defaultInfo.value.email,
+  introduction: defaultInfo.value.introduction,
+  avatarUrl: defaultInfo.value.avatarUrl,
 })
 const formItemLayout = {
   labelCol: { span: 2 },
@@ -33,11 +31,24 @@ const buttonItemLayout = {
 const fileList = ref([])
 const loading = ref<boolean>(false)
 const imageUrl = ref<string>('')
+
+async function handleConfirmChange() {
+  try {
+    const res: any = await userStore.changeUserProfile({ id: defaultInfo.value.id, ...formState })
+    message.success(res.msg)
+    emit('change', 0)
+  }
+  catch (e: any) {
+    message.error(e.msg)
+  }
+}
+
 function getBase64(img: any, callback: (base64Url: string) => void) {
   const reader = new FileReader()
   reader.addEventListener('load', () => callback(reader.result as string))
   reader.readAsDataURL(img)
 }
+
 function handleChange(info: UploadChangeParam) {
   if (info.file.status === 'uploading') {
     loading.value = true
@@ -86,10 +97,10 @@ function beforeUpload(file: any) {
           <a-input v-model:value="formState.job" placeholder="输入职业" />
         </a-form-item>
         <a-form-item label="邮箱地址">
-          <a-input v-model:value="formState.mail" placeholder="输入邮箱地址" />
+          <a-input v-model:value="formState.email" placeholder="输入邮箱地址" />
         </a-form-item>
         <a-form-item label="简介">
-          <a-textarea v-model:value="formState.introdction" show-count :maxlength="100" placeholder="输入简介" />
+          <a-textarea v-model:value="formState.introduction" show-count :maxlength="100" placeholder="输入简介" />
         </a-form-item>
         <a-form-item label="更换头像">
           <a-upload
@@ -111,7 +122,7 @@ function beforeUpload(file: any) {
           <a-button @click="$emit('change', 0)">
             返回
           </a-button>
-          <a-button type="primary" class="submit-button" @click="$emit('change', 0)">
+          <a-button type="primary" class="submit-button" @click="handleConfirmChange">
             确认
           </a-button>
         </a-form-item>

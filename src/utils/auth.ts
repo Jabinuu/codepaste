@@ -1,4 +1,4 @@
-import type { CurrentUser } from '@/types/auth.type'
+import type { CurrentUser } from '@/types/user.type'
 
 const TOKEN_NAME = 'token'
 export const INFO_NAME = 'user_store'
