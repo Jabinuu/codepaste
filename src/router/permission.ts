@@ -26,7 +26,7 @@ export function createPermissionGuard(router: Router) {
     // 存在token但没有用户信息
     if (!userStore.getUserInfo()) {
       try {
-        // 发起请求获得userinfo并持久化存储
+        // 发起请求获得userinfo 然后存入store并持久化存储
         await userStore.getUserInfoAction()
         persistStoreUserInfo(userStore.getUserInfo())
       }

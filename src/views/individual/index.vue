@@ -89,6 +89,5 @@ function changeLayoutContent() {
   transition: all .2s;
   margin-left: 80px;
   padding: 24px;
-  height: 100vh;
 }
 </style>

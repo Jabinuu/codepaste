@@ -122,18 +122,9 @@ function beforeUpload(file: any) {
 
 <style scoped lang="less">
 .form-container {
-  background-color: #fff;
-
-  .ant-input {
-    border-radius: 6px;
-  }
 
   .submit-button {
     margin-left: 20px;
-  }
-
-  .ant-btn {
-    border-radius: 6px;
   }
 
   .avatar-uploader>.ant-upload {

@@ -36,7 +36,7 @@ async function onClickLogin() {
   if (route.query.redirect)
     router.push(route.query.redirect as string)
   else
-    router.push('/')
+    router.push('/add')
 }
 </script>
 
