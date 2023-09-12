@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import type { UnwrapRef } from 'vue'
 import type { SelectProps } from 'ant-design-vue'
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons-vue'
+import { highlightLang } from '@/utils/constant'
 
 interface FormState {
   keyword: string
@@ -13,25 +14,7 @@ const formState: UnwrapRef<FormState> = reactive({
   lang: [],
 })
 
-const options1 = ref<SelectProps['options']>([
-  {
-    value: 'jack',
-    label: 'Jack',
-  },
-  {
-    value: 'lucy',
-    label: 'Lucy',
-  },
-  {
-    value: 'disabled',
-    label: 'Disabled',
-    disabled: true,
-  },
-  {
-    value: 'yiminghe',
-    label: 'Yiminghe',
-  },
-])
+const options = ref<SelectProps['options']>(highlightLang)
 function focus() {
   console.log('focus')
 }
@@ -52,7 +35,7 @@ function handleChange(value: string) {
           v-model:value="formState.lang"
           mode="multiple"
           style="width: 200px"
-          :options="options1"
+          :options="options"
           placeholder="选择编程语言"
           @focus="focus"
           @change="handleChange"

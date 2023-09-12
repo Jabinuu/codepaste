@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { SelectProps } from 'ant-design-vue'
 import mitt from '@/utils/mitt'
+import { highlightLang } from '@/utils/constant'
 
 const isEdit = ref()
 const open = ref<boolean>(false)
@@ -25,25 +26,7 @@ const formState = ref({
   content: 'test123456789',
 })
 
-const options1 = ref<SelectProps['options']>([
-  {
-    value: 'jack',
-    label: 'Jack',
-  },
-  {
-    value: 'lucy',
-    label: 'Lucy',
-  },
-  {
-    value: 'disabled',
-    label: 'Disabled',
-    disabled: true,
-  },
-  {
-    value: 'yiminghe',
-    label: 'Yiminghe',
-  },
-])
+const options = ref<SelectProps['options']>(highlightLang)
 </script>
 
 <template>
@@ -68,7 +51,7 @@ const options1 = ref<SelectProps['options']>([
         <a-form-item label="编程语言">
           <a-select
             v-model:value="formState.lang"
-            :options="options1"
+            :options="options"
             placeholder="选择编程语言"
             :disabled="!isEdit"
           />

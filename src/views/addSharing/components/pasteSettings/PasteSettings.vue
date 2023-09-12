@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createNewPaste, settingsState, useMitt } from './hook'
-import { categories, expirations, highlightLang } from './constant'
+import { categories, expirations, highlightLang } from '@/utils/constant'
 
 useMitt()
 </script>
@@ -52,3 +52,4 @@ useMitt()
     line-height: 40px;
   }
 </style>
+../../../../utils/constant

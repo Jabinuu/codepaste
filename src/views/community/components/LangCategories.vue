@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { highlightLang } from '@/views/addSharing/components/pasteSettings/constant'
+import { highlightLang } from '@/utils/constant'
 import { HighlightLangEnum } from '@/enums/codeEnum'
 import mitt from '@/utils/mitt'
 
@@ -50,3 +50,4 @@ function computeLanguages(filter: string[]) {
   padding: 0 0 24px;
 }
 </style>
+@/utils/constant
