@@ -19,3 +19,13 @@ export interface ChangeProfileFormState {
 export interface ChangeProfileReq extends ChangeProfileFormState {
   id: number
 }
+
+export interface UserCodeListItem {
+  codeId: string
+  title: string
+  author: string
+  encrypt: string
+  lang: string
+  content: string
+  date: string
+}

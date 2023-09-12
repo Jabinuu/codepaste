@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia'
 import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
-import { reqChangeProfile, reqGetUserInfo } from '@/services/api/user'
+import { reqChangeProfile, reqGetUserCode, reqGetUserInfo } from '@/services/api/user'
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
-import type { ChangeProfileReq, CurrentUser } from '@/types/user.type'
+import type { ChangeProfileReq, CurrentUser, UserCodeListItem } from '@/types/user.type'
 import { getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
 
 interface userStoreState {
   loginComponentId: number
   current: CurrentUser | null
   token: string | undefined
+  userCode: UserCodeListItem[] | null
 }
 
 export default defineStore('user', {
@@ -18,6 +19,7 @@ export default defineStore('user', {
       token: undefined,
       loginComponentId: LogincComponent.LOGINGROUP,
       current: null,
+      userCode: null,
     }
   },
   actions: {
@@ -60,10 +62,14 @@ export default defineStore('user', {
         }
         else {
           console.log(res)
-
           reject(new Error(res))
         }
       })
+    },
+
+    async getUserCode(data: { id: number }) {
+      const { data: res }: any = await reqGetUserCode(data)
+      this.userCode = res
     },
 
     initUserInfo() {

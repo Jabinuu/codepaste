@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { createVNode } from 'vue'
+import { computed, createVNode, onMounted, toRef } from 'vue'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import Icon from '@/components/Icon/Icon.vue'
 import useIconLangName from '@/hooks/useIconLangName'
 import mitt from '@/utils/mitt'
 
-const iconName = useIconLangName({ value: 'JavaScript' })
+import useUserStore from '@/store/modules/user'
+
+const userStore = useUserStore()
+const iconName = ({ value: 'JavaScript' })
 const columns = [
   {
     title: '编号',
-    dataIndex: 'id',
+    dataIndex: 'codeId',
+    ellipsis: true,
   },
   {
     title: '标题',
@@ -23,22 +27,26 @@ const columns = [
   {
     title: '内容',
     dataIndex: 'content',
+    ellipsis: true,
+    width: 360,
   },
   {
     title: '引用链接',
-    dataIndex: 'citeLink',
+    dataIndex: 'link',
   },
   {
     title: '状态',
-    dataIndex: 'status',
+    dataIndex: 'encrypt',
+    width: 70,
   },
   {
     title: '创建时间',
-    dataIndex: 'createDate',
+    dataIndex: 'date',
   },
   {
     title: '操作',
     key: 'action',
+    width: 150,
   },
 ]
 
@@ -47,7 +55,7 @@ const data = [
     id: '1234-4567-7895',
     title: 'John Brown',
     lang: 'JavaScript',
-    content: '<script setup lang="ts"> import { createNewPaste, settin...',
+    content: '<script setup lang="ts"> import { createNewPaste, <script setup lang="ts">',
     citeLink: '1692539328888.cpp',
     status: '加密',
     createDate: '2023-08-20 21:48',
@@ -89,6 +97,17 @@ const data = [
     createDate: '2023-08-20 21:48',
   },
 ]
+const current = computed(() => userStore.getUserInfo())
+const userCode = computed(() => userStore.userCode)
+
+onMounted(() => {
+  getUserCode(current.value.id)
+})
+
+async function getUserCode(id: number | undefined) {
+  if (id)
+    await userStore.getUserCode({ id })
+}
 
 function showDeleteConfirm(id: string) {
   Modal.confirm({
@@ -110,10 +129,10 @@ function showDeleteConfirm(id: string) {
 
 <template>
   <div class="list-container bdr-4">
-    <a-table :columns="columns" :data-source="data">
+    <a-table :columns="columns" :data-source="userCode" :row-expandable="() => false" ellipsis>
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'lang'">
-          <Icon :name="`icon-${iconName}`" size="16px" />
+          <Icon :name="`icon-${useIconLangName(toRef(record.lang)).value}`" size="16px" />
           {{ record.lang }}
         </template>
         <template v-else-if="column.dataIndex === 'status'">
