@@ -10,7 +10,6 @@ export function createPermissionGuard(router: Router) {
 
   router.beforeEach(async (to, from, next) => {
     const token = userStore.getToken()
-
     if (!token) {
       // 白名单中的路由无须身份认证，直接放行
       if (whiteList.includes(to.path) || to.path.startsWith('/post'))

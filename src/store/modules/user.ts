@@ -55,10 +55,14 @@ export default defineStore('user', {
       const res: any = await reqChangeProfile(data)
       await this.getUserInfoAction()
       return new Promise<void>((resolve, reject) => {
-        if (res.code === 100)
+        if (res.code === 100) {
           resolve(res)
-        else
+        }
+        else {
+          console.log(res)
+
           reject(new Error(res))
+        }
       })
     },
 

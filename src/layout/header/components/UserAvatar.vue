@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { UserOutlined } from '@ant-design/icons-vue'
-import { userLogout, whiteList } from '@/hooks/useAuth'
+import { userLogout } from '@/hooks/useAuth'
 import { getAvatarUrl } from '@/utils/local'
 
 const router = useRouter()
-const route = useRoute()
 function gocustomerCenter() {
   router.push('/individual')
 }
 function handleLogout() {
+  router.push('/add')
   userLogout()
-  if (!whiteList.includes(route.path))
-    router.push('/')
 }
 const avatarUrl = ref<string>(getAvatarUrl())
 const isHaveAvatar = computed(() => avatarUrl.value !== '')

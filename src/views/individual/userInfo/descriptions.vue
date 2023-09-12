@@ -8,8 +8,8 @@ defineEmits(['change'])
 const userStore = useUserStore()
 const profile = computed(() => userStore.getUserInfo())
 
-const _location = computed(() => profile.value.location.replace(/\//g, ' '))
-const _registerTime = computed(() => formatDate(profile.value.registerTime))
+const _location = computed(() => profile.value?.location.replace(/\//g, ' '))
+const _registerTime = computed(() => formatDate(profile.value?.registerTime))
 </script>
 
 <template>
@@ -19,24 +19,24 @@ const _registerTime = computed(() => formatDate(profile.value.registerTime))
     </template>
     <a-descriptions :column="1">
       <a-descriptions-item label="简介">
-        {{ profile.introduction }}
+        {{ profile?.introduction }}
       </a-descriptions-item>
       <a-descriptions-item label="电话号码">
-        {{ profile.tel }}
+        {{ profile?.tel }}
       </a-descriptions-item>
       <a-descriptions-item label="兴趣">
-        {{ profile.hobby }}
+        {{ profile?.hobby }}
       </a-descriptions-item>
       <a-descriptions-item label="现地址">
         {{ _location }}
       </a-descriptions-item>
       <a-descriptions-item label="职业">
         <a-tag color="blue">
-          {{ profile.job }}
+          {{ profile?.job }}
         </a-tag>
       </a-descriptions-item>
       <a-descriptions-item label="邮箱地址">
-        {{ profile.email }}
+        {{ profile?.email }}
       </a-descriptions-item>
       <a-descriptions-item label="注册时间">
         {{ _registerTime }}

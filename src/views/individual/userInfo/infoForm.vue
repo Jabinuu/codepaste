@@ -39,6 +39,7 @@ async function handleConfirmChange() {
     emit('change', 0)
   }
   catch (e: any) {
+    console.log(e)
     message.error(e.msg)
   }
 }
