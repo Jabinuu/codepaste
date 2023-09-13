@@ -52,16 +52,27 @@ const columns = [
 
 const current = computed(() => userStore.getUserInfo())
 const userCode: any = computed(() => userStore.userCode)
+const pagination = {
+
+}
 
 onMounted(() => {
   getUserCode(current.value.id)
 })
 
 async function getUserCode(id: number | undefined) {
-  if (id)
-    await userStore.getUserCode({ id })
+  if (id) {
+    await userStore.getUserCode({
+      id,
+      languages: [],
+      kw: '',
+      ps: 3,
+      pn: 1,
+    })
+  }
 }
 
+// 打开代码详情抽屉
 function openDetailDrawer(record: any) {
   const data = {
     record,
@@ -70,6 +81,7 @@ function openDetailDrawer(record: any) {
   mitt.emit('openEditor', data)
 }
 
+// 打开代码编辑抽屉
 function openEditDrawer(record: any) {
   const data = {
     record,
@@ -98,7 +110,7 @@ function showDeleteConfirm(id: string) {
 
 <template>
   <div class="list-container bdr-4">
-    <a-table :columns="columns" :data-source="userCode" :row-expandable="() => false">
+    <a-table :columns="columns" :data-source="userCode" :pagination="pagination">
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'codeId'">
           <a-tooltip>

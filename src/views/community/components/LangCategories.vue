@@ -1,41 +1,56 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { highlightLang } from '@/utils/constant'
-import { HighlightLangEnum } from '@/enums/codeEnum'
+import { computeLanguages } from '@/utils/filter'
 import mitt from '@/utils/mitt'
+import { HighlightLangEnum } from '@/enums/codeEnum'
 
-const langFilter = ref(Array(highlightLang.length))
-watch(langFilter, (newVal) => {
+const checkboxState = ref<string[] | []>([])
+watch(checkboxState, (newVal) => {
   const languages = computeLanguages(newVal)
   mitt.emit('langFilter', languages)
 }, { deep: true })
-
-function computeLanguages(filter: string[]) {
-  const res: string[] = []
-  filter.forEach((elem, index) => {
-    if (elem) {
-      if (highlightLang[index].value !== HighlightLangEnum.OTHER)
-        res.push(highlightLang[index].value)
-      else
-        res.push(HighlightLangEnum.TXT, HighlightLangEnum.MARKDOWN)
-    }
-  })
-  return res
-}
 </script>
 
 <template>
   <div class="bg-w bdr-4 list-contariner">
     <a-card title="筛选编程语言" :bordered="false">
-      <a-list item-layout="horizontal" :data-source="highlightLang" :split="false">
-        <template #renderItem="{ item, index }">
-          <a-list-item>
-            <a-checkbox v-model:checked="langFilter[index]">
-              {{ item.value }}
-            </a-checkbox>
-          </a-list-item>
-        </template>
-      </a-list>
+      <a-checkbox-group v-model:value="checkboxState" name="checkboxgroup">
+        <a-col :span="24">
+          <a-checkbox :value="HighlightLangEnum.C">
+            {{ HighlightLangEnum.C }}
+          </a-checkbox>
+        </a-col>
+        <a-col :span="24">
+          <a-checkbox :value="HighlightLangEnum.JAVA">
+            {{ HighlightLangEnum.JAVA }}
+          </a-checkbox>
+        </a-col>
+        <a-col :span="24">
+          <a-checkbox :value="HighlightLangEnum.JAVASCRIPT">
+            {{ HighlightLangEnum.JAVASCRIPT }}
+          </a-checkbox>
+        </a-col>
+        <a-col :span="24">
+          <a-checkbox :value="HighlightLangEnum.PYTHON">
+            {{ HighlightLangEnum.PYTHON }}
+          </a-checkbox>
+        </a-col>
+        <a-col :span="24">
+          <a-checkbox :value="HighlightLangEnum.CSS">
+            {{ HighlightLangEnum.CSS }}
+          </a-checkbox>
+        </a-col>
+        <a-col :span="24">
+          <a-checkbox :value="HighlightLangEnum.HTML">
+            {{ HighlightLangEnum.HTML }}
+          </a-checkbox>
+        </a-col>
+        <a-col :span="24">
+          <a-checkbox :value="HighlightLangEnum.OTHER">
+            {{ HighlightLangEnum.OTHER }}
+          </a-checkbox>
+        </a-col>
+      </a-checkbox-group>
     </a-card>
   </div>
 </template>
@@ -49,5 +64,7 @@ function computeLanguages(filter: string[]) {
 :deep(.ant-card-body){
   padding: 0 0 24px;
 }
+.ant-col{
+  padding: 8px 24px;
+}
 </style>
-@/utils/constant

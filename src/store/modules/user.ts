@@ -5,6 +5,7 @@ import { reqChangeProfile, reqGetUserCode, reqGetUserInfo } from '@/services/api
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
 import type { ChangeProfileReq, CurrentUser, UserCodeListItem } from '@/types/user.type'
 import { getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
+import type { UserCodeReqBody } from '@/types/http.type'
 
 interface userStoreState {
   loginComponentId: number
@@ -67,7 +68,7 @@ export default defineStore('user', {
       })
     },
 
-    async getUserCode(data: { id: number }) {
+    async getUserCode(data: UserCodeReqBody) {
       const { data: res }: any = await reqGetUserCode(data)
       this.userCode = res
     },

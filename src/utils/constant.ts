@@ -17,7 +17,7 @@ export const highlightLang: SelectorOption[] = [
   { label: 'Python', value: HighlightLangEnum.PYTHON },
   { label: 'CSS', value: HighlightLangEnum.CSS },
   { label: 'HTML', value: HighlightLangEnum.HTML },
-  { label: 'other', value: HighlightLangEnum.OTHER },
+  { label: 'Other', value: HighlightLangEnum.OTHER },
 ]
 export const expirations: SelectorOption[] = [
   { label: '永久', value: ExpirationsEnum.NEVER },
