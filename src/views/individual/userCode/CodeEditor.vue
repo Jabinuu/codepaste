@@ -6,27 +6,24 @@ import { highlightLang } from '@/utils/constant'
 
 const isEdit = ref()
 const open = ref<boolean>(false)
+const formState = ref()
+const options = ref<SelectProps['options']>(highlightLang)
+
 onMounted(() => {
-  mitt.on('openEditor', (e: boolean) => {
+  mitt.on('openEditor', (e: any) => {
     open.value = true
-    isEdit.value = e
+    isEdit.value = e.isEdit
+    formState.value = e.record
   })
 })
+
 onUnmounted(() => {
   mitt.off('openEditor')
 })
+
 function afterOpenChange(bool: boolean) {
   console.log('open', bool)
 }
-const formState = ref({
-  id: '1234-4567-6789',
-  title: 'test1',
-  lang: 'JavaScript',
-  encrypt: true,
-  content: 'test123456789',
-})
-
-const options = ref<SelectProps['options']>(highlightLang)
 </script>
 
 <template>
@@ -43,7 +40,7 @@ const options = ref<SelectProps['options']>(highlightLang)
     >
       <a-form>
         <a-form-item label="代码编号">
-          <a-input v-model:value="formState.id" :disabled="!isEdit" />
+          <a-input v-model:value="formState.codeId" :disabled="!isEdit" />
         </a-form-item>
         <a-form-item label="代码标题">
           <a-input v-model:value="formState.title" :disabled="!isEdit" />

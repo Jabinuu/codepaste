@@ -13,7 +13,6 @@ const columns = [
   {
     title: '编号',
     dataIndex: 'codeId',
-    // ellipsis: true,
   },
   {
     title: '标题',
@@ -63,6 +62,22 @@ async function getUserCode(id: number | undefined) {
     await userStore.getUserCode({ id })
 }
 
+function openDetailDrawer(record: any) {
+  const data = {
+    record,
+    isEdit: false,
+  }
+  mitt.emit('openEditor', data)
+}
+
+function openEditDrawer(record: any) {
+  const data = {
+    record,
+    isEdit: true,
+  }
+  mitt.emit('openEditor', data)
+}
+
 function showDeleteConfirm(id: string) {
   Modal.confirm({
     title: '删除提醒',
@@ -83,7 +98,7 @@ function showDeleteConfirm(id: string) {
 
 <template>
   <div class="list-container bdr-4">
-    <a-table :columns="columns" :data-source="userCode" :row-expandable="() => false" ellipsis>
+    <a-table :columns="columns" :data-source="userCode" :row-expandable="() => false">
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'codeId'">
           <a-tooltip>
@@ -118,10 +133,10 @@ function showDeleteConfirm(id: string) {
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="action-btn">
-            <a-button type="link" style="color:#67c23a" @click="mitt.emit('openEditor', false)">
+            <a-button type="link" style="color:#67c23a" @click="openDetailDrawer(record)">
               详情
             </a-button>
-            <a-button type="link" @click="mitt.emit('openEditor', true)">
+            <a-button type="link" @click="openEditDrawer(record)">
               编辑
             </a-button>
             <a-button type="link" danger @click="showDeleteConfirm(record.id)">
