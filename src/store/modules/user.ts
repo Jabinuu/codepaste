@@ -3,15 +3,19 @@ import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
 import { reqChangeProfile, reqGetUserCode, reqGetUserInfo } from '@/services/api/user'
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
-import type { ChangeProfileReq, CurrentUser, UserCodeListItem } from '@/types/user.type'
+import type { ChangeProfileReq, CurrentUser } from '@/types/user.type'
 import { getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
 import type { UserCodeReqBody } from '@/types/http.type'
 
+interface UserCode {
+  codes: any[]
+  total: number
+}
 interface userStoreState {
   loginComponentId: number
   current: CurrentUser | null
   token: string | undefined
-  userCode: UserCodeListItem[] | null
+  userCode: UserCode | {}
 }
 
 export default defineStore('user', {
@@ -20,7 +24,7 @@ export default defineStore('user', {
       token: undefined,
       loginComponentId: LogincComponent.LOGINGROUP,
       current: null,
-      userCode: null,
+      userCode: {},
     }
   },
   actions: {
@@ -91,6 +95,15 @@ export default defineStore('user', {
     },
     getLoginComponentId(): number {
       return this.getUserInfo() ? LogincComponent.USERAVATAR : LogincComponent.LOGINGROUP
+    },
+    getUserCodeTotal(state) {
+      return state.userCode.total
+    },
+    getUserCodeList(state) {
+      return state.userCode.codes
+    },
+    getCurUserId(state): number {
+      return this.getUserInfo().id
     },
   },
 })

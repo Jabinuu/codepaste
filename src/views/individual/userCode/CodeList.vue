@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, createVNode, onMounted } from 'vue'
+import { computed, createVNode, onMounted, ref } from 'vue'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import Icon from '@/components/Icon/Icon.vue'
@@ -49,27 +49,31 @@ const columns = [
     width: 150,
   },
 ]
+const curPage = ref<number>(1)
+const pageSize = ref<number>(3)
+const dataSource = computed(() => userStore.getUserCodeList)
 
-const current = computed(() => userStore.getUserInfo())
-const userCode: any = computed(() => userStore.userCode)
-const pagination = {
+// const current = computed(() => userStore.getUserInfo())
 
-}
-
+const pagination = computed(() => {
+  return {
+    total: userStore.getUserCodeTotal,
+    pageSize: pageSize.value,
+    current: curPage.value,
+  }
+})
 onMounted(() => {
-  getUserCode(current.value.id)
+  getUserCode()
 })
 
-async function getUserCode(id: number | undefined) {
-  if (id) {
-    await userStore.getUserCode({
-      id,
-      languages: [],
-      kw: '',
-      ps: 3,
-      pn: 1,
-    })
-  }
+async function getUserCode() {
+  await userStore.getUserCode({
+    id: userStore.getCurUserId,
+    languages: [],
+    kw: '',
+    ps: pageSize.value,
+    pn: curPage.value,
+  })
 }
 
 // 打开代码详情抽屉
@@ -88,6 +92,12 @@ function openEditDrawer(record: any) {
     isEdit: true,
   }
   mitt.emit('openEditor', data)
+}
+
+async function handlePageChange(e) {
+  curPage.value = e.current
+  pageSize.value = e.pageSize
+  await getUserCode()
 }
 
 function showDeleteConfirm(id: string) {
@@ -110,7 +120,7 @@ function showDeleteConfirm(id: string) {
 
 <template>
   <div class="list-container bdr-4">
-    <a-table :columns="columns" :data-source="userCode" :pagination="pagination">
+    <a-table :columns="columns" :data-source="dataSource" :pagination="pagination" @change="handlePageChange">
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'codeId'">
           <a-tooltip>

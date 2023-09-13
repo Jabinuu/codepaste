@@ -23,8 +23,6 @@ const ps = ref<number>(3)
 const id = userStore.getUserInfo().id
 
 async function runSearch() {
-  console.log(computeLanguages(formState.languages))
-
   await userStore.getUserCode({
     kw: formState.kw,
     languages: computeLanguages(formState.languages),
@@ -34,12 +32,9 @@ async function runSearch() {
   })
 }
 
-function focus() {
-  console.log('focus')
-}
-
-function handleChange(value: string) {
-  console.log(`selected ${value}`)
+function resetForm() {
+  formState.kw = ''
+  formState.languages = []
 }
 </script>
 
@@ -56,15 +51,13 @@ function handleChange(value: string) {
           style="width: 200px"
           :options="options"
           placeholder="选择编程语言"
-          @focus="focus"
-          @change="handleChange"
         />
       </a-form-item>
       <a-form-item>
         <a-button type="primary" class="margin" @click="runSearch">
           <SearchOutlined />查询
         </a-button>
-        <a-button>
+        <a-button @click="resetForm">
           <DeleteOutlined />重置
         </a-button>
       </a-form-item>
