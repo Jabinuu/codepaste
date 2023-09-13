@@ -16,7 +16,7 @@ export default defineStore('codes', {
   },
   actions: {
     async createCode(formData: CodeFromData) {
-      await reqCreateCode(formData)
+      return await reqCreateCode(formData)
     },
 
     async getHotlist(body: CodeRequestBody) {

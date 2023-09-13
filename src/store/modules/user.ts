@@ -97,13 +97,16 @@ export default defineStore('user', {
       return this.getUserInfo() ? LogincComponent.USERAVATAR : LogincComponent.LOGINGROUP
     },
     getUserCodeTotal(state) {
-      return state.userCode.total
+      return (state.userCode as UserCode).total
     },
     getUserCodeList(state) {
-      return state.userCode.codes
+      return (state.userCode as UserCode).codes
     },
-    getCurUserId(state): number {
+    getCurUserId(): number {
       return this.getUserInfo().id
+    },
+    getCurUsername(): string {
+      return this.getUserInfo().username
     },
   },
 })

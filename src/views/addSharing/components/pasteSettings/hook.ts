@@ -1,17 +1,19 @@
-import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { message } from 'ant-design-vue'
 import type { SettingOption } from '@/types/codeContentInfo.type'
 import useCodeStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
+import useUseStore from '@/store/modules/user'
 
 export const content = ref<string>('')
 export const codeStore = useCodeStore()
-export const settingsState = reactive<SettingOption>({
+export const settingsState = ref<SettingOption>({
   title: '',
-  language: undefined,
+  lang: undefined,
   expiration: 'never',
-  password: '',
+  codepw: '',
   category: 'code',
-  exposure: undefined,
+  exposure: 1,
   encrypt: false,
 })
 
@@ -26,5 +28,17 @@ export function useMitt() {
 }
 
 export async function createNewPaste() {
-  await codeStore.uploadCode({ ...settingsState, content: content.value })
+  const userStore = useUseStore()
+  const res: any = await codeStore.createCode({
+    ...settingsState.value,
+    author: userStore.getCurUsername,
+    content: content.value,
+    uid: userStore.getCurUserId,
+  })
+  if (res.code === 100)
+    message.success('创建代码成功!')
+    // todo:跳转首页
+
+  else
+    message.error('创建代码失败!')
 }

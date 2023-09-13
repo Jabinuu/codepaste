@@ -1,14 +1,16 @@
 export interface SettingOption {
   title: string
-  language: string | undefined
+  lang: string | undefined
   expiration: string
-  password: string
+  codepw: string
   category: string
-  exposure: string | undefined
+  exposure: number
   encrypt: boolean
 }
 export interface CodeFromData extends SettingOption {
   content: string
+  author: string
+  uid: number
 }
 
 export interface CodeSet {
