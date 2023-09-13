@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { computed, createVNode, onMounted, toRef } from 'vue'
+import { computed, createVNode, onMounted } from 'vue'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import Icon from '@/components/Icon/Icon.vue'
-import useIconLangName from '@/hooks/useIconLangName'
 import mitt from '@/utils/mitt'
-
+import useIconLangName from '@/hooks/useIconLangName'
 import useUserStore from '@/store/modules/user'
+import { formatDate } from '@/utils/date'
 
 const userStore = useUserStore()
-const iconName = ({ value: 'JavaScript' })
 const columns = [
   {
     title: '编号',
     dataIndex: 'codeId',
-    ellipsis: true,
+    // ellipsis: true,
   },
   {
     title: '标题',
     dataIndex: 'title',
+    ellipsis: true,
   },
   {
     title: '语言',
@@ -33,6 +33,7 @@ const columns = [
   {
     title: '引用链接',
     dataIndex: 'link',
+    width: 160,
   },
   {
     title: '状态',
@@ -45,60 +46,13 @@ const columns = [
   },
   {
     title: '操作',
-    key: 'action',
+    dataIndex: 'action',
     width: 150,
   },
 ]
 
-const data = [
-  {
-    id: '1234-4567-7895',
-    title: 'John Brown',
-    lang: 'JavaScript',
-    content: '<script setup lang="ts"> import { createNewPaste, <script setup lang="ts">',
-    citeLink: '1692539328888.cpp',
-    status: '加密',
-    createDate: '2023-08-20 21:48',
-  },
-  {
-    id: '1234-4567-7895',
-    title: 'John Brown',
-    lang: 'JavaScript',
-    content: '<script setup lang="ts"> import { createNewPaste, settin...',
-    citeLink: '1692539328888.cpp',
-    status: '加密',
-    createDate: '2023-08-20 21:48',
-  },
-  {
-    id: '1234-4567-7895',
-    title: 'John Brown',
-    lang: 'JavaScript',
-    content: '<script setup lang="ts"> import { createNewPaste, settin...',
-    citeLink: '1692539328888.cpp',
-    status: '加密',
-    createDate: '2023-08-20 21:48',
-  },
-  {
-    id: '1234-4567-7895',
-    title: 'John Brown',
-    lang: 'JavaScript',
-    content: '<script setup lang="ts"> import { createNewPaste, settin...',
-    citeLink: '1692539328888.cpp',
-    status: '加密',
-    createDate: '2023-08-20 21:48',
-  },
-  {
-    id: '1234-4567-7895',
-    title: 'John Brown',
-    lang: 'JavaScript',
-    content: '<script setup lang="ts"> import { createNewPaste, settin...',
-    citeLink: '1692539328888.cpp',
-    status: '加密',
-    createDate: '2023-08-20 21:48',
-  },
-]
 const current = computed(() => userStore.getUserInfo())
-const userCode = computed(() => userStore.userCode)
+const userCode: any = computed(() => userStore.userCode)
 
 onMounted(() => {
   getUserCode(current.value.id)
@@ -131,16 +85,38 @@ function showDeleteConfirm(id: string) {
   <div class="list-container bdr-4">
     <a-table :columns="columns" :data-source="userCode" :row-expandable="() => false" ellipsis>
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'lang'">
-          <Icon :name="`icon-${useIconLangName(toRef(record.lang)).value}`" size="16px" />
+        <template v-if="column.dataIndex === 'codeId'">
+          <a-tooltip>
+            <template #title>
+              <div style="width: 300px;">
+                {{ record.codeId }}
+              </div>
+            </template>
+            <a>{{ record.codeId }}</a>
+          </a-tooltip>
+        </template>
+        <template v-else-if="column.dataIndex === 'lang'">
+          <Icon :name="`icon-${useIconLangName(record.lang).value}`" size="16px" />
           {{ record.lang }}
         </template>
-        <template v-else-if="column.dataIndex === 'status'">
-          <a-tag color="blue">
-            {{ record.status }}
+        <template v-else-if="column.dataIndex === 'encrypt'">
+          <a-tag v-if="record.encrypt" color="red">
+            加密
+          </a-tag>
+          <a-tag v-else color="blue">
+            公开
           </a-tag>
         </template>
-        <template v-else-if="column.key === 'action'">
+        <template v-else-if="column.dataIndex === 'content'">
+          <span title="">{{ record.content }}</span>
+        </template>
+        <template v-else-if="column.dataIndex === 'link'">
+          <a href="#">{{ record.link }}</a>
+        </template>
+        <template v-else-if="column.dataIndex === 'date'">
+          <span>{{ formatDate(record.date) }}</span>
+        </template>
+        <template v-else-if="column.dataIndex === 'action'">
           <div class="action-btn">
             <a-button type="link" style="color:#67c23a" @click="mitt.emit('openEditor', false)">
               详情
@@ -165,6 +141,16 @@ function showDeleteConfirm(id: string) {
   .action-btn .ant-btn{
     font-size: 12px;
     padding: 0 6px;
+  }
+  :deep(.ant-table-cell){
+    overflow: hidden ;
+    white-space: nowrap;
+  }
+  a{
+    color: rgba(0, 0, 0, 0.88);
+  }
+  a:hover{
+    color: #1677ff;
   }
 }
 </style>

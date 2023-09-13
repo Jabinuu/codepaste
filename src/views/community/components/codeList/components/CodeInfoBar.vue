@@ -12,7 +12,7 @@ const props = defineProps<{
 }>()
 
 const computedSize = useComputedSzie(toRef(() => props.size))
-const iconName = useIconLangName(toRef(() => props.lang))
+const iconName = useIconLangName(props.lang)
 </script>
 
 <template>

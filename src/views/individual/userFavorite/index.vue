@@ -3,7 +3,7 @@ import { CommentOutlined, EyeOutlined, StarFilled } from '@ant-design/icons-vue'
 import Icon from '@/components/Icon/Icon.vue'
 import useIconLangName from '@/hooks/useIconLangName'
 
-const iconName = useIconLangName({ value: 'JavaScript' })
+const iconName = useIconLangName('JavaScript')
 interface DataItem {
   title: string
 }

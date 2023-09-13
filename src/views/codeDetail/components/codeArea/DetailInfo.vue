@@ -10,7 +10,7 @@ const currentCode = inject<Ref<CodeList>>('currentCode')
 let iconName: Ref<string>
 let computedSize: Ref<string>
 watch(toRef(currentCode), () => {
-  iconName = useIconLangName(toRef(currentCode?.value.lang))
+  iconName = useIconLangName(currentCode?.value.lang as string)
   computedSize = useComputedSzie(toRef(currentCode?.value.size))
 })
 </script>
