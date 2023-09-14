@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia'
+import { INFO_NAME, getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
 import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
 import { reqChangeProfile, reqGetUserCode, reqGetUserInfo } from '@/services/api/user'
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
 import type { ChangeProfileReq, CurrentUser } from '@/types/user.type'
-import { getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
 import type { UserCodeReqBody } from '@/types/http.type'
 
 interface UserCode {
   codes: any[]
   total: number
 }
+
 interface userStoreState {
   loginComponentId: number
   current: CurrentUser | null
@@ -90,23 +91,39 @@ export default defineStore('user', {
     getToken(state) {
       return () => state.token || getToken()
     },
+
     getUserInfo(state) {
       return () => state.current || getUserInfoFromLocal()
     },
+
     getLoginComponentId(): number {
       return this.getUserInfo() ? LogincComponent.USERAVATAR : LogincComponent.LOGINGROUP
     },
+
     getUserCodeTotal(state) {
       return (state.userCode as UserCode).total
     },
+
     getUserCodeList(state) {
       return (state.userCode as UserCode).codes
     },
+
     getCurUserId(): number {
       return this.getUserInfo().id
     },
+
     getCurUsername(): string {
       return this.getUserInfo().username
+    },
+
+    getAvatarUrl(state) {
+      if (state.current)
+        return state.current.avatarUrl
+      const local = localStorage.getItem(INFO_NAME)
+      if (!local)
+        return ''
+      const { avatarUrl } = JSON.parse(local)
+      return avatarUrl || ''
     },
   },
 })

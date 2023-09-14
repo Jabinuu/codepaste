@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { UserOutlined } from '@ant-design/icons-vue'
 import { userLogout } from '@/hooks/useAuth'
-import { getAvatarUrl } from '@/utils/local'
+import useUserStore from '@/store/modules/user'
 
+const userStore = useUserStore()
 const router = useRouter()
 function gocustomerCenter() {
   router.push('/individual')
@@ -13,7 +14,7 @@ function handleLogout() {
   router.push('/add')
   userLogout()
 }
-const avatarUrl = ref<string>(getAvatarUrl())
+const avatarUrl = computed(() => userStore.getAvatarUrl)
 const isHaveAvatar = computed(() => avatarUrl.value !== '')
 </script>
 
