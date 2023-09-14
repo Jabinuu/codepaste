@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
-import { useRouter } from 'vue-router'
 import useCodesStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
 import type { CodeList } from '@/types/codeContentInfo.type'
@@ -98,14 +97,5 @@ export function useSwitchList() {
     switchHotlist,
     switchNewlist,
     switchQualitylist,
-  }
-}
-
-export function useGoCodeDetail() {
-  const router = useRouter()
-  return {
-    goCodeDetail(url: string) {
-      router.push(url)
-    },
   }
 }

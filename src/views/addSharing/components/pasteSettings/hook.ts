@@ -7,7 +7,6 @@ import mitt from '@/utils/mitt'
 import useUseStore from '@/store/modules/user'
 
 export const content = ref<string>('')
-const router = useRouter()
 export const codeStore = useCodeStore()
 export const settingsState = ref<SettingOption>({
   title: '',
@@ -26,20 +25,34 @@ export function useMitt() {
 
   onUnmounted(() => {
     mitt.off('jiabin')
+    // 清空表单
+    settingsState.value = {
+      title: '',
+      lang: undefined,
+      expiration: 'never',
+      codepw: '',
+      category: 'code',
+      exposure: 1,
+      encrypt: false,
+    }
   })
 }
 
-export async function createNewPaste() {
-  const userStore = useUseStore()
-  const res: any = await codeStore.createCode({
-    ...settingsState.value,
-    author: userStore.getCurUsername,
-    content: content.value,
-    uid: userStore.getCurUserId,
-  })
-  if (res.code === 100)
-    message.success('创建代码成功!')
-    // todo:跳转代码详情页
-
-  else message.error('创建代码失败!')
+// TODO: 未登录状态时添加代码
+export function useCreateNewPaste() {
+  const router = useRouter()
+  return async () => {
+    const userStore = useUseStore()
+    const res: any = await codeStore.createCode({
+      ...settingsState.value,
+      author: userStore.getCurUsername,
+      content: content.value,
+      uid: userStore.getCurUserId,
+    })
+    if (res.code === 100) {
+      message.success('创建代码成功!')
+      router.push(`/post/${res.data.codeId}`)
+    }
+    else { message.error('创建代码失败!') }
+  }
 }

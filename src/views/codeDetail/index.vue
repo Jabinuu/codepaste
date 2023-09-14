@@ -24,8 +24,9 @@ async function getDetailById() {
   const [data] = await codeStore.getDetailById(route.params.id as string)
   currentCode.value = data
 }
+
 function getCommentList() {
-  commentStore.getCodeComment(Number.parseInt(route.params.id[0]))
+  commentStore.getCodeComment(route.params.id as string)
 }
 </script>
 

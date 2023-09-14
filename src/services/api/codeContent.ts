@@ -6,6 +6,6 @@ export const reqGetHotlist = (data: CodeRequestBody) => defHttp.post('./code/hot
 export const reqGetNewlist = (data: CodeRequestBody) => defHttp.post('./code/newlist', data)
 export const reqGetQualitylist = (data: CodeRequestBody) => defHttp.post('./code/qualitylist', data)
 export const reqCreateCode = (data: CodeFromData) => defHttp.post('/code/create', data)
-export const reqGetDetailById = (data: { id: string }) => defHttp.post('./code/single', data)
+export const reqGetDetailById = (data: { codeId: string }) => defHttp.post('./code/single', data)
 export const reqGetRecommedlist = () => defHttp.get('/code/recommend')
 export const reqGetCommentList = (data: { id: string }) => defHttp.post('./comment/list', data)
