@@ -1,7 +1,6 @@
-import { useRouter } from 'vue-router'
+import type { Router } from 'vue-router'
 
-export const pushToBlank = function (path, query = {}) {
-  const router = useRouter()
+export const pushToBlank = function (router: Router, path, query = {}) {
   const routeData = router.resolve({
     path,
     query,

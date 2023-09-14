@@ -10,7 +10,7 @@ export default defineStore('comment', {
     }
   },
   actions: {
-    async getCodeComment(cid: number) {
+    async getCodeComment(cid: string) {
       const { data }: any = await reqGetCodeComment({ cid })
       this.codeComment = data
     },

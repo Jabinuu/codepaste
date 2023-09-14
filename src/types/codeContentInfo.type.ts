@@ -5,12 +5,17 @@ export interface SettingOption {
   codepw: string
   category: string
   exposure: number
-  encrypt: boolean
+  encrypt: number
 }
 export interface CodeFromData extends SettingOption {
   content: string
   author: string
   uid: number
+}
+
+export interface CodeEditerForm extends SettingOption {
+  codeId: string
+  content: string
 }
 
 export interface CodeSet {

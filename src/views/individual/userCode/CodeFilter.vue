@@ -11,24 +11,26 @@ interface FormState {
   kw: string
   languages: string[]
 }
-
+const props = defineProps(['publicData'])
+const emit = defineEmits(['sendFilter'])
 const formState: UnwrapRef<FormState> = reactive({
   kw: '',
   languages: [],
 })
 const userStore = useUserStore()
 const options = ref<SelectProps['options']>(highlightLang)
-const pn = ref<number>(1)
-const ps = ref<number>(3)
-const id = userStore.getUserInfo().id
 
 async function runSearch() {
+  emit('sendFilter', {
+    languages: computeLanguages(formState.languages),
+    kw: formState.kw,
+  })
   await userStore.getUserCode({
     kw: formState.kw,
     languages: computeLanguages(formState.languages),
-    pn: pn.value,
-    ps: ps.value,
-    id,
+    pn: props.publicData.pn,
+    ps: props.publicData.ps,
+    id: userStore.getCurUserId,
   })
 }
 

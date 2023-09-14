@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, createVNode, onMounted, ref } from 'vue'
+import { computed, createVNode, onMounted } from 'vue'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import Icon from '@/components/Icon/Icon.vue'
@@ -8,6 +8,8 @@ import useIconLangName from '@/hooks/useIconLangName'
 import useUserStore from '@/store/modules/user'
 import { formatDate } from '@/utils/date'
 
+const props = defineProps(['publicData'])
+const emit = defineEmits(['sendPage'])
 const userStore = useUserStore()
 const columns = [
   {
@@ -49,17 +51,14 @@ const columns = [
     width: 150,
   },
 ]
-const curPage = ref<number>(1)
-const pageSize = ref<number>(3)
-const dataSource = computed(() => userStore.getUserCodeList)
 
-// const current = computed(() => userStore.getUserInfo())
+const dataSource = computed(() => userStore.getUserCodeList)
 
 const pagination = computed(() => {
   return {
     total: userStore.getUserCodeTotal,
-    pageSize: pageSize.value,
-    current: curPage.value,
+    pageSize: props.publicData.ps,
+    current: props.publicData.pn,
   }
 })
 onMounted(() => {
@@ -71,8 +70,8 @@ async function getUserCode() {
     id: userStore.getCurUserId,
     languages: [],
     kw: '',
-    ps: pageSize.value,
-    pn: curPage.value,
+    ps: props.publicData.ps,
+    pn: props.publicData.pn,
   })
 }
 
@@ -95,8 +94,10 @@ function openEditDrawer(record: any) {
 }
 
 async function handlePageChange(e) {
-  curPage.value = e.current
-  pageSize.value = e.pageSize
+  emit('sendPage', {
+    pn: e.current,
+    ps: e.pageSize,
+  })
   await getUserCode()
 }
 

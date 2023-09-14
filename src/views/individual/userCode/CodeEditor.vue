@@ -1,19 +1,34 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import type { SelectProps } from 'ant-design-vue'
+import { message } from 'ant-design-vue'
 import mitt from '@/utils/mitt'
-import { highlightLang } from '@/utils/constant'
+import CodeSettingForm from '@/components/CodeSettingForm/CodeSettingForm.vue'
+import type { CodeEditerForm } from '@/types/codeContentInfo.type'
+import useUserStore from '@/store/modules/user'
 
+const props = defineProps(['publicData'])
+const userStore = useUserStore()
 const isEdit = ref()
 const open = ref<boolean>(false)
-const formState = ref()
-const options = ref<SelectProps['options']>(highlightLang)
-
+const formState = ref<CodeEditerForm>({
+  title: '',
+  lang: undefined,
+  expiration: 'never',
+  codepw: '',
+  category: 'code',
+  exposure: 1,
+  encrypt: 0,
+  content: '',
+  codeId: '',
+})
 onMounted(() => {
   mitt.on('openEditor', (e: any) => {
     open.value = true
     isEdit.value = e.isEdit
-    formState.value = e.record
+    // FIXED BUG: 这里不直接把e.record 赋值是为了避免子组件修改formData时，父组件CodeList
+    // 中的表格数据同时变化。这是因为父组组件之间传的值是对象的引用，所以子组件修改该引用会导致
+    // 父组件渲染更新。解决方式是拷贝一份新的对象传递给子组件。
+    formState.value = JSON.parse(JSON.stringify(e.record))
   })
 })
 
@@ -21,8 +36,19 @@ onUnmounted(() => {
   mitt.off('openEditor')
 })
 
-function afterOpenChange(bool: boolean) {
-  console.log('open', bool)
+async function handleSubmitChange() {
+  const res = await userStore.changeUserCode(formState.value)
+  if (res.code === 100) {
+    message.success('修改代码成功!')
+    open.value = false
+    await userStore.getUserCode({
+      pn: props.publicData.pn,
+      ps: props.publicData.ps,
+      kw: props.publicData.kw,
+      languages: props.publicData.languages,
+      id: userStore.getCurUserId,
+    })
+  }
 }
 </script>
 
@@ -36,31 +62,17 @@ function afterOpenChange(bool: boolean) {
       title="代码信息"
       :width="456"
       placement="right"
-      @after-open-change="afterOpenChange"
     >
       <a-form>
         <a-form-item label="代码编号">
-          <a-input v-model:value="formState.codeId" :disabled="!isEdit" />
+          <a-input v-model:value="formState.codeId" disabled />
         </a-form-item>
-        <a-form-item label="代码标题">
-          <a-input v-model:value="formState.title" :disabled="!isEdit" />
-        </a-form-item>
-        <a-form-item label="编程语言">
-          <a-select
-            v-model:value="formState.lang"
-            :options="options"
-            placeholder="选择编程语言"
-            :disabled="!isEdit"
-          />
-        </a-form-item>
-        <a-form-item label="是否加密">
-          <a-switch v-model:checked="formState.encrypt" :disabled="!isEdit" />
-        </a-form-item>
+        <CodeSettingForm :form-state="formState" :is-edit="isEdit" />
         <a-form-item label="代码详情">
           <a-textarea v-model:value="formState.content" :rows="20" :disabled="!isEdit" />
         </a-form-item>
         <a-form-item :wrapper-col="{ offset: 4 }">
-          <a-button v-if="isEdit" type="primary">
+          <a-button v-if="isEdit" type="primary" @click="handleSubmitChange">
             提交修改
           </a-button>
         </a-form-item>

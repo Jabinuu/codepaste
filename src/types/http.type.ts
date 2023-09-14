@@ -12,3 +12,14 @@ export interface UserCodeReqBody {
   ps: number
   pn: number
 }
+
+export interface ChangeCodeBody {
+  title: string
+  lang: string | undefined
+  codepw?: string
+  encrypt: number
+  category: string
+  content: string
+  codeId: string
+  exposure: number
+}

@@ -1,5 +1,16 @@
 <script setup lang="ts">
-import { content, onBlurTextArea } from './hook'
+import { onUnmounted, ref } from 'vue'
+import mitt from '@/utils/mitt'
+
+const content = ref<string>('')
+
+onUnmounted(() => {
+  content.value = ''
+})
+
+function onBlurTextArea() {
+  mitt.emit('jiabin', content.value)
+}
 </script>
 
 <template>
