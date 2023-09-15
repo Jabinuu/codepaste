@@ -1,33 +1,36 @@
 <script setup lang="ts">
-import { createVNode, ref } from 'vue'
-import { Modal } from 'ant-design-vue'
+import { computed, createVNode, onMounted, ref } from 'vue'
+import { Modal, message } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import { useRouter } from 'vue-router'
+import useCommentStore from '@/store/modules/comment'
+import useUserStore from '@/store/modules/user'
+import { formatDate } from '@/utils/date'
+import { pushToBlank } from '@/hooks/usePushBlank'
 
-interface DataItem {
-  id: number
-  title: string
-}
-const data: DataItem[] = [
-  {
-    id: 0,
-    title: '哇 大佬太强了！',
-  },
-  {
-    id: 1,
-    title: '非常优雅的代码',
-  },
-  {
-    id: 2,
-    title: '学习了学习了',
-  },
-  {
-    id: 3,
-    title: '哥哥真棒',
-  },
-]
+const userStore = useUserStore()
+const commentStoe = useCommentStore()
+const data = computed(() => commentStoe.userComment)
 const curItem = ref<number>()
+const router = useRouter()
+onMounted(() => {
+  getUserComment()
+})
 
-function showDeleteConfirm() {
+async function getUserComment() {
+  try {
+    await commentStoe.getUserComment(userStore.getCurUserId)
+  }
+  catch (e: any) {
+    message.error(e)
+  }
+}
+
+function handleClickTitle(item) {
+  pushToBlank(router, `/post/${item.codeId}`)
+}
+
+function showDeleteConfirm(item) {
   Modal.confirm({
     title: '删除提醒',
     icon: createVNode(ExclamationCircleOutlined),
@@ -35,11 +38,16 @@ function showDeleteConfirm() {
     okText: '确认',
     okType: 'danger',
     cancelText: '取消',
-    onOk() {
-      console.log('OK')
-    },
-    onCancel() {
-      console.log('Cancel')
+    async onOk() {
+      try {
+        await commentStoe.deleteUserComment(item.id)
+        message.success('删除成功!')
+        await getUserComment()
+      }
+      catch (e: any) {
+        console.log(e)
+        message.error(e.msg)
+      }
     },
   })
 }
@@ -50,19 +58,19 @@ function showDeleteConfirm() {
     <a-list item-layout="horizontal" :data-source="data" @mouseleave="curItem = -1">
       <template #renderItem="{ item }">
         <a-list-item @mouseenter="curItem = item.id">
-          <a-list-item-meta :description="item.title">
+          <a-list-item-meta :description="item.content">
             <template #title>
               <span>
                 <span class="mr-8">我</span>
-                <span class="mr-8">2023-07-11 22:14</span>
+                <span class="mr-8">{{ formatDate(item.date) }}</span>
                 <span class="mr-8">评论了</span>
-                <span class="mr-8">游客1</span>
+                <span class="mr-8">{{ item.author }}</span>
                 <span class="mr-8">的代码</span>
-                <a-button type="link" style="padding-left: 0;">
-                  GenshinYelan
+                <a-button type="link" style="padding-left: 0;" @click="handleClickTitle(item)">
+                  {{ item.title }}
                 </a-button>
               </span>
-              <a-button v-show="curItem === item.id" type="link" danger style="float: right;" @click="showDeleteConfirm">
+              <a-button v-show="curItem === item.id" type="link" danger style="float: right;" @click="showDeleteConfirm(item)">
                 删除
               </a-button>
             </template>

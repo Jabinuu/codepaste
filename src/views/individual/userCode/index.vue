@@ -6,7 +6,7 @@ import CodeEditor from './CodeEditor.vue'
 
 const publicData = ref({
   pn: 1,
-  ps: 3,
+  ps: 8,
   kw: '',
   languages: [],
 })
