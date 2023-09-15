@@ -25,6 +25,16 @@ export function useMitt() {
 
   onUnmounted(() => {
     mitt.off('jiabin')
+    // 清空表单
+    settingsState.value = {
+      title: '',
+      lang: undefined,
+      expiration: 'never',
+      codepw: '',
+      category: 'code',
+      exposure: 1,
+      encrypt: 0,
+    }
   })
 }
 
