@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { CodeFromData, CodeList } from '@/types/codeContentInfo.type'
 import type { CodeRequestBody } from '@/types/http.type'
-import { reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist } from '@/services/api/codeContent'
+import { reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist } from '@/services/api/code'
 
 interface CodeResponse {
   codeList: CodeList[]
