@@ -3,7 +3,7 @@ import { INFO_NAME, getToken, getUserInfoFromLocal, persistStoreUserInfo } from 
 import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
 import { reqChangeProfile, reqGetUserCode, reqGetUserInfo } from '@/services/api/user'
-import { reqChangeUserCode } from '@/services/api/code'
+import { reqChangeUserCode, reqDeleteUserCode } from '@/services/api/code'
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
 import type { ChangeProfileReq, CurrentUser } from '@/types/user.type'
 import type { ChangeCodeBody, UserCodeReqBody } from '@/types/http.type'
@@ -81,6 +81,11 @@ export default defineStore('user', {
 
     async changeUserCode(data: ChangeCodeBody) {
       const res: any = await reqChangeUserCode(data)
+      return res
+    },
+
+    async deleteUserCode(data: { codeId: string }) {
+      const res: any = await reqDeleteUserCode(data)
       return res
     },
 

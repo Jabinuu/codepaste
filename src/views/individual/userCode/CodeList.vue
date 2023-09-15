@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, createVNode, onMounted } from 'vue'
-import { Modal } from 'ant-design-vue'
+import { Modal, message } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import Icon from '@/components/Icon/Icon.vue'
 import mitt from '@/utils/mitt'
@@ -101,19 +101,23 @@ async function handlePageChange(e) {
   await getUserCode()
 }
 
-function showDeleteConfirm(id: string) {
+function showDeleteConfirm(codeId: string) {
   Modal.confirm({
     title: '删除提醒',
     icon: createVNode(ExclamationCircleOutlined),
-    content: `该操作将要删除编号为${id}的代码，操作是否继续?`,
+    content: `该操作将要删除编号为 ${codeId} 的代码，操作是否继续?`,
     okText: '确认',
     okType: 'danger',
     cancelText: '取消',
-    onOk() {
-      console.log('OK')
-    },
-    onCancel() {
-      console.log('Cancel')
+    async onOk() {
+      const res = await userStore.deleteUserCode({ codeId })
+      if (res.code === 100) {
+        message.success('删除成功!')
+        await getUserCode()
+      }
+      else {
+        message.error(res.msg)
+      }
     },
   })
 }
@@ -162,7 +166,7 @@ function showDeleteConfirm(id: string) {
             <a-button type="link" @click="openEditDrawer(record)">
               编辑
             </a-button>
-            <a-button type="link" danger @click="showDeleteConfirm(record.id)">
+            <a-button type="link" danger @click="showDeleteConfirm(record.codeId)">
               删除
             </a-button>
           </div>

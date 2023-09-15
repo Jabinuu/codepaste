@@ -26,7 +26,7 @@ defHttp.interceptors.response.use((response) => {
   const { data } = response
   return data
 }, (err) => {
-  message.error(err)
+  message.error('请求失败! 请检查网络设置')
   return Promise.reject(err)
 })
 
