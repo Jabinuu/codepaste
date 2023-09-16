@@ -11,7 +11,7 @@ useMitt()
     设置选项
   </h3>
   <a-form :model="settingsState" autocomplete="off" :label-col="{ style: { width: '90px' } }" :wrapper-col="{ span: 10 }">
-    <CodeSettingForm :form-state="settingsState" />
+    <CodeSettingForm :form-state="settingsState" :is-edit="true" />
     <a-form-item :wrapper-col="{ span: 10, offset: 3 }">
       <a-button type="primary" @click="createNewPaste">
         创建粘贴文本
