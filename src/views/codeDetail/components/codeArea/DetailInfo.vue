@@ -11,7 +11,7 @@ let iconName: Ref<string>
 let computedSize: Ref<string>
 watch(toRef(currentCode), () => {
   iconName = useIconLangName(currentCode?.value.lang as string)
-  computedSize = useComputedSzie(toRef(currentCode?.value.size))
+  computedSize = useComputedSzie(currentCode?.value.size as number)
 })
 </script>
 

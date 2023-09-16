@@ -3,10 +3,10 @@ import { INFO_NAME, getToken, getUserInfoFromLocal, persistStoreUserInfo } from 
 import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
 import { reqChangeProfile, reqGetUserInfo } from '@/services/api/user'
-import { reqChangeUserCode, reqDeleteUserCode, reqGetUserCode } from '@/services/api/code'
+import { reqChangeUserCode, reqDeleteUserCode, reqGetFavorite, reqGetUserCode } from '@/services/api/code'
 
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
-import type { ChangeProfileReq, CurrentUser } from '@/types/user.type'
+import type { ChangeProfileReq, CurrentUser, UserFavoriteList } from '@/types/user.type'
 import type { ChangeCodeBody, UserCodeReqBody } from '@/types/http.type'
 
 interface UserCode {
@@ -65,13 +65,11 @@ export default defineStore('user', {
       const res: any = await reqChangeProfile(data)
       await this.getUserInfoAction()
       return new Promise<void>((resolve, reject) => {
-        if (res.code === 100) {
+        if (res.code === 100)
           resolve(res)
-        }
-        else {
-          console.log(res)
-          reject(new Error(res))
-        }
+
+        else
+          reject(res.msg)
       })
     },
 
@@ -88,6 +86,17 @@ export default defineStore('user', {
     async deleteUserCode(data: { codeId: string }) {
       const res: any = await reqDeleteUserCode(data)
       return res
+    },
+
+    async getFavorite(data: { id: number }) {
+      const res: any = await reqGetFavorite(data)
+      return new Promise<UserFavoriteList[]>((resolve, reject) => {
+        if (res.code === 100)
+          resolve(res.data)
+
+        else
+          reject(res.msg)
+      })
     },
 
     initUserInfo() {

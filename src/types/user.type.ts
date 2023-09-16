@@ -29,3 +29,16 @@ export interface UserCodeListItem {
   content: string
   date: string
 }
+
+export interface UserFavoriteList {
+  title: string
+  content: string
+  author: string
+  date: number
+  size: number
+  viewNum: number
+  commentNum: number
+  lang: string
+  id: number
+  codeId: string
+}
