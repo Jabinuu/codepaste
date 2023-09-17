@@ -35,4 +35,5 @@ export interface CodeList extends Pick<SettingOption, 'title' | 'expiration' | '
   viewNum: number
   exposure: number
   commentNum: number
+  isFilled?: boolean
 }

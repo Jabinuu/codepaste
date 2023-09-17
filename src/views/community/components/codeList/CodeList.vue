@@ -6,7 +6,7 @@ import CodeInfoBar from './components/CodeInfoBar.vue'
 import { actions } from './constant'
 import { useShowCodeList } from './hook'
 
-const { pagination, listData, queryParam, getCodeDesc, onSwitchList } = useShowCodeList()
+const { pagination, listData, queryParam, getCodeDesc, onSwitchList, handleClickStar, computedIconType } = useShowCodeList()
 </script>
 
 <template>
@@ -28,10 +28,10 @@ const { pagination, listData, queryParam, getCodeDesc, onSwitchList } = useShowC
           </a-list-item-meta>
           <CodeInfoBar :lang="item.lang" :date="item.date" :size="item.size" />
           <template #actions>
-            <span v-for="{ type, id } in actions" :key="id" class="hover">
-              <component :is="type" style="margin-right: 4px" />
+            <span v-for="{ type, id } in actions" :key="id" class="hover" @click="handleClickStar(id, item)">
+              <component :is="computedIconType(type, id, item.isFilled)" class="mr-4" :class="[{ filled: id === 3 && item.isFilled }]" />
               <span v-if="type === EyeOutlined">{{ item.viewNum }}</span>
-              <span v-else-if="type === MessageOutlined">{{ item.commentNum }}</span>
+              <span v-else-if="type === MessageOutlined">{{ item.commentNum || '评论' }}</span>
               <span v-else>收藏</span>
             </span>
           </template>
@@ -53,9 +53,11 @@ const { pagination, listData, queryParam, getCodeDesc, onSwitchList } = useShowC
     border-bottom: 2px solid #f0f0f0;
     margin-bottom: 20px;
   }
-
+  .anticon-star.filled{
+    color: #409eff;
+  }
   .hover:hover{
     cursor:pointer;
-    color: #409eff;;
+    color: #409eff;
   }
 </style>

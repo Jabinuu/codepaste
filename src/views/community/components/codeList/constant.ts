@@ -6,7 +6,7 @@ export const exposureMap = new Map([
 ])
 
 export const actions: Record<string, any>[] = [
-  { type: EyeOutlined, id: '1' },
-  { type: MessageOutlined, id: '2' },
-  { type: StarOutlined, id: '3' },
+  { type: EyeOutlined, id: 1 },
+  { type: MessageOutlined, id: 2 },
+  { type: StarOutlined, id: 3 },
 ]

@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import { message } from 'ant-design-vue'
+import { StarFilled } from '@ant-design/icons-vue'
 import useCodesStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
 import type { CodeList } from '@/types/codeContentInfo.type'
 import type { CodeRequestBody } from '@/types/http.type'
+import useUserStore from '@/store/modules/user'
 
 export function useShowCodeList() {
   const codesStore = useCodesStore()
+  const userStore = useUserStore()
   const listData = computed(() => codesStore.listData)
   // 当前所在代码分类tab
   let curTab = 'hot'
@@ -43,7 +47,7 @@ export function useShowCodeList() {
       pagination.value.current = 1
       getCodeList(curTab, queryParam)
     })
-    codesStore.getHotlist(queryParam)
+    getCodeList(curTab, queryParam)
   })
 
   onUnmounted(() => {
@@ -60,38 +64,77 @@ export function useShowCodeList() {
     pagination.value.current = 1
   }
 
+  async function handleClickStar(type: number, item: any) {
+    if (type === 3) {
+      try {
+        const res = await codesStore.addFavorite({
+          uid: userStore.getCurUserId,
+          cid: item.id,
+        })
+        item.isFilled = true
+        await userStore.getUserInfoAction()
+        message.success(res)
+      }
+      catch (e: any) {
+        message.error(e)
+      }
+    }
+  }
+
+  function computedIconType(type, id: number, isFilled) {
+    if (id === 3)
+      return isFilled ? StarFilled : type
+    else
+      return type
+  }
+
   return {
     listData,
     pagination,
     queryParam,
     getCodeDesc,
     onSwitchList,
+    handleClickStar,
+    computedIconType,
   }
 }
 
-export function getCodeList(tab: string, query: CodeRequestBody) {
+export async function getCodeList(tab: string, query: CodeRequestBody) {
   const codesStore = useCodesStore()
   if (tab === 'hot')
-    codesStore.getHotlist(query)
+    await codesStore.getHotlist(query)
   else if (tab === 'new')
-    codesStore.getNewlist(query)
+    await codesStore.getNewlist(query)
   else if (tab === 'quality')
-    codesStore.getQualitylist(query)
+    await codesStore.getQualitylist(query)
+  handleStaredIcon(codesStore.listData.codeList)
+}
+
+export function handleStaredIcon(list: CodeList[]) {
+  const userStore = useUserStore()
+  if (userStore.getUserInfo()) {
+    const favoArr = userStore.getUserFavorite
+
+    list.forEach((elem) => {
+      if (favoArr?.includes(elem.id))
+        elem.isFilled = true
+    })
+  }
 }
 
 export function useSwitchList() {
-  const codesStore = useCodesStore()
+  // const codesStore = useCodesStore()
   async function switchHotlist(queryParam: CodeRequestBody, emit: any) {
     emit('switchList', 'hot')
-    await codesStore.getHotlist(queryParam)
+    getCodeList('hot', queryParam)
   }
   async function switchNewlist(queryParam: CodeRequestBody, emit: any) {
     emit('switchList', 'new')
-    await codesStore.getNewlist(queryParam)
+    getCodeList('new', queryParam)
   }
   async function switchQualitylist(queryParam: CodeRequestBody, emit: any) {
     emit('switchList', 'quality')
-    await codesStore.getQualitylist(queryParam)
+    getCodeList('quality', queryParam)
   }
   return {
     switchHotlist,

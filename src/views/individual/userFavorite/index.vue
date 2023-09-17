@@ -16,7 +16,7 @@ onMounted(() => {
 })
 
 async function getFavorite(id: number) {
-  data.value = await userStore.getFavorite({ id })
+  data.value = await userStore.getFavoriteAction({ id })
 }
 </script>
 

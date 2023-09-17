@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { CodeFromData, CodeList } from '@/types/codeContentInfo.type'
 import type { CodeRequestBody } from '@/types/http.type'
-import { reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist } from '@/services/api/code'
+import { reqAddFavorite, reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist } from '@/services/api/code'
 
 interface CodeResponse {
   codeList: CodeList[]
@@ -42,6 +42,16 @@ export default defineStore('codes', {
     async getDetailById(codeId: string): Promise<CodeList[]> {
       const { data }: any = await reqGetDetailById({ codeId })
       return data
+    },
+
+    async addFavorite(data: { uid: number; cid: number }) {
+      const res: any = await reqAddFavorite(data)
+      return new Promise<string>((resolve, reject) => {
+        if (res.code === 100)
+          resolve('收藏成功!')
+        else
+          reject(res.msg)
+      })
     },
   },
   getters: {

@@ -12,3 +12,4 @@ export const reqChangeUserCode = (data: ChangeCodeBody) => defHttp.patch('/code/
 export const reqDeleteUserCode = (data: { codeId: string }) => defHttp.post('/code/deleteCode', data)
 export const reqGetUserCode = (data: UserCodeReqBody) => defHttp.post('/code/userCode', data)
 export const reqGetFavorite = (data: { id: number }) => defHttp.post('/favorite/list', data)
+export const reqAddFavorite = (data: { uid: number; cid: number }) => defHttp.post('/favorite/add', data)

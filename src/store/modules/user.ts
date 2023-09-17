@@ -88,7 +88,7 @@ export default defineStore('user', {
       return res
     },
 
-    async getFavorite(data: { id: number }) {
+    async getFavoriteAction(data: { id: number }) {
       const res: any = await reqGetFavorite(data)
       return new Promise<UserFavoriteList[]>((resolve, reject) => {
         if (res.code === 100)
@@ -145,6 +145,11 @@ export default defineStore('user', {
         return ''
       const { avatarUrl } = JSON.parse(local)
       return avatarUrl || ''
+    },
+
+    getUserFavorite(): number[] | undefined {
+      if (this.getUserInfo())
+        return JSON.parse(this.getUserInfo().favorite)
     },
   },
 })
