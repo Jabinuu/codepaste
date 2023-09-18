@@ -4,18 +4,18 @@ import type { JointContent } from 'ant-design-vue/es/message/interface'
 import useUserStore from '@/store/modules/user'
 import { store } from '@/store'
 import { userLogout, whiteList } from '@/hooks/useAuth'
+import useFootmark from '@/hooks/useFootmark'
 
 export function createPermissionGuard(router: Router) {
   const userStore = useUserStore(store)
-
+  const { recordFootmark } = useFootmark()
   router.beforeEach(async (to, from, next) => {
     const token = userStore.getToken()
     if (!token) {
       // 白名单中的路由无须身份认证，直接放行
-      if (whiteList.includes(to.path) || to.path.startsWith('/post'))
-        return next()
-      else
+      if (!(whiteList.includes(to.path) || to.path.startsWith('/post')))
         return next(`/login?redirect=${from.path}`)
+      return next()
     }
     // 已登录便不允许访问login
     if (to.path === '/login')
@@ -34,6 +34,9 @@ export function createPermissionGuard(router: Router) {
         return next(`/login?redirect=${to.path}`)
       }
     }
+    if (to.path.startsWith('/post'))
+      recordFootmark(to.params.id as string)
+
     next()
   })
 }

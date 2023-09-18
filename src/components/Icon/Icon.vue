@@ -19,7 +19,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const s = `${props.size.replace('px', '')}px`
-const iconName = computed(() => `#${props.name}`)
 const iconStyle = computed((): CSSProperties => {
   return {
     // color: props.color,
@@ -30,7 +29,7 @@ const iconStyle = computed((): CSSProperties => {
 
 <template>
   <svg class="svg-icon icon" :style="iconStyle">
-    <use :href="iconName" />
+    <use :href="`#icon-${props.name}`" />
   </svg>
 </template>
 

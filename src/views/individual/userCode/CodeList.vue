@@ -138,7 +138,7 @@ function showDeleteConfirm(codeId: string) {
           </a-tooltip>
         </template>
         <template v-else-if="column.dataIndex === 'lang'">
-          <Icon :name="`icon-${useIconLangName(record.lang).value}`" size="16px" />
+          <Icon :name="`${useIconLangName(record.lang).value}`" size="16px" />
           {{ record.lang }}
         </template>
         <template v-else-if="column.dataIndex === 'encrypt'">

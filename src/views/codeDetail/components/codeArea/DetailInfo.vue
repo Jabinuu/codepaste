@@ -18,7 +18,7 @@ watch(toRef(currentCode), () => {
 <template>
   <div>
     <span>
-      <Icon :name="`icon-${iconName}`" size="16px" />
+      <Icon :name="`${iconName}`" size="16px" />
       {{ currentCode?.lang }}
     </span>
     <a-divider type="vertical" />

@@ -39,9 +39,9 @@ export default defineStore('codes', {
       this.recommendlist = data
     },
 
-    async getDetailById(codeId: string): Promise<CodeList[]> {
+    async getDetailById(codeId: string): Promise<CodeList> {
       const { data }: any = await reqGetDetailById({ codeId })
-      return data
+      return data[0]
     },
 
     async addFavorite(data: { uid: number; cid: number }) {

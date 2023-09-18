@@ -17,7 +17,7 @@ const iconName = useIconLangName(props.lang)
 <template>
   <div>
     <span>
-      <Icon :name="`icon-${iconName}`" size="16px" />
+      <Icon :name="`${iconName}`" size="16px" />
       {{ props.lang }}</span>
     <a-divider type="vertical" style="border-width: 2px;" />
     <span>{{ relativeTime(date) }}</span>

@@ -73,7 +73,7 @@ async function handleClickStar(item) {
               </a>
             </div>
             <a-tag class="lang-tag">
-              <Icon :name="`icon-${useIconLangName(item.lang).value}`" />
+              <Icon :name="`${useIconLangName(item.lang).value}`" />
               {{ item.lang }}
             </a-tag>
           </div>
