@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CommentOutlined, EyeOutlined, StarFilled } from '@ant-design/icons-vue'
+import { CommentOutlined, EyeOutlined, StarFilled, StarOutlined } from '@ant-design/icons-vue'
 import { onMounted, ref } from 'vue'
 import Icon from '@/components/Icon/Icon.vue'
 import useIconLangName from '@/hooks/useIconLangName'
@@ -7,7 +7,9 @@ import useUserStore from '@/store/modules/user'
 import type { UserFavoriteList } from '@/types/user.type'
 import { relativeTime } from '@/utils/date'
 import useComputedSzie from '@/hooks/useComputeSize'
+import useCodeStore from '@/store/modules/codes'
 
+const codeStore = useCodeStore()
 const userStore = useUserStore()
 const data = ref<UserFavoriteList[]>()
 
@@ -17,6 +19,28 @@ onMounted(() => {
 
 async function getFavorite(id: number) {
   data.value = await userStore.getFavoriteAction({ id })
+}
+
+async function handleClickStar(item) {
+  try {
+    if (!item.isQuited) {
+      await codeStore.quitFavorite({
+        uid: userStore.getCurUserId,
+        cid: item.id,
+      })
+      item.isQuited = true
+    }
+    else {
+      item.isQuited = false
+      await codeStore.addFavorite({
+        uid: userStore.getCurUserId,
+        cid: item.id,
+      })
+    }
+  }
+  catch (e) {
+
+  }
 }
 </script>
 
@@ -28,8 +52,7 @@ async function getFavorite(id: number) {
           <a-list-item-meta :description="item.content">
             <template #title>
               <a :href="`/post/${item.codeId}`" class="item-title" target="_blank">{{ item.title }}</a>
-              <StarFilled class="star-icon" />
-              <!-- <StarOutlined /> -->
+              <component :is="item.isQuited ? StarOutlined : StarFilled" class="star-icon" @click="handleClickStar(item)" />
             </template>
           </a-list-item-meta>
           <div class="flex justify-between">

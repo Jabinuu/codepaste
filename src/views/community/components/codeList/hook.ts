@@ -6,18 +6,19 @@ import useCodesStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
 import type { CodeList } from '@/types/codeContentInfo.type'
 import type { CodeRequestBody } from '@/types/http.type'
+import useFavorite from '@/hooks/useFavorite'
 import useUserStore from '@/store/modules/user'
 
 export function useShowCodeList() {
-  const codesStore = useCodesStore()
-  const userStore = useUserStore()
-  const listData = computed(() => codesStore.listData)
+  const { addFavorite, quitFavorite } = useFavorite()
+  const codeStore = useCodesStore()
+  const listData = computed(() => codeStore.listData)
   // 当前所在代码分类tab
   let curTab = 'hot'
   // 分页器数据
   const pagination = ref({
     current: 1,
-    total: computed(() => codesStore.listData.total),
+    total: computed(() => codeStore.listData.total),
     pageSize: 3,
     onChange(page: number) {
       pagination.value.current = page
@@ -84,31 +85,6 @@ export function useShowCodeList() {
       return isFilled ? StarFilled : type
     else
       return type
-  }
-
-  async function addFavorite(item) {
-    const res = await codesStore.addFavorite({
-      uid: userStore.getCurUserId,
-      cid: item.id,
-    })
-    item.isFilled = true
-    await userStore.getUserInfoAction()
-    message.success(res)
-  }
-
-  async function quitFavorite(item) {
-    try {
-      await userStore.quitFavorite({
-        cid: item.id,
-        uid: userStore.getCurUserId,
-      })
-      item.isFilled = false
-      await userStore.getUserInfoAction()
-      message.info('取消收藏')
-    }
-    catch (e: any) {
-      message.error(e)
-    }
   }
 
   return {
