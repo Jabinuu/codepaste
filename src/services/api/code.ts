@@ -13,3 +13,4 @@ export const reqDeleteUserCode = (data: { codeId: string }) => defHttp.post('/co
 export const reqGetUserCode = (data: UserCodeReqBody) => defHttp.post('/code/userCode', data)
 export const reqGetFavorite = (data: { id: number }) => defHttp.post('/favorite/list', data)
 export const reqAddFavorite = (data: { uid: number; cid: number }) => defHttp.post('/favorite/add', data)
+export const reqQuitFavorite = (data: { uid: number; cid: number }) => defHttp.post('/favorite/quit', data)

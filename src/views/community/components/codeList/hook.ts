@@ -67,13 +67,11 @@ export function useShowCodeList() {
   async function handleClickStar(type: number, item: any) {
     if (type === 3) {
       try {
-        const res = await codesStore.addFavorite({
-          uid: userStore.getCurUserId,
-          cid: item.id,
-        })
-        item.isFilled = true
-        await userStore.getUserInfoAction()
-        message.success(res)
+        if (item.isFilled)
+          quitFavorite(item)
+
+        else
+          addFavorite(item)
       }
       catch (e: any) {
         message.error(e)
@@ -86,6 +84,31 @@ export function useShowCodeList() {
       return isFilled ? StarFilled : type
     else
       return type
+  }
+
+  async function addFavorite(item) {
+    const res = await codesStore.addFavorite({
+      uid: userStore.getCurUserId,
+      cid: item.id,
+    })
+    item.isFilled = true
+    await userStore.getUserInfoAction()
+    message.success(res)
+  }
+
+  async function quitFavorite(item) {
+    try {
+      await userStore.quitFavorite({
+        cid: item.id,
+        uid: userStore.getCurUserId,
+      })
+      item.isFilled = false
+      await userStore.getUserInfoAction()
+      message.info('取消收藏')
+    }
+    catch (e: any) {
+      message.error(e)
+    }
   }
 
   return {
@@ -123,7 +146,6 @@ export function handleStaredIcon(list: CodeList[]) {
 }
 
 export function useSwitchList() {
-  // const codesStore = useCodesStore()
   async function switchHotlist(queryParam: CodeRequestBody, emit: any) {
     emit('switchList', 'hot')
     getCodeList('hot', queryParam)

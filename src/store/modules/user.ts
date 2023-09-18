@@ -3,7 +3,7 @@ import { INFO_NAME, getToken, getUserInfoFromLocal, persistStoreUserInfo } from 
 import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
 import { reqChangeProfile, reqGetUserInfo } from '@/services/api/user'
-import { reqChangeUserCode, reqDeleteUserCode, reqGetFavorite, reqGetUserCode } from '@/services/api/code'
+import { reqChangeUserCode, reqDeleteUserCode, reqGetFavorite, reqGetUserCode, reqQuitFavorite } from '@/services/api/code'
 
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
 import type { ChangeProfileReq, CurrentUser, UserFavoriteList } from '@/types/user.type'
@@ -93,6 +93,17 @@ export default defineStore('user', {
       return new Promise<UserFavoriteList[]>((resolve, reject) => {
         if (res.code === 100)
           resolve(res.data)
+
+        else
+          reject(res.msg)
+      })
+    },
+
+    async quitFavorite(data: { uid: number; cid: number }) {
+      const res: any = await reqQuitFavorite(data)
+      return new Promise<void>((resolve, reject) => {
+        if (res.code === 100)
+          resolve(res.msg)
 
         else
           reject(res.msg)
