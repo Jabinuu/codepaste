@@ -62,9 +62,9 @@ watch(checkboxState, (newVal) => {
   background: #fff;
 }
 :deep(.ant-card-body){
-  padding: 0 0 24px;
+  padding: 0 0 20px;
 }
 .ant-col{
-  padding: 8px 24px;
+  padding: 8px 28px;
 }
 </style>

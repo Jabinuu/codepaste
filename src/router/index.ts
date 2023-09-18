@@ -84,6 +84,7 @@ const router = createRouter({
       redirect: 'add',
     },
   ],
+  scrollBehavior: () => ({ top: 0 }),
 })
 
 export function setupRouter(app: App<Element>) {
