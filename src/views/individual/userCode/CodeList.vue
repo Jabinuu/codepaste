@@ -134,7 +134,9 @@ function showDeleteConfirm(codeId: string) {
                 {{ record.codeId }}
               </div>
             </template>
-            <a>{{ record.codeId }}</a>
+            <a :href="`/post/${record.codeId}`" target="_blank">
+              {{ record.codeId }}
+            </a>
           </a-tooltip>
         </template>
         <template v-else-if="column.dataIndex === 'lang'">
