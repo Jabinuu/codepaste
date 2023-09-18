@@ -7,7 +7,7 @@ export const reqGetNewlist = (data: CodeRequestBody) => defHttp.post('/code/newl
 export const reqGetQualitylist = (data: CodeRequestBody) => defHttp.post('/code/qualitylist', data)
 export const reqCreateCode = (data: CodeFromData) => defHttp.post('/code/create', data)
 export const reqGetDetailById = (data: { codeId: string }) => defHttp.post('/code/single', data)
-export const reqGetRecommedlist = () => defHttp.get('/code/recommend')
+export const reqGetRecommedlist = () => defHttp.get('/recommend/list')
 export const reqChangeUserCode = (data: ChangeCodeBody) => defHttp.patch('/code/changeCode', data)
 export const reqDeleteUserCode = (data: { codeId: string }) => defHttp.post('/code/deleteCode', data)
 export const reqGetUserCode = (data: UserCodeReqBody) => defHttp.post('/code/userCode', data)

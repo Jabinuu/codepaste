@@ -1,48 +1,48 @@
 <script setup lang="ts">
-interface DataItem {
-  title: string
-}
-const data: DataItem[] = [
-  {
-    title: '手写promise',
-  },
-  {
-    title: '快速排序',
-  },
-  {
-    title: 'vue响应式原理',
-  },
-  {
-    title: 'promise.all',
-  },
-  {
-    title: '手写深拷贝和浅拷贝手写深拷',
-  },
-  {
-    title: '手写apply、call、bind',
-  },
-  {
-    title: '手写const',
-  },
+import { computed, onMounted } from 'vue'
+import { HighlightLangEnum, LangToColor } from '@/enums/codeEnum'
+import useCodeStore from '@/store/modules/codes'
+import { relativeTime } from '@/utils/date'
+import useComputedSzie from '@/hooks/useComputeSize'
 
-]
+const codeStore = useCodeStore()
+const recommenList = computed(() => codeStore.recommendlist)
+const colorObj = {
+  C: LangToColor.C,
+  Java: LangToColor.JAVA,
+  JavaScript: LangToColor.JAVASCRIPT,
+  Python: LangToColor.PYTHON,
+  CSS: LangToColor.CSS,
+  HTML: LangToColor.HTML,
+  Text: LangToColor.TXT,
+  Markdown: LangToColor.MARKDOWN,
+}
+
+onMounted(() => {
+  codeStore.getRecommendlist()
+})
+function computeColorKey(item) {
+  return colorObj[item.lang === HighlightLangEnum.C ? 'C' : item.lang]
+}
 </script>
 
 <template>
   <div class="list-contariner">
     <a-card title="最近公开" :bordered="false">
-      <a-list item-layout="horizontal" :data-source="data">
+      <a-list item-layout="horizontal" :data-source="recommenList">
         <template #renderItem="{ item }">
           <a-list-item>
             <a-list-item-meta>
               <template #title>
-                <a style="font-size: 12px">{{ item.title }}</a>
+                <a style="font-size: 12px" :href="`/post/${item.codeId}`" target="_blank">{{ item.title }}</a>
               </template>
               <template #description>
-                <span style="font-size: 12px">js | 1天前 | 7.13 KB</span>
+                <span style="font-size: 12px">
+                  {{ item.lang }} | {{ relativeTime(item.date) }} | {{ useComputedSzie(item.size).value }}
+                </span>
               </template>
               <template #avatar>
-                <a-avatar src="https://joeschmoe.io/api/v1/random" style="width:15px;height: 15px;" />
+                <a-avatar class="avatar" :style="{ backgroundColor: computeColorKey(item) }" />
               </template>
             </a-list-item-meta>
           </a-list-item>
@@ -72,5 +72,9 @@ const data: DataItem[] = [
 
 :deep(.ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title) {
   line-height: 1 ;
+}
+.avatar{
+width: 15px;
+height: 15px;
 }
 </style>

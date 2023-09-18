@@ -24,3 +24,14 @@ export enum ExpirationsEnum {
   W1 = '1-W',
   MON1 = '1-Mon',
 }
+
+export enum LangToColor {
+  C = '#F34B7D',
+  JAVA = '#b07219',
+  JAVASCRIPT = '#F1F45A',
+  PYTHON = '#3572A5',
+  CSS = '#563D7C',
+  HTML = '#E34C26',
+  TXT = '#00ADD8',
+  MARKDOWN = '#696969',
+}
