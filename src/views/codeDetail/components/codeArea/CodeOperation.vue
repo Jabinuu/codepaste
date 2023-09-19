@@ -2,7 +2,7 @@
 import { ApiOutlined, CopyOutlined, DownloadOutlined, ExportOutlined, ShareAltOutlined } from '@ant-design/icons-vue'
 import type { Ref } from 'vue'
 import { inject } from 'vue'
-import { useTools } from './hook'
+import useTools from '@/hooks/useTools'
 
 import type { CodeList } from '@/types/codeContentInfo.type'
 
@@ -36,7 +36,7 @@ const { downloadCodeFile } = useTools()
       <template #title>
         一键复制代码
       </template>
-      <a-tag color="blue" class="cursor-pointer">
+      <a-tag v-copy="currentCode?.content" color="blue" class="cursor-pointer">
         <CopyOutlined class="mr-4" />复制
       </a-tag>
     </a-tooltip>
