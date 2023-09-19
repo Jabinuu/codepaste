@@ -3,10 +3,12 @@ import axios from 'axios'
 import nprogress from 'nprogress'
 import { getToken } from '@/utils/auth'
 import 'nprogress/nprogress.css'
+import { downloadFile } from '@/utils/download'
 
 const defHttp = axios.create({
   baseURL: '/api',
   timeout: 3000,
+
 })
 
 // 请求拦截器
@@ -24,6 +26,11 @@ defHttp.interceptors.request.use((config) => {
 defHttp.interceptors.response.use((response) => {
   nprogress.done()
   const { data } = response
+  console.log(response)
+
+  if (data instanceof Blob)
+    return downloadFile(response)
+
   return data
 }, (err) => {
   message.error('请求失败! 请检查网络设置')

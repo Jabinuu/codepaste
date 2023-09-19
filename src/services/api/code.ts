@@ -14,3 +14,4 @@ export const reqGetUserCode = (data: UserCodeReqBody) => defHttp.post('/code/use
 export const reqGetFavorite = (data: { id: number }) => defHttp.post('/favorite/list', data)
 export const reqAddFavorite = (data: { uid: number; cid: number }) => defHttp.post('/favorite/add', data)
 export const reqQuitFavorite = (data: { uid: number; cid: number }) => defHttp.post('/favorite/quit', data)
+export const reqDownloadCode = (data: { codeId: string }) => defHttp.get(`/file/download/${data.codeId}`, { responseType: 'blob' })

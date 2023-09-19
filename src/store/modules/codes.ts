@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { CodeFromData, CodeList } from '@/types/codeContentInfo.type'
 import type { CodeRequestBody } from '@/types/http.type'
-import { reqAddFavorite, reqCreateCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist, reqQuitFavorite } from '@/services/api/code'
+import { reqAddFavorite, reqCreateCode, reqDownloadCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist, reqQuitFavorite } from '@/services/api/code'
 
 interface CodeResponse {
   codeList: CodeList[]
@@ -63,6 +63,10 @@ export default defineStore('codes', {
         else
           reject(res.msg)
       })
+    },
+
+    async downloadCodeFile(data: { codeId: string }) {
+      await reqDownloadCode(data)
     },
   },
   getters: {

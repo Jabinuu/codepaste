@@ -42,7 +42,7 @@ function computeColorKey(item) {
                 </span>
               </template>
               <template #avatar>
-                <a-avatar class="avatar" :style="{ backgroundColor: computeColorKey(item) }" />
+                <a-avatar class="avatar" :style="{ backgroundColor: computeColorKey(item), opacity: 0.8 }" />
               </template>
             </a-list-item-meta>
           </a-list-item>
