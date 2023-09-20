@@ -3,16 +3,16 @@ import { ApiOutlined, CopyOutlined, DownloadOutlined, ExportOutlined, ShareAltOu
 import type { Ref } from 'vue'
 import { inject } from 'vue'
 import useTools from '@/hooks/useTools'
-
 import type { CodeList } from '@/types/codeContentInfo.type'
 
+const href = window.location.href
 const currentCode = inject<Ref<CodeList>>('currentCode')
-const { downloadCodeFile, exportAsImage } = useTools()
+const { downloadCodeFile, exportAsImage, pushToCitePage } = useTools()
 </script>
 
 <template>
   <div class="tag-group">
-    <a-tag color="blue" class="cursor-pointer">
+    <a-tag color="blue" class="cursor-pointer" @click="pushToCitePage(currentCode)">
       <ApiOutlined class="mr-4" />引用
     </a-tag>
     <a-tooltip>
@@ -40,10 +40,14 @@ const { downloadCodeFile, exportAsImage } = useTools()
         <CopyOutlined class="mr-4" />复制
       </a-tag>
     </a-tooltip>
-
-    <a-tag color="blue" class="cursor-pointer">
-      <ShareAltOutlined class="mr-4" />点击分享
-    </a-tag>
+    <a-tooltip>
+      <template #title>
+        复制代码链接
+      </template>
+      <a-tag v-copy="href" color="blue" class="cursor-pointer">
+        <ShareAltOutlined class="mr-4" />点击分享
+      </a-tag>
+    </a-tooltip>
   </div>
 </template>
 

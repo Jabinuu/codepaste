@@ -1,8 +1,6 @@
-import { useRouter } from 'vue-router'
 import type { Directive, DirectiveBinding } from 'vue'
 import { message } from 'ant-design-vue'
 import html2canvas from 'html2canvas'
-import { pushToBlank } from '@/hooks/usePushBlank'
 import useCodeStore from '@/store/modules/codes'
 
 interface ElType extends HTMLElement {
@@ -58,10 +56,8 @@ function downFileToLocal(fileName, blob) {
 }
 
 export default function useTools() {
-  function pushToCitePage() {
-    const router = useRouter()
-
-    pushToBlank(router, 'localhost:3000/pastecode')
+  function pushToCitePage(curCode: any) {
+    window.open(curCode.raw, '_blank')
   }
 
   function downloadCodeFile(codeId: string) {

@@ -5,5 +5,7 @@ export const pushToBlank = function (router: Router, path, query = {}) {
     path,
     query,
   })
+  console.log(routeData.path)
+
   window.open(routeData.path, '_blank')
 }
