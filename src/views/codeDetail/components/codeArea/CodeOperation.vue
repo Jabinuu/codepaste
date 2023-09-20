@@ -7,7 +7,7 @@ import useTools from '@/hooks/useTools'
 import type { CodeList } from '@/types/codeContentInfo.type'
 
 const currentCode = inject<Ref<CodeList>>('currentCode')
-const { downloadCodeFile } = useTools()
+const { downloadCodeFile, exportAsImage } = useTools()
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const { downloadCodeFile } = useTools()
       <template #title>
         代码生成图片导出
       </template>
-      <a-tag color="blue" class="cursor-pointer">
+      <a-tag color="blue" class="cursor-pointer" @click="exportAsImage">
         <ExportOutlined class="mr-4" />导出
       </a-tag>
     </a-tooltip>

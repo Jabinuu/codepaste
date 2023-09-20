@@ -22,7 +22,7 @@ watch(toRef(currentCode), () => {
 
 <template>
   <div>
-    <pre>
+    <pre class="code-block">
       <code>{{ currentCode?.content }}</code>
     </pre>
   </div>
