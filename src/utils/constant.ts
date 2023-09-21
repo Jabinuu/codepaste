@@ -27,3 +27,15 @@ export const expirations: SelectorOption[] = [
   { label: '1周', value: ExpirationsEnum.W1 },
   { label: '1个月', value: ExpirationsEnum.MON1 },
 ]
+
+export const langToExtname = new Map([
+  [HighlightLangEnum.C, '.cpp'],
+  [HighlightLangEnum.JAVA, '.java'],
+  [HighlightLangEnum.JAVASCRIPT, '.js'],
+  [HighlightLangEnum.PYTHON, '.py'],
+  [HighlightLangEnum.CSS, '.css'],
+  [HighlightLangEnum.HTML, 'html'],
+  [HighlightLangEnum.TXT, '.txt'],
+  [HighlightLangEnum.MARKDOWN, '.md'],
+  [HighlightLangEnum.OTHER, '.txt'],
+])

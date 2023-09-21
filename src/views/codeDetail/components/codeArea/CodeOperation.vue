@@ -19,7 +19,7 @@ const { downloadCodeFile, exportAsImage, pushToCitePage } = useTools()
       <template #title>
         代码文件下载到本地
       </template>
-      <a-tag color="blue" class="cursor-pointer" @click="downloadCodeFile((currentCode as any).codeId)">
+      <a-tag color="blue" class="cursor-pointer" @click="downloadCodeFile(currentCode)">
         <DownloadOutlined class="mr-4" />下载
       </a-tag>
     </a-tooltip>

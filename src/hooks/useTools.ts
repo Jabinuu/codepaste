@@ -1,7 +1,8 @@
 import type { Directive, DirectiveBinding } from 'vue'
 import { message } from 'ant-design-vue'
 import html2canvas from 'html2canvas'
-import useCodeStore from '@/store/modules/codes'
+import { aTagDownloadAction } from '@/utils/download'
+import { langToExtname } from '@/utils/constant'
 
 interface ElType extends HTMLElement {
   targetContent: string
@@ -24,9 +25,8 @@ function convertBase64ToBlob(imageEditorBase64) {
   const bytes = atob(base64String)
   // var bytes = base64;
   const bytesCode = new ArrayBuffer(bytes.length)
-  // 转换为类型化数组
+  // 转换为类型化数组(ArrayBuffer不可直接读写，需要TypedArray提供的接口对其操作，视图)
   const byteArray = new Uint8Array(bytesCode)
-  console.log(byteArray)
 
   // 将base64转换为ascii码
   for (let i = 0; i < bytes.length; i++)
@@ -34,36 +34,13 @@ function convertBase64ToBlob(imageEditorBase64) {
   // 生成Blob对象（文件对象）
   return new Blob([byteArray], { type: imgtype })
 }
-
-// 下载Blob流文件
-function downFileToLocal(fileName, blob) {
-  // 创建用于下载文件的a标签
-  const d = document.createElement('a')
-  // 给blob对象创建一个专属url
-  d.href = window.URL.createObjectURL(blob)
-  // 设置下载文件的名字
-  d.download = fileName
-  // 界面上隐藏该按钮
-  d.style.display = 'none'
-  // 放到页面上
-  document.body.appendChild(d)
-  // 点击下载文件
-  d.click()
-  // 从页面移除掉
-  document.body.removeChild(d)
-  // 释放 URL.createObjectURL() 创建的 URL 对象
-  window.URL.revokeObjectURL(d.href)
-}
-
 export default function useTools() {
   function pushToCitePage(curCode: any) {
     window.open(curCode.raw, '_blank')
   }
 
-  function downloadCodeFile(codeId: string) {
-    const codeStore = useCodeStore()
-
-    codeStore.downloadCodeFile({ codeId })
+  function downloadCodeFile(curCode: any) {
+    aTagDownloadAction(curCode.content, curCode.title + langToExtname.get(curCode.lang) as string)
   }
 
   function copyCodeToClipboard() {
@@ -107,9 +84,7 @@ export default function useTools() {
       removeContainer: true,
     })
     const base64Img = canvas.toDataURL('image/png')
-    console.log(base64Img)
-
-    downFileToLocal('code.png', convertBase64ToBlob(base64Img))
+    aTagDownloadAction(convertBase64ToBlob(base64Img), 'code.png')
   }
 
   return {

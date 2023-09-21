@@ -15,17 +15,28 @@ export function downloadFile(response: AxiosResponse) {
         }
       }
       catch (error) {
-        const blob = new Blob([response.data])
-        const url = window.URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.href = url
         const filename = response?.headers?.['content-dispositon']?.split('filename*=')?.[1]?.substr(7)
-        link.setAttribute('download', decodeURI(filename))
-        document.body.appendChild(link)
-        link.click()
+        aTagDownloadAction(response.data, filename)
         resolve(response.data)
       }
     }
     fileReader.readAsText(response.data)
   })
+}
+
+export function aTagDownloadAction(data: any, filename: string) {
+  const blob = new Blob([data])
+  // 给blob对象创建一个专属url
+  const url = window.URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  // 设置下载文件的名字
+  link.setAttribute('download', filename)
+  link.style.display = 'none'
+  document.body.appendChild(link)
+  // 点击下载文件
+  link.click()
+  document.body.removeChild(link)
+  // 释放 URL.createObjectURL() 创建的 URL 对象
+  window.URL.revokeObjectURL(url)
 }
