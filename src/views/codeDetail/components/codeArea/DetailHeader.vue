@@ -21,7 +21,9 @@ const expirationMap = new Map([
     <div class="avatar mr-20" />
     <div class="header-info flex-1">
       <div class="header-title">
-        <h1>{{ currentCode?.title }}</h1>
+        <h1>
+          {{ currentCode?.title }}
+        </h1>
       </div>
       <div class="flex info-group">
         <div>
@@ -67,13 +69,8 @@ const expirationMap = new Map([
 
   .header-info {
     .header-title h1 {
-      display: inline;
       font-size: 1.25em;
       font-weight: 600;
-      height: 20px;
-      line-height: 19px;
-      margin: 0;
-      padding: 0;
     }
   }
 

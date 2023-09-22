@@ -21,7 +21,7 @@ onMounted(() => {
 })
 
 async function getDetailById() {
-  const data = await codeStore.getDetailById(route.params.id as string)
+  const data = await codeStore.getDetailById(route.params.id as string, true)
   currentCode.value = data
 }
 

@@ -6,7 +6,7 @@ export const reqGetHotlist = (data: CodeRequestBody) => defHttp.post('/code/hotl
 export const reqGetNewlist = (data: CodeRequestBody) => defHttp.post('/code/newlist', data)
 export const reqGetQualitylist = (data: CodeRequestBody) => defHttp.post('/code/qualitylist', data)
 export const reqCreateCode = (data: CodeFromData) => defHttp.post('/code/create', data)
-export const reqGetDetailById = (data: { codeId: string }) => defHttp.post('/code/single', data)
+export const reqGetDetailById = (data: { codeId: string; isCount: boolean }) => defHttp.post('/code/single', data)
 export const reqGetRecommedlist = () => defHttp.get('/recommend/list')
 export const reqChangeUserCode = (data: ChangeCodeBody) => defHttp.patch('/code/changeCode', data)
 export const reqDeleteUserCode = (data: { codeId: string }) => defHttp.post('/code/deleteCode', data)
