@@ -7,7 +7,7 @@ import useIconLangName from '@/hooks/useIconLangName'
 import { pushToBlank } from '@/hooks/usePushBlank'
 
 const { getFootmark } = useFootmark()
-const footmark = getFootmark()
+const footmark = getFootmark().reverse()
 const router = useRouter()
 function handleClickTitle(codeId) {
   pushToBlank(router, `/post/${codeId}`)

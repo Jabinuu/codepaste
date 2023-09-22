@@ -4,7 +4,7 @@ import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
 import { reqChangeProfile, reqGetUserInfo } from '@/services/api/user'
 import { reqChangeUserCode, reqDeleteUserCode, reqGetFavorite, reqGetUserCode } from '@/services/api/code'
-
+import useFootmark from '@/hooks/useFootmark'
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
 import type { ChangeProfileReq, CurrentUser, UserFavoriteList } from '@/types/user.type'
 import type { ChangeCodeBody, UserCodeReqBody } from '@/types/http.type'
@@ -84,7 +84,9 @@ export default defineStore('user', {
     },
 
     async deleteUserCode(data: { codeId: string }) {
+      const { deleteDeletedFootmark } = useFootmark()
       const res: any = await reqDeleteUserCode(data)
+      deleteDeletedFootmark(data.codeId)
       return res
     },
 

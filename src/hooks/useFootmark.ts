@@ -40,5 +40,13 @@ export default function useFootmark() {
     }
   }
 
-  return { recordFootmark, getFootmark }
+  function deleteDeletedFootmark(codeId: string) {
+    let footmark = getFootmark()
+    footmark = footmark.filter(item => item.codeId !== codeId)
+    console.log(codeId)
+
+    localStorage.setItem(FOOTMARK_STORE, JSON.stringify(footmark))
+  }
+
+  return { recordFootmark, getFootmark, deleteDeletedFootmark }
 }
