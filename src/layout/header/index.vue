@@ -7,6 +7,7 @@ import UserAvatar from '@/layout/header/components/UserAvatar.vue'
 import mitt from '@/utils/mitt'
 
 const userStore = useUserStore()
+// const componentId = computed(() => userStore.getLoginComponentId)
 const kw = ref<string>('')
 const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
 </script>

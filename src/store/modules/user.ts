@@ -114,7 +114,8 @@ export default defineStore('user', {
     },
 
     getUserInfo(state) {
-      return () => state.current || getUserInfoFromLocal()
+      const cur = state.current || getUserInfoFromLocal()
+      return () => cur && (cur.exp * 1000 < Date.now() ? null : cur)
     },
 
     getLoginComponentId(): number {

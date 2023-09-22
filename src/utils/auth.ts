@@ -20,7 +20,7 @@ export function persistStoreUserInfo(cur: CurrentUser) {
 
 export function getUserInfoFromLocal() {
   const local = JSON.parse(localStorage.getItem(INFO_NAME) as string)
-  return local && (local.exp * 1000 < Date.now() ? null : local)
+  return local
 }
 
 export function deleteUserInfoLocal() {

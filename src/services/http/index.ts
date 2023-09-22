@@ -26,7 +26,6 @@ defHttp.interceptors.request.use((config) => {
 defHttp.interceptors.response.use((response) => {
   nprogress.done()
   const { data } = response
-  console.log(response)
 
   if (data instanceof Blob)
     return downloadFile(response)
