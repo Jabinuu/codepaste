@@ -35,7 +35,7 @@ const isHaveAvatar = computed(() => avatarUrl.value !== '')
           <a @click="gocustomerCenter">个人中心</a>
         </a-menu-item>
         <a-menu-item>
-          <LogoutOutlined class="mr-4" />
+          <LogoutOutlined class="mr-4 red" />
           <a @click="handleLogout">退出登录</a>
         </a-menu-item>
       </a-menu>
@@ -44,5 +44,7 @@ const isHaveAvatar = computed(() => avatarUrl.value !== '')
 </template>
 
 <style lang="less" scoped>
-
+.red{
+  color: red;
+}
 </style>
