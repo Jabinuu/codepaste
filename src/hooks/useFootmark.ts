@@ -48,5 +48,9 @@ export default function useFootmark() {
     localStorage.setItem(FOOTMARK_STORE, JSON.stringify(footmark))
   }
 
-  return { recordFootmark, getFootmark, deleteDeletedFootmark }
+  function deleteAllFootmark() {
+    localStorage.removeItem(FOOTMARK_STORE)
+  }
+
+  return { recordFootmark, getFootmark, deleteDeletedFootmark, deleteAllFootmark }
 }

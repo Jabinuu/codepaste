@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { message } from 'ant-design-vue'
 import useFootmark from '@/hooks/useFootmark'
 import Icon from '@/components/Icon/Icon.vue'
 import { formatDate } from '@/utils/date'
 import useIconLangName from '@/hooks/useIconLangName'
 import { pushToBlank } from '@/hooks/usePushBlank'
 
-const { getFootmark } = useFootmark()
-const footmark = getFootmark().reverse()
+const { getFootmark, deleteAllFootmark } = useFootmark()
+const footmark = getFootmark()?.reverse()
 const router = useRouter()
 function handleClickTitle(codeId) {
   pushToBlank(router, `/post/${codeId}`)
+}
+
+function deleteAllFootmarkAction() {
+  deleteAllFootmark()
+  message.success('清除成功!')
 }
 </script>
 
@@ -25,6 +31,16 @@ function handleClickTitle(codeId) {
         <span class="time">{{ formatDate(item.date, 'YYYY-MM-HH') }}</span>
       </a-timeline-item>
     </a-timeline>
+    <a-popconfirm
+      title="确定清除所有浏览记录吗"
+      ok-text="是"
+      cancel-text="否"
+      @confirm="deleteAllFootmarkAction"
+    >
+      <a-button danger class="ml">
+        清除所有浏览记录
+      </a-button>
+    </a-popconfirm>
   </a-card>
 </template>
 
