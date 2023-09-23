@@ -15,3 +15,4 @@ export const reqGetFavorite = (data: { id: number }) => defHttp.post('/favorite/
 export const reqAddFavorite = (data: { uid: number; cid: number }) => defHttp.post('/favorite/add', data)
 export const reqQuitFavorite = (data: { uid: number; cid: number }) => defHttp.post('/favorite/quit', data)
 export const reqDownloadCode = (data: { codeId: string }) => defHttp.get(`/file/download/${data.codeId}`, { responseType: 'blob' })
+export const reqVerifyCodepw = (data: { codeId: string; codepw: string }) => defHttp.post('/code/verify', data)

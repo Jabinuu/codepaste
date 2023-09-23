@@ -14,7 +14,7 @@ function handleLogout() {
   router.push('/add')
   userLogout()
 }
-const avatarUrl = computed(() => userStore.getAvatarUrl)
+const avatarUrl = computed(() => userStore.getUserAvatar)
 const isHaveAvatar = computed(() => avatarUrl.value !== '')
 </script>
 

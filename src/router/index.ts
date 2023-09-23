@@ -1,6 +1,7 @@
 import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPermissionGuard } from './permission'
+import useCodeStore from '@/store/modules/codes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -62,7 +63,27 @@ const router = createRouter({
       path: '/post/:id',
       name: 'post',
       component: () => import('@/views/codeDetail/index.vue'),
-
+      beforeEnter: async (to, from, next) => {
+        const codeStore = useCodeStore()
+        const verifyCodepw = async (codeId: string, codepw: string) => {
+          try {
+            return await codeStore.verifyCodepw({
+              codeId,
+              codepw,
+            })
+          }
+          catch (e: any) {
+            if (codepw !== undefined) {
+              message.error(e)
+              return false
+            }
+          }
+        }
+        const { encrypt, codeId } = await codeStore.getDetailById(to.params.id as string)
+        if (encrypt && !await verifyCodepw(codeId, to.query.codepw))
+          return next(`/encrypt/${to.params.id}`)
+        return next()
+      },
     },
     {
       path: '/login',
@@ -78,6 +99,11 @@ const router = createRouter({
       path: '/forget',
       name: 'forget',
       component: () => import('@/views/auth/forget/forget.vue'),
+    },
+    {
+      path: '/encrypt/:id',
+      name: 'encrypt',
+      component: () => import('@/views/codeEncrypt/index.vue'),
     },
     {
       path: '/',

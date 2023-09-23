@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { INFO_NAME, getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
+import { getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
 import { LogincComponent } from '@/enums/loginCompEnum'
 import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
-import { reqChangeProfile, reqGetUserInfo } from '@/services/api/user'
+import { reqChangeProfile, reqGetUserInfo, reqGetUserInfoById } from '@/services/api/user'
 import { reqChangeUserCode, reqDeleteUserCode, reqGetFavorite, reqGetUserCode } from '@/services/api/code'
 import useFootmark from '@/hooks/useFootmark'
 import type { ChangePasswordFormState, LoginFormState, RegisterFormState } from '@/types/auth.type'
@@ -101,6 +101,16 @@ export default defineStore('user', {
       })
     },
 
+    async getUserInfoById(data: { id: number }) {
+      const res: any = await reqGetUserInfoById(data)
+      return new Promise<any>((resolve, reject) => {
+        if (res.code === 100)
+          resolve(res.data)
+
+        else reject(res.msg)
+      })
+    },
+
     initUserInfo() {
       this.current = null
     },
@@ -140,19 +150,23 @@ export default defineStore('user', {
       return this.getUserInfo().username
     },
 
-    getAvatarUrl(state) {
-      if (state.current)
-        return state.current.avatarUrl
-      const local = localStorage.getItem(INFO_NAME)
-      if (!local)
-        return ''
-      const { avatarUrl } = JSON.parse(local)
-      return avatarUrl || ''
-    },
+    // getAvatarUrl(state) {
+    //   if (state.current)
+    //     return state.current.avatarUrl
+    //   const local = localStorage.getItem(INFO_NAME)
+    //   if (!local)
+    //     return ''
+    //   const { avatarUrl } = JSON.parse(local)
+    //   return avatarUrl || ''
+    // },
 
     getUserFavorite(): number[] | undefined {
       if (this.getUserInfo())
         return JSON.parse(this.getUserInfo().favorite)
+    },
+
+    getUserAvatar(): string {
+      return this.getUserInfo().avatarUrl
     },
   },
 })

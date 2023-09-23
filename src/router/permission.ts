@@ -1,19 +1,23 @@
 import type { Router } from 'vue-router'
 import { message } from 'ant-design-vue'
 import type { JointContent } from 'ant-design-vue/es/message/interface'
+import { computed } from 'vue'
 import useUserStore from '@/store/modules/user'
-import { store } from '@/store'
 import { userLogout, whiteList } from '@/hooks/useAuth'
 import useFootmark from '@/hooks/useFootmark'
 
 export function createPermissionGuard(router: Router) {
-  const userStore = useUserStore(store)
+  const userStore = useUserStore()
   const { recordFootmark } = useFootmark()
+
   router.beforeEach(async (to, from, next) => {
+    const isPost = computed(() => to.path.startsWith('/post'))
+    const isEncryptPage = computed(() => to.path.startsWith('/encrypt'))
     const token = userStore.getToken()
+
     if (!token) {
       // 白名单中的路由无须身份认证，直接放行
-      if (!(whiteList.includes(to.path) || to.path.startsWith('/post')))
+      if (!(whiteList.includes(to.path) || isPost.value || isEncryptPage.value))
         return next(`/login?redirect=${from.path}`)
       return next()
     }
@@ -34,7 +38,8 @@ export function createPermissionGuard(router: Router) {
         return next(`/login?redirect=${to.path}`)
       }
     }
-    if (to.path.startsWith('/post'))
+    // 登录状态下跳转至codeDetail 记录浏览记录
+    if ((isPost.value))
       recordFootmark(to.params.id as string)
 
     next()
