@@ -17,7 +17,7 @@ const encrypt = computed({
 </script>
 
 <template>
-  <a-form-item label="文本标题">
+  <a-form-item label="文本标题" name="title">
     <a-input v-model:value="_formState.title" placeholder="输入文本标题" :disabled="!isEdit" />
   </a-form-item>
   <a-form-item label="文本属性">
@@ -26,7 +26,6 @@ const encrypt = computed({
   <a-form-item v-if="_formState.category === 'code'" label="选择语言">
     <a-select v-model:value="_formState.lang" :options="highlightLang" placeholder="选择合适的语言" :disabled="!isEdit" />
   </a-form-item>
-  <!-- TODO：管理员才能修改有效时长 -->
   <a-form-item v-if="route.path === '/add'" label="有效时长">
     <a-select v-model:value="_formState.expiration" :options="expirations" />
   </a-form-item>
@@ -43,8 +42,8 @@ const encrypt = computed({
   <a-form-item label="是否加密">
     <a-switch v-model:checked="encrypt" :disabled="!isEdit" />
   </a-form-item>
-  <a-form-item v-if="_formState.encrypt" label="访问密码" :disabled="!isEdit">
-    <a-input v-model:value="_formState.codepw" placeholder="输入访问密码" />
+  <a-form-item v-if="_formState.encrypt" label="访问密码" :disabled="!isEdit" name="codepw">
+    <a-input-password v-model:value="_formState.codepw" placeholder="输入访问密码" :visibility-toggle="false" />
   </a-form-item>
 </template>
 

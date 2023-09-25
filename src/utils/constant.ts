@@ -39,3 +39,33 @@ export const langToExtname = new Map([
   [HighlightLangEnum.MARKDOWN, '.md'],
   [HighlightLangEnum.OTHER, '.txt'],
 ])
+
+export const usernameInputRules = [
+  { required: true, message: '请输入账号!' },
+  { pattern: /^[a-zA-Z0-9]{4,16}$/, message: '用户名长度为4~16,用户名仅包含字母和数字!' },
+]
+
+export const passwordInputRules = [
+  { required: true, message: '请输入密码!' },
+  { pattern: /^[a-zA-Z0-9]*$/, message: '密码只能为字母，数字' },
+]
+
+export const emailInputRules = [
+  { required: true, message: '请输入电子邮箱!' },
+  { pattern: /^(\w)+@[\w]+.([A-Za-z]{2,4})$/, message: '邮箱格式不正确!' },
+]
+
+export const rePasswordInputRules = [
+  { required: true, message: '请再次输入密码!' },
+  { pattern: /^[a-zA-Z0-9]*$/, message: '密码只能为字母，数字' },
+]
+
+export const codeTitleInputRules = [
+  { required: true, message: '文本标题不能为空' },
+  { pattern: /^[a-zA-Z0-9\u4E00-\u9FA5\s]*$/, message: '标题只能为字母，数字，汉字和空格' },
+]
+
+export const codepwInputeRules = [
+  { required: true, message: '访问密码不能为空!' },
+  { pattern: /^[a-zA-Z0-9^\s]*$/, message: '访问密码只能为字母，数字' },
+]

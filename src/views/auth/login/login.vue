@@ -5,16 +5,21 @@ import { message } from 'ant-design-vue'
 import { setToken } from '@/utils/auth'
 import type { LoginFormState } from '@/types/auth.type'
 import useUserStore from '@/store/modules/user'
+import { passwordInputRules, usernameInputRules } from '@/utils/constant'
 
 const router = useRouter()
 const route = useRoute()
 const curTab = ref('login')
 const userStore = useUserStore()
-
+const rules = {
+  username: usernameInputRules,
+  password: passwordInputRules,
+}
 const formState = ref<LoginFormState>({
   username: '',
   password: '',
 })
+const formRef = ref()
 
 const tabList = [{
   key: 'login',
@@ -23,20 +28,24 @@ const tabList = [{
 ]
 
 async function onClickLogin() {
-  const res: any = await userStore.userLogin({
-    username: formState.value.username,
-    password: formState.value.password,
-  })
-  // 登录失败
-  if (res.code !== 100)
-    return message.error(res.msg)
-  // 登录成功，持久化存储token,并跳转首页
-  message.success(res.msg)
-  setToken(userStore.token as string)
-  if (route.query.redirect)
-    router.push(route.query.redirect as string)
-  else
-    router.push('/add')
+  try {
+    await formRef.value.validate()
+    const res: any = await userStore.userLogin({
+      username: formState.value.username,
+      password: formState.value.password,
+    })
+    // 登录失败
+    if (res.code !== 100)
+      return message.error(res.msg)
+    // 登录成功，持久化存储token,并跳转首页
+    message.success(res.msg)
+    setToken(userStore.token as string)
+    if (route.query.redirect)
+      router.push(route.query.redirect as string)
+    else
+      router.push('/add')
+  }
+  catch (error) {}
 }
 </script>
 
@@ -48,25 +57,25 @@ async function onClickLogin() {
       class="inline-block "
     >
       <a-form
+        ref="formRef"
         :model="formState"
         name="basic"
         :label-col="{ span: 4 }"
         :wrapper-col="{ span: 20 }"
+        :rules="rules"
         style="width:400px"
         autocomplete="off"
       >
         <a-form-item
           label="用户名"
           name="username"
-          :rules="[{ required: true, message: '请输入账号!' }]"
         >
-          <a-input v-model:value="formState.username" placeholder="请输入账号" />
+          <a-input v-model:value.trim="formState.username" placeholder="请输入账号" />
         </a-form-item>
 
         <a-form-item
           label="密码"
           name="password"
-          :rules="[{ required: true, message: '请输入密码!' }]"
         >
           <a-input-password v-model:value="formState.password" placeholder="请输入密码" />
         </a-form-item>
@@ -82,7 +91,7 @@ async function onClickLogin() {
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 4, span: 20 }">
-          <a-button type="primary" style="width:100%" @click="onClickLogin">
+          <a-button type="primary" html-type="submit" style="width:100%" @click="onClickLogin">
             登录
           </a-button>
         </a-form-item>

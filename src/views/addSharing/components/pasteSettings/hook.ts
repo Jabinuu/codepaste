@@ -5,9 +5,15 @@ import type { SettingOption } from '@/types/codeContentInfo.type'
 import useCodeStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
 import useUseStore from '@/store/modules/user'
+import { codeTitleInputRules, codepwInputeRules } from '@/utils/constant'
 
-export const content = ref<string>('')
-export const codeStore = useCodeStore()
+export const rules = {
+  title: codeTitleInputRules,
+  codepw: codepwInputeRules,
+}
+export const formRef = ref()
+const content = ref<string>('')
+const codeStore = useCodeStore()
 export const settingsState = ref<SettingOption>({
   title: '',
   lang: undefined,
@@ -55,17 +61,22 @@ export function useCreateNewPaste() {
   })
 
   return async () => {
-    const userStore = useUseStore()
-    const res: any = await codeStore.createCode({
-      ...settingsState.value,
-      author: userStore.getCurUsername,
-      content: content.value,
-      uid: userStore.getCurUserId,
-    })
-    if (res.code === 100) {
-      message.success('创建代码成功!')
-      router.push(`/post/${res.data.codeId}`)
+    try {
+      await formRef.value.validate()
+      const userStore = useUseStore()
+      const res: any = await codeStore.createCode({
+        ...settingsState.value,
+        author: userStore.getCurUsername,
+        content: content.value,
+        uid: userStore.getCurUserId,
+      })
+      if (res.code === 100) {
+        message.success('创建代码成功!')
+        router.push(`/post/${res.data.codeId}`)
+      }
+      else { message.error('创建代码失败!') }
     }
-    else { message.error('创建代码失败!') }
+    catch (error) {
+    }
   }
 }

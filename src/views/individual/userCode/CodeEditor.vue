@@ -5,8 +5,14 @@ import mitt from '@/utils/mitt'
 import CodeSettingForm from '@/components/CodeSettingForm/CodeSettingForm.vue'
 import type { CodeEditerForm } from '@/types/codeContentInfo.type'
 import useUserStore from '@/store/modules/user'
+import { codeTitleInputRules, codepwInputeRules } from '@/utils/constant'
 
 const props = defineProps(['publicData'])
+const rules = {
+  title: codeTitleInputRules,
+  codepw: codepwInputeRules,
+}
+const formRef = ref()
 const userStore = useUserStore()
 const isEdit = ref()
 const open = ref<boolean>(false)
@@ -37,17 +43,23 @@ onUnmounted(() => {
 })
 
 async function handleSubmitChange() {
-  const res = await userStore.changeUserCode(formState.value)
-  if (res.code === 100) {
-    message.success('修改代码成功!')
-    open.value = false
-    await userStore.getUserCode({
-      pn: props.publicData.pn,
-      ps: props.publicData.ps,
-      kw: props.publicData.kw,
-      languages: props.publicData.languages,
-      id: userStore.getCurUserId,
-    })
+  try {
+    await formRef.value.validate()
+    const res = await userStore.changeUserCode(formState.value)
+    if (res.code === 100) {
+      message.success('修改代码成功!')
+      open.value = false
+      await userStore.getUserCode({
+        pn: props.publicData.pn,
+        ps: props.publicData.ps,
+        kw: props.publicData.kw,
+        languages: props.publicData.languages,
+        id: userStore.getCurUserId,
+      })
+    }
+  }
+  catch (error) {
+
   }
 }
 </script>
@@ -60,10 +72,16 @@ async function handleSubmitChange() {
       root-class-name="root-class-name"
       :root-style="{ color: 'blue' }"
       title="代码信息"
-      :width="456"
+      :width="520"
       placement="right"
     >
-      <a-form>
+      <a-form
+        ref="formRef"
+        :rules="rules"
+        :label-col="{ span: 5 }"
+        :wrapper-col="{ span: 19 }"
+        :model="formState"
+      >
         <a-form-item label="代码编号">
           <a-input v-model:value="formState.codeId" disabled />
         </a-form-item>
@@ -72,7 +90,7 @@ async function handleSubmitChange() {
           <a-textarea v-model:value="formState.content" :rows="20" :disabled="!isEdit" />
         </a-form-item>
         <a-form-item :wrapper-col="{ offset: 4 }">
-          <a-button v-if="isEdit" type="primary" @click="handleSubmitChange">
+          <a-button v-if="isEdit" type="primary" html-type="submit" @click="handleSubmitChange">
             提交修改
           </a-button>
         </a-form-item>

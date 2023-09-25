@@ -42,7 +42,13 @@ export default defineStore('user', {
     },
 
     async changePassword(data: ChangePasswordFormState) {
-      return await reqChangePassword(data)
+      const res: any = await reqChangePassword(data)
+      return new Promise<void>((resolve, reject) => {
+        if (res.code === 100)
+          resolve()
+        else
+          reject(res.msg)
+      })
     },
 
     async getUserInfoAction() {
@@ -150,23 +156,13 @@ export default defineStore('user', {
       return this.getUserInfo().username
     },
 
-    // getAvatarUrl(state) {
-    //   if (state.current)
-    //     return state.current.avatarUrl
-    //   const local = localStorage.getItem(INFO_NAME)
-    //   if (!local)
-    //     return ''
-    //   const { avatarUrl } = JSON.parse(local)
-    //   return avatarUrl || ''
-    // },
-
     getUserFavorite(): number[] | undefined {
       if (this.getUserInfo())
         return JSON.parse(this.getUserInfo().favorite)
     },
 
     getUserAvatar(): string {
-      return this.getUserInfo().avatarUrl
+      return this.getUserInfo()?.avatarUrl
     },
   },
 })
