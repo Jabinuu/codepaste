@@ -27,9 +27,9 @@ async function getAuthCardInfo() {
 }
 
 async function checkCodepw() {
+  route.meta.codepw = codepw.value
   router.push({
     path: `/post/${currentCode.value?.codeId}`,
-    query: { codepw: codepw.value }, // todo:传递一个md5加密后的密码，然后在路由首位解密，传送给后端进行验证
   })
 }
 </script>

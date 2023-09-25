@@ -71,7 +71,7 @@ export default defineStore('codes', {
 
     async verifyCodepw(data: { codeId: string; codepw: string }) {
       const res: any = await reqVerifyCodepw(data)
-      return new Promise<void>((resolve, reject) => {
+      return new Promise<any>((resolve, reject) => {
         if (res.code === 100)
           resolve(true)
 

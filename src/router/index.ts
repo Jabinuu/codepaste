@@ -1,5 +1,6 @@
 import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { message } from 'ant-design-vue'
 import { createPermissionGuard } from './permission'
 import useCodeStore from '@/store/modules/codes'
 
@@ -63,7 +64,9 @@ const router = createRouter({
       path: '/post/:id',
       name: 'post',
       component: () => import('@/views/codeDetail/index.vue'),
+      meta: { codepw: '' },
       beforeEnter: async (to, from, next) => {
+        const isFromEncrypt = from.name === 'encrypt'
         const codeStore = useCodeStore()
         const verifyCodepw = async (codeId: string, codepw: string) => {
           try {
@@ -73,14 +76,17 @@ const router = createRouter({
             })
           }
           catch (e: any) {
-            if (codepw !== undefined) {
+            if (isFromEncrypt) {
               message.error(e)
               return false
             }
           }
         }
+
+        if (isFromEncrypt)
+          to.meta.codepw = from.meta.codepw
         const { encrypt, codeId } = await codeStore.getDetailById(to.params.id as string)
-        if (encrypt && !await verifyCodepw(codeId, to.query.codepw))
+        if (encrypt && !await verifyCodepw(codeId, to.meta.codepw as string))
           return next(`/encrypt/${to.params.id}`)
         return next()
       },
@@ -104,6 +110,7 @@ const router = createRouter({
       path: '/encrypt/:id',
       name: 'encrypt',
       component: () => import('@/views/codeEncrypt/index.vue'),
+      meta: { codepw: '' },
     },
     {
       path: '/',
