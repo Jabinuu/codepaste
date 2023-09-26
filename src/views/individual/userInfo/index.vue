@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import descriptions from './Descriptions.vue'
-import infoForm from './InfoForm.vue'
+import infoForm from '@/views/individual/userInfo/InfoForm.vue'
+import descriptions from '@/views/individual/userInfo/Descriptions.vue'
 import useUserStore from '@/store/modules/user'
 
 const tabs = [descriptions, infoForm]

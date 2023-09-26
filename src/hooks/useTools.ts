@@ -9,7 +9,7 @@ interface ElType extends HTMLElement {
 }
 
 // base64转化为Blob对象
-function convertBase64ToBlob(imageEditorBase64) {
+function convertBase64ToBlob(imageEditorBase64: any) {
   const base64Arr = imageEditorBase64.split(',')
   let imgtype = ''
   let base64String = ''

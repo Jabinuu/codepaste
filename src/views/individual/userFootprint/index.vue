@@ -10,7 +10,7 @@ import { pushToBlank } from '@/hooks/usePushBlank'
 const { getFootmark, deleteAllFootmark } = useFootmark()
 const footmark = getFootmark()?.reverse()
 const router = useRouter()
-function handleClickTitle(codeId) {
+function handleClickTitle(codeId: any) {
   pushToBlank(router, `/post/${codeId}`)
 }
 

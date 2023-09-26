@@ -26,11 +26,11 @@ async function getUserComment() {
   }
 }
 
-function handleClickTitle(item) {
+function handleClickTitle(item: any) {
   pushToBlank(router, `/post/${item.codeId}`)
 }
 
-function showDeleteConfirm(item) {
+function showDeleteConfirm(item: any) {
   Modal.confirm({
     title: '删除提醒',
     icon: createVNode(ExclamationCircleOutlined),

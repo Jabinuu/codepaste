@@ -80,7 +80,7 @@ export function useShowCodeList() {
     }
   }
 
-  function computedIconType(type, id: number, isFilled) {
+  function computedIconType(type: any, id: number, isFilled: any) {
     if (id === 3)
       return isFilled ? StarFilled : type
     else

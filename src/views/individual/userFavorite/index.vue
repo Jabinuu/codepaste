@@ -21,7 +21,7 @@ async function getFavorite(id: number) {
   data.value = await userStore.getFavoriteAction({ id })
 }
 
-async function handleClickStar(item) {
+async function handleClickStar(item: any) {
   try {
     if (!item.isQuited) {
       await quitFavorite(item)

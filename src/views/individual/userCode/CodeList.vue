@@ -93,7 +93,7 @@ function openEditDrawer(record: any) {
   mitt.emit('openEditor', data)
 }
 
-async function handlePageChange(e) {
+async function handlePageChange(e: any) {
   emit('sendPage', {
     pn: e.current,
     ps: e.pageSize,

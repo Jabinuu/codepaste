@@ -11,13 +11,13 @@ const publicData = ref({
   languages: [],
 })
 
-function onSendFilter(val) {
+function onSendFilter(val: any) {
   publicData.value.kw = val.kw
   publicData.value.languages = val.languages
   publicData.value.pn = 1
 }
 
-function onSendPage(val) {
+function onSendPage(val: any) {
   publicData.value.ps = val.ps
   publicData.value.pn = val.pn
 }

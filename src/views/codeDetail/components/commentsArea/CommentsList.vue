@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import useCommentStore from '@/store/modules/comment'
-import type { CommentList } from '@/types/comment.type'
+import type { UserCommentList } from '@/types/comment.type'
 import { relativeTime } from '@/utils/date'
 
 const commentStore = useCommentStore()
-const data = computed<CommentList[]>(() => commentStore.codeComment)
+const data = computed<UserCommentList[]>(() => commentStore.codeComment)
 </script>
 
 <template>

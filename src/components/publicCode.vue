@@ -5,9 +5,20 @@ import useCodeStore from '@/store/modules/codes'
 import { relativeTime } from '@/utils/date'
 import useComputedSzie from '@/hooks/useComputeSize'
 
+interface ColorObj {
+  C: string
+  Java: string
+  JavaScript: string
+  Python: string
+  CSS: string
+  HTML: string
+  Text: string
+  Markdown: string
+}
+
 const codeStore = useCodeStore()
 const recommenList = computed(() => codeStore.recommendlist)
-const colorObj = {
+const colorObj: ColorObj = {
   C: LangToColor.C,
   Java: LangToColor.JAVA,
   JavaScript: LangToColor.JAVASCRIPT,
@@ -21,8 +32,8 @@ const colorObj = {
 onMounted(() => {
   codeStore.getRecommendlist()
 })
-function computeColorKey(item) {
-  return colorObj[item.lang === HighlightLangEnum.C ? 'C' : item.lang]
+function computeColorKey(item: any): any {
+  return colorObj[(item.lang === HighlightLangEnum.C ? 'C' : item.lang) as keyof ColorObj]
 }
 </script>
 

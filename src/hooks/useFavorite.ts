@@ -6,7 +6,7 @@ export default function useFavorite() {
   const userStore = useUserStore()
   const codeStore = useCodesStore()
 
-  async function addFavorite(item) {
+  async function addFavorite(item: any) {
     const res = await codeStore.addFavorite({
       uid: userStore.getCurUserId,
       cid: item.id,
@@ -16,7 +16,7 @@ export default function useFavorite() {
     message.success(res)
   }
 
-  async function quitFavorite(item) {
+  async function quitFavorite(item: any) {
     try {
       await codeStore.quitFavorite({
         cid: item.id,
