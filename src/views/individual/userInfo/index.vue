@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import infoForm from '@/views/individual/userInfo/InfoForm.vue'
-import descriptions from '@/views/individual/userInfo/Descriptions.vue'
+import InfoForm from '@/views/individual/userInfo/InfoForm.vue'
+import Descriptions from '@/views/individual/userInfo/Descriptions.vue'
 import useUserStore from '@/store/modules/user'
 
-const tabs = [descriptions, infoForm]
+const tabs = [Descriptions, InfoForm]
 const currentTab = ref(0)
 const userStore = useUserStore()
 const { avatarUrl, username, role } = userStore.getUserInfo()
