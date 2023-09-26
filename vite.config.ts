@@ -1,3 +1,5 @@
+// import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
@@ -24,7 +26,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@': './src',
+      '@/': `${resolve(process.cwd(), '.', 'src')}/`,
     },
   },
 })
