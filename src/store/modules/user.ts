@@ -126,6 +126,7 @@ export default defineStore('user', {
     },
   },
   getters: {
+    // pinia的getters属性只能感知到这个仓库的状态的更新
     // 缓存大坑！！！！若返回的是一个get函数，则不缓存
     getToken(state) {
       return () => state.token || getToken()
@@ -133,6 +134,8 @@ export default defineStore('user', {
 
     getUserInfo(state) {
       const cur = state.current || getUserInfoFromLocal()
+      if (!state.current)
+        state.current = cur
       return () => cur && (cur.exp * 1000 < Date.now() ? null : cur)
     },
 
@@ -141,19 +144,19 @@ export default defineStore('user', {
     },
 
     getUserCodeTotal(state) {
-      return (state.userCode as UserCode).total
+      return (state.userCode as UserCode)?.total
     },
 
     getUserCodeList(state) {
-      return (state.userCode as UserCode).codes
+      return (state.userCode as UserCode)?.codes
     },
 
     getCurUserId(): number {
-      return this.getUserInfo().id
+      return this.getUserInfo()?.id
     },
 
     getCurUsername(): string {
-      return this.getUserInfo().username
+      return this.getUserInfo()?.username
     },
 
     getUserFavorite(): number[] | undefined {

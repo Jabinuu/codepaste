@@ -12,7 +12,7 @@ const { pagination, listData, queryParam, getCodeDesc, onSwitchList, handleClick
 <template>
   <div class="list-container bg-w p-24">
     <ListMenu :query="queryParam" @switch-list="onSwitchList" />
-    <a-list item-layout="vertical" size="large" :data-source="listData.codeList">
+    <a-list item-layout="vertical" size="large" :data-source="listData?.codeList">
       <template #renderItem="{ item }">
         <a-list-item :key="item.id">
           <ItemProperty :encrypt="item.encrypt" :author="item.author" :exposure="item.exposure" />

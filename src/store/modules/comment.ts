@@ -17,13 +17,14 @@ export default defineStore('comment', {
 
     async getUserComment(uid: number) {
       const data: any = await reqGetUserComment({ uid })
+
       return new Promise<void>((resolve, reject) => {
         if (data.code === 100) {
           this.userComment = data.data
           resolve()
         }
         else {
-          reject(data.msg)
+          data.msg && reject(data.msg)
         }
       })
     },

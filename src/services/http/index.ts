@@ -33,7 +33,7 @@ defHttp.interceptors.response.use((response) => {
   return data
 }, (err) => {
   message.error('请求失败! 请检查网络设置')
-  return Promise.reject(err)
+  return err
 })
 
 export default defHttp

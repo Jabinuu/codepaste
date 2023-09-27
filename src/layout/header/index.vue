@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { markRaw, reactive, ref } from 'vue'
+import { computed, markRaw, reactive, ref } from 'vue'
 import useUserStore from '@/store/modules/user'
 import NavigateMenu from '@/layout/header/components/NavigateMenu.vue'
 import LoginGroup from '@/layout/header/components/LoginGroup.vue'
@@ -7,7 +7,7 @@ import UserAvatar from '@/layout/header/components/UserAvatar.vue'
 import mitt from '@/utils/mitt'
 
 const userStore = useUserStore()
-// const componentId = computed(() => userStore.getLoginComponentId)
+const componentId = computed(() => userStore.getLoginComponentId)
 const kw = ref<string>('')
 const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
 </script>
@@ -27,7 +27,7 @@ const tabs = reactive([markRaw(LoginGroup), markRaw(UserAvatar)])
     />
   </div>
   <keep-alive>
-    <component :is="tabs[userStore.getLoginComponentId]" />
+    <component :is="tabs[componentId]" />
   </keep-alive>
 </template>
 

@@ -18,7 +18,7 @@ export function useShowCodeList() {
   // 分页器数据
   const pagination = ref({
     current: 1,
-    total: computed(() => codeStore.listData.total),
+    total: computed(() => codeStore.listData?.total),
     pageSize: 3,
     onChange(page: number) {
       pagination.value.current = page
@@ -106,7 +106,7 @@ export async function getCodeList(tab: string, query: CodeRequestBody) {
     await codesStore.getNewlist(query)
   else if (tab === 'quality')
     await codesStore.getQualitylist(query)
-  handleStaredIcon(codesStore.listData.codeList)
+  handleStaredIcon(codesStore.listData?.codeList)
 }
 
 export function handleStaredIcon(list: CodeList[]) {
@@ -114,7 +114,7 @@ export function handleStaredIcon(list: CodeList[]) {
   if (userStore.getUserInfo()) {
     const favoArr = userStore.getUserFavorite
 
-    list.forEach((elem) => {
+    list?.forEach((elem) => {
       if (favoArr?.includes(elem.id))
         elem.isFilled = true
     })

@@ -8,7 +8,7 @@ defineEmits(['change'])
 const userStore = useUserStore()
 const profile = computed(() => userStore.getUserInfo())
 
-const _location = computed(() => profile.value?.location.replace(/\//g, ' '))
+const _location = computed(() => profile.value?.location?.replace(/\//g, ' '))
 const _registerTime = computed(() => formatDate(profile.value?.registerTime))
 </script>
 
