@@ -1,15 +1,17 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
+import type { Rule } from 'ant-design-vue/es/form'
 import type { SettingOption } from '@/types/codeContentInfo.type'
 import useCodeStore from '@/store/modules/codes'
 import mitt from '@/utils/mitt'
 import useUseStore from '@/store/modules/user'
-import { codeTitleInputRules, codepwInputeRules } from '@/utils/constant'
+import { codeTitleInputRules, codepwInputeRules, selectLangRules } from '@/utils/constant'
 
-export const rules = {
+export const rules: Record<string, Rule[]> = {
   title: codeTitleInputRules,
   codepw: codepwInputeRules,
+  languages: selectLangRules,
 }
 export const formRef = ref()
 const content = ref<string>('')

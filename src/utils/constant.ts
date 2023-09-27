@@ -69,3 +69,8 @@ export const codepwInputeRules = [
   { required: true, message: '访问密码不能为空!' },
   { pattern: /^[a-zA-Z0-9^\s]*$/, message: '访问密码只能为字母，数字' },
 ]
+
+export const selectLangRules = [
+  { required: true, message: '需要选择一种语言' },
+
+]

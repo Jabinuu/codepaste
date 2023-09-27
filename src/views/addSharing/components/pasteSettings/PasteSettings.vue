@@ -9,7 +9,14 @@ const createNewPaste = useCreateNewPaste()
   <h3 class="settingsTitle mb-30">
     设置选项
   </h3>
-  <a-form ref="formRef" :model="settingsState" autocomplete="off" :label-col="{ style: { width: '90px' } }" :wrapper-col="{ span: 10 }" :rules="rules">
+  <a-form
+    ref="formRef"
+    :model="settingsState"
+    :rules="rules"
+    autocomplete="off"
+    :label-col="{ style: { width: '90px' } }"
+    :wrapper-col="{ span: 10 }"
+  >
     <CodeSettingForm :form-state="settingsState" :is-edit="true" />
     <a-form-item :wrapper-col="{ span: 10, offset: 3 }">
       <a-button type="primary" html-type="submit" @click="createNewPaste">
