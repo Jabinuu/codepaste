@@ -113,6 +113,10 @@ const router = createRouter({
       meta: { codepw: '' },
     },
     {
+      path: '/:pathMatch(.*)',
+      component: () => import('@/views/notFound/404.vue'),
+    },
+    {
       path: '/',
       redirect: 'add',
     },
