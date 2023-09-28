@@ -1,12 +1,12 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/:path*",
-      "destination": "/index.html"
+      "src": "/api/(.*)",
+      "dest": "https://pastecode-server-72997-5-1321247427.sh.run.tcloudbase.com/$1"
     },
     {
-      "source": "/api/:match*",
-      "destination": "https://pastecode-server-72997-5-1321247427.sh.run.tcloudbase.com/:match*"
+      "src": "/:path*",
+      "dest": "/index.html"
     }
   ]
 }
