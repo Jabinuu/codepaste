@@ -4,7 +4,6 @@ export default (req, res) => {
   let target = ''
 
   // 代理目标地址
-  // 这里使用 backend 主要用于区分 vercel serverless 的 api 路径
   if (req.url.startsWith('/api'))
     target = 'https://pastecode-server-72997-5-1321247427.sh.run.tcloudbase.com/'
 
