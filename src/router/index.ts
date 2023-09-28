@@ -1,11 +1,11 @@
 import type { App } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { createPermissionGuard } from './permission'
 import useCodeStore from '@/store/modules/codes'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/add',
