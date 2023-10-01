@@ -7,9 +7,11 @@ import useCommentStore from '@/store/modules/comment'
 import useUserStore from '@/store/modules/user'
 import { formatDate } from '@/utils/date'
 import { pushToBlank } from '@/hooks/usePushBlank'
+import useLoading from '@/hooks/useLoading'
 
 const userStore = useUserStore()
 const commentStoe = useCommentStore()
+const { isLoading, loadingWrapper } = useLoading()
 const data = computed(() => commentStoe.userComment)
 const curItem = ref<number>()
 const router = useRouter()
@@ -19,7 +21,7 @@ onMounted(() => {
 
 async function getUserComment() {
   try {
-    await commentStoe.getUserComment(userStore.getCurUserId)
+    await loadingWrapper(commentStoe.getUserComment(userStore.getCurUserId))
   }
   catch (e: any) {
     message.error(e)
@@ -55,29 +57,31 @@ function showDeleteConfirm(item: any) {
 
 <template>
   <a-card title="我发表的评论" style="margin:0 140px 0;">
-    <a-list item-layout="horizontal" :data-source="data" @mouseleave="curItem = -1">
-      <template #renderItem="{ item }">
-        <a-list-item @mouseenter="curItem = item.id">
-          <a-list-item-meta :description="item.content">
-            <template #title>
-              <span>
-                <span class="mr-8">我</span>
-                <span class="mr-8">{{ formatDate(item.date) }}</span>
-                <span class="mr-8">评论了</span>
-                <span class="mr-8">{{ item.author }}</span>
-                <span class="mr-8">的代码</span>
-                <a-button type="link" style="padding-left: 0;" @click="handleClickTitle(item)">
-                  {{ item.title }}
+    <a-spin :spinning="isLoading">
+      <a-list item-layout="horizontal" :data-source="data" @mouseleave="curItem = -1">
+        <template #renderItem="{ item }">
+          <a-list-item @mouseenter="curItem = item.id">
+            <a-list-item-meta :description="item.content">
+              <template #title>
+                <span>
+                  <span class="mr-8">我</span>
+                  <span class="mr-8">{{ formatDate(item.date) }}</span>
+                  <span class="mr-8">评论了</span>
+                  <span class="mr-8">{{ item.author }}</span>
+                  <span class="mr-8">的代码</span>
+                  <a-button type="link" style="padding-left: 0;" @click="handleClickTitle(item)">
+                    {{ item.title }}
+                  </a-button>
+                </span>
+                <a-button v-show="curItem === item.id" type="link" danger style="float: right;" @click="showDeleteConfirm(item)">
+                  删除
                 </a-button>
-              </span>
-              <a-button v-show="curItem === item.id" type="link" danger style="float: right;" @click="showDeleteConfirm(item)">
-                删除
-              </a-button>
-            </template>
-          </a-list-item-meta>
-        </a-list-item>
-      </template>
-    </a-list>
+              </template>
+            </a-list-item-meta>
+          </a-list-item>
+        </template>
+      </a-list>
+    </a-spin>
   </a-card>
 </template>
 

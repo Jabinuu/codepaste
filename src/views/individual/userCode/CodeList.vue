@@ -7,9 +7,11 @@ import mitt from '@/utils/mitt'
 import useIconLangName from '@/hooks/useIconLangName'
 import useUserStore from '@/store/modules/user'
 import { formatDate } from '@/utils/date'
+import useLoading from '@/hooks/useLoading'
 
 const props = defineProps(['publicData'])
 const emit = defineEmits(['sendPage'])
+const { isLoading, loadingWrapper } = useLoading()
 const userStore = useUserStore()
 const columns = [
   {
@@ -66,13 +68,13 @@ onMounted(() => {
 })
 
 async function getUserCode() {
-  await userStore.getUserCode({
+  await loadingWrapper(userStore.getUserCode({
     id: userStore.getCurUserId,
     languages: [],
     kw: '',
     ps: props.publicData.ps,
     pn: props.publicData.pn,
-  })
+  }))
 }
 
 // 打开代码详情抽屉
@@ -125,7 +127,13 @@ function showDeleteConfirm(codeId: string) {
 
 <template>
   <div class="list-container bdr-4">
-    <a-table :columns="columns" :data-source="dataSource" :pagination="pagination" @change="handlePageChange">
+    <a-table
+      :columns="columns"
+      :data-source="dataSource"
+      :pagination="pagination"
+      :loading="isLoading"
+      @change="handlePageChange"
+    >
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'codeId'">
           <a-tooltip>
@@ -140,7 +148,7 @@ function showDeleteConfirm(codeId: string) {
           </a-tooltip>
         </template>
         <template v-else-if="column.dataIndex === 'lang'">
-          <Icon :name="`${useIconLangName(record.lang).value}`" size="16px" />
+          <Icon :name="`${useIconLangName(record.lang)?.value}`" size="16px" />
           {{ record.lang }}
         </template>
         <template v-else-if="column.dataIndex === 'encrypt'">

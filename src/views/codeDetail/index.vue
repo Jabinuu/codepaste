@@ -7,7 +7,9 @@ import PublicCode from '@/components/PublicCode/PublicCode.vue'
 import useCodeStore from '@/store/modules/codes'
 import useCommentStore from '@/store/modules/comment'
 import type { CodeList } from '@/types/codeContentInfo.type'
+import useLoading from '@/hooks/useLoading'
 
+const { isLoading, loadingWrapper } = useLoading()
 const codeStore = useCodeStore()
 const commentStore = useCommentStore()
 const route = useRoute()
@@ -21,20 +23,22 @@ onMounted(() => {
 })
 
 async function getDetailById() {
-  const data = await codeStore.getDetailById(route.params.id as string, true)
+  const data = await loadingWrapper(codeStore.getDetailById(route.params.id as string, true))
   currentCode.value = data
 }
 
-function getCommentList() {
-  commentStore.getCodeComment(route.params.id as string)
+async function getCommentList() {
+  await loadingWrapper(commentStore.getCodeComment(route.params.id as string))
 }
 </script>
 
 <template>
   <div class="codeDetail flex justify-center">
     <div class="left">
-      <CodeArea />
-      <CommentsArea />
+      <a-spin :spinning="isLoading">
+        <CodeArea />
+        <CommentsArea />
+      </a-spin>
     </div>
     <PublicCode />
   </div>

@@ -9,16 +9,18 @@ import type { UserFavoriteList } from '@/types/user.type'
 import { relativeTime } from '@/utils/date'
 import useComputedSzie from '@/hooks/useComputeSize'
 import useFavorite from '@/hooks/useFavorite'
+import useLoading from '@/hooks/useLoading'
 
 const userStore = useUserStore()
 const data = ref<UserFavoriteList[]>()
 const { addFavorite, quitFavorite } = useFavorite()
+const { isLoading, loadingWrapper } = useLoading()
 onMounted(() => {
   getFavorite(userStore.getCurUserId)
 })
 
 async function getFavorite(id: number) {
-  data.value = await userStore.getFavoriteAction({ id })
+  data.value = await loadingWrapper(userStore.getFavoriteAction({ id }))
 }
 
 async function handleClickStar(item: any) {
@@ -40,46 +42,48 @@ async function handleClickStar(item: any) {
 
 <template>
   <a-card title="我的收藏" style="margin:0 140px 0;">
-    <a-list :data-source="data" item-layout="vertical">
-      <template #renderItem="{ item }">
-        <a-list-item>
-          <a-list-item-meta :description="item.content">
-            <template #title>
-              <a :href="`#/post/${item.codeId}`" class="item-title" target="_blank">{{ item.title }}</a>
-              <component :is="item.isQuited ? StarOutlined : StarFilled " class="star-icon" @click="handleClickStar(item)" />
-            </template>
-          </a-list-item-meta>
-          <div class="flex justify-between">
-            <div class="actions">
-              <a href="#" class="hover-color gray">
-                {{ item.author }}
-              </a>
-              <a-divider type="vertical" />
-              <span class="gray">
-                {{ relativeTime(item.date) }}
-              </span>
-              <a-divider type="vertical" />
-              <span class="gray">
-                {{ useComputedSzie(item.size).value }}
-              </span>
-              <a-divider type="vertical" />
-              <span class="mr-16 gray">
-                <EyeOutlined class="mr-4" />
-                <span>{{ item.viewNum }}</span>
-              </span>
-              <a :href="`#/post/${item.codeId}`" class="hover-color gray" target="_blank">
-                <CommentOutlined class="mr-4" />
-                <span>评论</span>
-              </a>
+    <a-spin :spinning="isLoading">
+      <a-list :data-source="data" item-layout="vertical">
+        <template #renderItem="{ item }">
+          <a-list-item>
+            <a-list-item-meta :description="item.content">
+              <template #title>
+                <a :href="`#/post/${item.codeId}`" class="item-title" target="_blank">{{ item.title }}</a>
+                <component :is="item.isQuited ? StarOutlined : StarFilled " class="star-icon" @click="handleClickStar(item)" />
+              </template>
+            </a-list-item-meta>
+            <div class="flex justify-between">
+              <div class="actions">
+                <a href="#" class="hover-color gray">
+                  {{ item.author }}
+                </a>
+                <a-divider type="vertical" />
+                <span class="gray">
+                  {{ relativeTime(item.date) }}
+                </span>
+                <a-divider type="vertical" />
+                <span class="gray">
+                  {{ useComputedSzie(item.size)?.value }}
+                </span>
+                <a-divider type="vertical" />
+                <span class="mr-16 gray">
+                  <EyeOutlined class="mr-4" />
+                  <span>{{ item.viewNum }}</span>
+                </span>
+                <a :href="`#/post/${item.codeId}`" class="hover-color gray" target="_blank">
+                  <CommentOutlined class="mr-4" />
+                  <span>评论</span>
+                </a>
+              </div>
+              <a-tag class="lang-tag">
+                <Icon :name="`${useIconLangName(item.lang)?.value}`" />
+                {{ item.lang }}
+              </a-tag>
             </div>
-            <a-tag class="lang-tag">
-              <Icon :name="`${useIconLangName(item.lang).value}`" />
-              {{ item.lang }}
-            </a-tag>
-          </div>
-        </a-list-item>
-      </template>
-    </a-list>
+          </a-list-item>
+        </template>
+      </a-list>
+    </a-spin>
   </a-card>
 </template>
 

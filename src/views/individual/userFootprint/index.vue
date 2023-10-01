@@ -24,7 +24,7 @@ function deleteAllFootmarkAction() {
   <a-card class="timeline-wrap bdr-4" title="浏览记录">
     <a-timeline>
       <a-timeline-item v-for="(item) in footmark" :key="item.codeId">
-        <Icon :name="`${useIconLangName(item.lang).value}`" class="mr-8" />
+        <Icon :name="`${useIconLangName(item.lang)?.value}`" class="mr-8" />
         <a class="mr-8 title" @click="handleClickTitle(item.codeId)">
           {{ item.title }}
         </a>
