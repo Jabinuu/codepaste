@@ -45,7 +45,7 @@ async function handleClickStar(item: any) {
         <a-list-item>
           <a-list-item-meta :description="item.content">
             <template #title>
-              <a :href="`/post/${item.codeId}`" class="item-title" target="_blank">{{ item.title }}</a>
+              <a :href="`#/post/${item.codeId}`" class="item-title" target="_blank">{{ item.title }}</a>
               <component :is="item.isQuited ? StarOutlined : StarFilled " class="star-icon" @click="handleClickStar(item)" />
             </template>
           </a-list-item-meta>
@@ -67,7 +67,7 @@ async function handleClickStar(item: any) {
                 <EyeOutlined class="mr-4" />
                 <span>{{ item.viewNum }}</span>
               </span>
-              <a :href="`/post/${item.codeId}`" class="hover-color gray" target="_blank">
+              <a :href="`#/post/${item.codeId}`" class="hover-color gray" target="_blank">
                 <CommentOutlined class="mr-4" />
                 <span>评论</span>
               </a>

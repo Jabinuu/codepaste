@@ -1,4 +1,3 @@
-import type { Ref } from 'vue'
 import { computed } from 'vue'
 
 function myToFixed(num: number | string, digit: number): string {
@@ -8,13 +7,15 @@ function myToFixed(num: number | string, digit: number): string {
   return (Math.round((num + Number.EPSILON) * 10 ** digit) / 10 ** digit).toFixed(digit)
 }
 
-export default function useComputedSzie(bytes: number): Ref<string> {
-  return computed((): string => {
-    let size: string
-    if (bytes > 1024)
-      size = `${myToFixed(bytes / 1024, 2)} KB`
-    else
-      size = `${bytes}字节`
-    return size
-  })
+export default function useComputedSzie(bytes: number) {
+  if (bytes) {
+    return computed((): string => {
+      let size: string
+      if (bytes > 1024)
+        size = `${myToFixed(bytes / 1024, 2)} KB`
+      else
+        size = `${bytes}字节`
+      return size
+    })
+  }
 }

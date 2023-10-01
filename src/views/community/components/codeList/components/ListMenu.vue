@@ -4,11 +4,12 @@ import { ClockCircleOutlined, FireOutlined, LikeOutlined } from '@ant-design/ico
 import { useSwitchList } from '../hook'
 import type { CodeRequestBody } from '@/types/http.type'
 
-defineProps<{
+const props = defineProps<{
   query: CodeRequestBody
+  loadingWrapper: Function
 }>()
 const emit = defineEmits(['switchList'])
-const { switchHotlist, switchNewlist, switchQualitylist } = useSwitchList()
+const { switchHotlist, switchNewlist, switchQualitylist } = useSwitchList(props.loadingWrapper)
 const current = ref<string[]>(['hot'])
 </script>
 

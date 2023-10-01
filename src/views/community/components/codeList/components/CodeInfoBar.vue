@@ -5,13 +5,13 @@ import { relativeTime } from '@/utils/date'
 import Icon from '@/components/Icon/Icon.vue'
 
 const props = defineProps<{
-  lang: string
-  date: number
-  size: number
+  lang?: string
+  date?: number
+  size?: number
 }>()
 
-const computedSize = useComputedSzie(props.size)
-const iconName = useIconLangName(props.lang)
+const computedSize = useComputedSzie(props.size as number)
+const iconName = useIconLangName(props.lang as string)
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const iconName = useIconLangName(props.lang)
       <Icon :name="`${iconName}`" size="16px" />
       {{ props.lang }}</span>
     <a-divider type="vertical" style="border-width: 2px;" />
-    <span>{{ relativeTime(date) }}</span>
+    <span>{{ relativeTime(date as number) }}</span>
     <a-divider type="vertical" style="border-width: 2px;" />
     <span>{{ computedSize }}</span>
   </div>

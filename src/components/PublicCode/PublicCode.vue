@@ -4,6 +4,7 @@ import { HighlightLangEnum, LangToColor } from '@/enums/codeEnum'
 import useCodeStore from '@/store/modules/codes'
 import { relativeTime } from '@/utils/date'
 import useComputedSzie from '@/hooks/useComputeSize'
+import useLoading from '@/hooks/useLoading'
 
 interface ColorObj {
   C: string
@@ -17,7 +18,12 @@ interface ColorObj {
 }
 
 const codeStore = useCodeStore()
-const recommenList = computed(() => codeStore.recommendlist)
+const { loadingWrapper, isLoading } = useLoading()
+const recommenList = computed(() => {
+  return codeStore.recommendlist.length === 0
+    ? Array(7).fill({})
+    : codeStore.recommendlist
+})
 const colorObj: ColorObj = {
   C: LangToColor.C,
   Java: LangToColor.JAVA,
@@ -29,8 +35,8 @@ const colorObj: ColorObj = {
   Markdown: LangToColor.MARKDOWN,
 }
 
-onMounted(() => {
-  codeStore.getRecommendlist()
+onMounted(async () => {
+  console.log(await loadingWrapper(codeStore.getRecommendlist()))
 })
 function computeColorKey(item: any): any {
   return colorObj[(item.lang === HighlightLangEnum.C ? 'C' : item.lang) as keyof ColorObj]
@@ -43,19 +49,21 @@ function computeColorKey(item: any): any {
       <a-list item-layout="horizontal" :data-source="recommenList">
         <template #renderItem="{ item }">
           <a-list-item>
-            <a-list-item-meta>
-              <template #title>
-                <a style="font-size: 12px" :href="`/post/${item.codeId}`" target="_blank">{{ item.title }}</a>
-              </template>
-              <template #description>
-                <span style="font-size: 12px">
-                  {{ item.lang }} | {{ relativeTime(item.date) }} | {{ useComputedSzie(item.size).value }}
-                </span>
-              </template>
-              <template #avatar>
-                <a-avatar class="avatar" :style="{ backgroundColor: computeColorKey(item), opacity: 0.8 }" />
-              </template>
-            </a-list-item-meta>
+            <a-skeleton active :avatar="{ size: 'small', shape: 'circle' }" :loading="isLoading" :paragraph="false" :title="{ width: '100%' }">
+              <a-list-item-meta>
+                <template #title>
+                  <a style="font-size: 12px" :href="`#/post/${item.codeId}`" target="_blank">{{ item.title }}</a>
+                </template>
+                <template #description>
+                  <span style="font-size: 12px">
+                    {{ item.lang }} | {{ relativeTime(item.date) }} | {{ useComputedSzie(item.size)?.value }}
+                  </span>
+                </template>
+                <template #avatar>
+                  <a-avatar class="avatar" :style="{ backgroundColor: computeColorKey(item), opacity: 0.8 }" />
+                </template>
+              </a-list-item-meta>
+            </a-skeleton>
           </a-list-item>
         </template>
       </a-list>
@@ -74,7 +82,7 @@ function computeColorKey(item: any): any {
 }
 
 :deep(.ant-card-body) {
-  padding: 0 24px 24px;
+  padding: 0 24px 10px;
 }
 
 :deep(.ant-list-item) {

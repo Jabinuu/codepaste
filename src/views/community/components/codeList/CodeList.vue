@@ -6,35 +6,47 @@ import CodeInfoBar from './components/CodeInfoBar.vue'
 import { actions } from './constant'
 import { useShowCodeList } from './hook'
 
-const { pagination, listData, queryParam, getCodeDesc, onSwitchList, handleClickStar, computedIconType } = useShowCodeList()
+const {
+  pagination,
+  listData,
+  queryParam,
+  isLoading,
+  loadingWrapper,
+  getCodeDesc,
+  onSwitchList,
+  handleClickStar,
+  computedIconType,
+} = useShowCodeList()
 </script>
 
 <template>
   <div class="list-container bg-w p-24">
-    <ListMenu :query="queryParam" @switch-list="onSwitchList" />
+    <ListMenu :query="queryParam" :loading-wrapper="loadingWrapper" @switch-list="onSwitchList" />
     <a-list item-layout="vertical" size="large" :data-source="listData?.codeList">
       <template #renderItem="{ item }">
-        <a-list-item :key="item.id">
-          <ItemProperty :encrypt="item.encrypt" :author="item.author" :exposure="item.exposure" />
-          <a-list-item-meta>
-            <template #title>
-              <router-link :to="`/post/${item.codeId}`" target="_blank">
-                {{ item.title }}
-              </router-link>
+        <a-list-item :key="item?.id">
+          <a-skeleton :paragraph="{ rows: 3 }" active :loading="isLoading">
+            <ItemProperty :encrypt="item?.encrypt" :author="item?.author" :exposure="item?.exposure" />
+            <a-list-item-meta>
+              <template #title>
+                <router-link :to="`/post/${item?.codeId}`" target="_blank">
+                  {{ item?.title }}
+                </router-link>
+              </template>
+              <template #description>
+                {{ getCodeDesc(item) }}
+              </template>
+            </a-list-item-meta>
+            <CodeInfoBar :lang="item?.lang" :date="item?.date" :size="item?.size" />
+            <template #actions>
+              <span v-for="{ type, id } in actions" :key="id" class="hover" @click="handleClickStar(id, item)">
+                <component :is="computedIconType(type, id, item?.isFilled)" class="mr-4" :class="[{ filled: id === 3 && item?.isFilled }]" />
+                <span v-if="type === EyeOutlined">{{ item?.viewNum }}</span>
+                <span v-else-if="type === MessageOutlined">{{ item?.commentNum || '评论' }}</span>
+                <span v-else>收藏</span>
+              </span>
             </template>
-            <template #description>
-              {{ getCodeDesc(item) }}
-            </template>
-          </a-list-item-meta>
-          <CodeInfoBar :lang="item.lang" :date="item.date" :size="item.size" />
-          <template #actions>
-            <span v-for="{ type, id } in actions" :key="id" class="hover" @click="handleClickStar(id, item)">
-              <component :is="computedIconType(type, id, item.isFilled)" class="mr-4" :class="[{ filled: id === 3 && item.isFilled }]" />
-              <span v-if="type === EyeOutlined">{{ item.viewNum }}</span>
-              <span v-else-if="type === MessageOutlined">{{ item.commentNum || '评论' }}</span>
-              <span v-else>收藏</span>
-            </span>
-          </template>
+          </a-skeleton>
         </a-list-item>
       </template>
     </a-list>
@@ -48,6 +60,7 @@ const { pagination, listData, queryParam, getCodeDesc, onSwitchList, handleClick
 <style lang="less" scoped>
   .list-container{
     padding-top: 10px;
+    margin-bottom: 80px;
   }
   .ant-menu-horizontal{
     border-bottom: 2px solid #f0f0f0;

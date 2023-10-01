@@ -134,7 +134,7 @@ function showDeleteConfirm(codeId: string) {
                 {{ record.codeId }}
               </div>
             </template>
-            <a :href="`/post/${record.codeId}`" target="_blank">
+            <a :href="`#/post/${record.codeId}`" target="_blank">
               {{ record.codeId }}
             </a>
           </a-tooltip>

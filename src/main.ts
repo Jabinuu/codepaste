@@ -4,8 +4,8 @@ import '@/mock'
 import {
   Avatar, Button, Card, Cascader, Checkbox, Col, Descriptions, Divider,
   Drawer, Dropdown, Form, Input, Layout, List, Menu, Modal, Pagination,
-  Popconfirm, Radio, Row, Select, Switch, Table, Tabs, Tag, Timeline, Tooltip,
-  Upload,
+  Popconfirm, Radio, Row, Select, Skeleton, Switch, Table, Tabs, Tag, Timeline,
+  Tooltip, Upload,
 } from 'ant-design-vue'
 
 import 'ant-design-vue/dist/reset.css'
@@ -30,7 +30,7 @@ function bootstrap() {
     .use(Form).use(Radio).use(Select).use(Switch).use(Avatar).use(Card).use(Descriptions)
     .use(List).use(Table).use(Tabs).use(Tag).use(Timeline).use(Tooltip).use(Drawer)
     .use(Modal).use(Input).use(Checkbox).use(Col).use(Row).use(Cascader).use(Upload)
-    .use(Popconfirm)
+    .use(Popconfirm).use(Skeleton)
   app.mount('#app')
 }
 

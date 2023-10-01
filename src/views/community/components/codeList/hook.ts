@@ -8,11 +8,22 @@ import type { CodeList } from '@/types/codeContentInfo.type'
 import type { CodeRequestBody } from '@/types/http.type'
 import useFavorite from '@/hooks/useFavorite'
 import useUserStore from '@/store/modules/user'
+import useLoading from '@/hooks/useLoading'
 
 export function useShowCodeList() {
   const { addFavorite, quitFavorite } = useFavorite()
   const codeStore = useCodesStore()
-  const listData = computed(() => codeStore.listData)
+  const { isLoading, loadingWrapper } = useLoading()
+  const listData = computed(() => {
+    const total = codeStore.listData.total
+    const tmp = codeStore.listData.codeList.length === 0
+      ? Array(pagination.value.pageSize).fill({})
+      : codeStore.listData.codeList
+    return {
+      total,
+      codeList: tmp,
+    }
+  })
   // 当前所在代码分类tab
   let curTab = 'hot'
   // 分页器数据
@@ -22,7 +33,7 @@ export function useShowCodeList() {
     pageSize: 3,
     onChange(page: number) {
       pagination.value.current = page
-      getCodeList(curTab, queryParam)
+      getCodeList(curTab, queryParam, loadingWrapper)
     },
   })
   // 获取代码列表的请求体
@@ -41,14 +52,14 @@ export function useShowCodeList() {
   onMounted(() => {
     mitt.on('search', (val: string) => {
       queryParam.kw = val
-      getCodeList(curTab, queryParam)
+      getCodeList(curTab, queryParam, loadingWrapper)
     })
     mitt.on('langFilter', (languages: string[]) => {
       queryParam.languages = languages
       pagination.value.current = 1
-      getCodeList(curTab, queryParam)
+      getCodeList(curTab, queryParam, loadingWrapper)
     })
-    getCodeList(curTab, queryParam)
+    getCodeList(curTab, queryParam, loadingWrapper)
   })
 
   onUnmounted(() => {
@@ -57,10 +68,11 @@ export function useShowCodeList() {
   })
 
   function getCodeDesc(item: CodeList) {
-    return item.content.slice(0, 100)
+    return item.content?.slice(0, 100)
   }
 
   function onSwitchList(tab: string) {
+    codeStore.listData.codeList = []
     curTab = tab
     pagination.value.current = 1
   }
@@ -91,6 +103,8 @@ export function useShowCodeList() {
     listData,
     pagination,
     queryParam,
+    isLoading,
+    loadingWrapper,
     getCodeDesc,
     onSwitchList,
     handleClickStar,
@@ -98,14 +112,14 @@ export function useShowCodeList() {
   }
 }
 
-export async function getCodeList(tab: string, query: CodeRequestBody) {
+export async function getCodeList(tab: string, query: CodeRequestBody, loadingWrapper: Function) {
   const codesStore = useCodesStore()
   if (tab === 'hot')
-    await codesStore.getHotlist(query)
+    await loadingWrapper(codesStore.getHotlist(query))
   else if (tab === 'new')
-    await codesStore.getNewlist(query)
+    await loadingWrapper(codesStore.getNewlist(query))
   else if (tab === 'quality')
-    await codesStore.getQualitylist(query)
+    await loadingWrapper(codesStore.getQualitylist(query))
   handleStaredIcon(codesStore.listData?.codeList)
 }
 
@@ -121,18 +135,18 @@ export function handleStaredIcon(list: CodeList[]) {
   }
 }
 
-export function useSwitchList() {
+export function useSwitchList(loadingWrapper: Function) {
   async function switchHotlist(queryParam: CodeRequestBody, emit: any) {
     emit('switchList', 'hot')
-    getCodeList('hot', queryParam)
+    getCodeList('hot', queryParam, loadingWrapper)
   }
   async function switchNewlist(queryParam: CodeRequestBody, emit: any) {
     emit('switchList', 'new')
-    getCodeList('new', queryParam)
+    getCodeList('new', queryParam, loadingWrapper)
   }
   async function switchQualitylist(queryParam: CodeRequestBody, emit: any) {
     emit('switchList', 'quality')
-    getCodeList('quality', queryParam)
+    getCodeList('quality', queryParam, loadingWrapper)
   }
   return {
     switchHotlist,
