@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import { inject, toRef, watch } from 'vue'
 import Icon from '@/components/Icon/Icon.vue'
 import useIconLangName from '@/hooks/useIconLangName'
@@ -7,8 +7,8 @@ import useComputedSzie from '@/hooks/useComputeSize'
 import type { CodeList } from '@/types/codeContentInfo.type'
 
 const currentCode = inject<Ref<CodeList>>('currentCode')
-let iconName: Ref<string>
-let computedSize: Ref<string>
+let iconName: ComputedRef<string> | undefined
+let computedSize: ComputedRef<string> | undefined
 watch(toRef(currentCode), () => {
   iconName = useIconLangName(currentCode?.value.lang as string)
   computedSize = useComputedSzie(currentCode?.value.size as number)
