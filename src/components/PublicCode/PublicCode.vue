@@ -36,7 +36,7 @@ const colorObj: ColorObj = {
 }
 
 onMounted(async () => {
-  console.log(await loadingWrapper(codeStore.getRecommendlist()))
+  await loadingWrapper(codeStore.getRecommendlist())
 })
 function computeColorKey(item: any): any {
   return colorObj[(item.lang === HighlightLangEnum.C ? 'C' : item.lang) as keyof ColorObj]

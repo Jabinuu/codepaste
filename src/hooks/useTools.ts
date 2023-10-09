@@ -1,6 +1,8 @@
-import type { Directive, DirectiveBinding } from 'vue'
+import { type Directive, type DirectiveBinding, nextTick } from 'vue'
 import { message } from 'ant-design-vue'
-import html2canvas from 'html2canvas'
+
+// import html2canvas from 'html2canvas'
+import { dom2Image } from '@jiabinuu/dom-to-image'
 import { aTagDownloadAction } from '@/utils/download'
 import { langToExtname } from '@/utils/constant'
 
@@ -34,15 +36,31 @@ function convertBase64ToBlob(imageEditorBase64: any) {
   // 生成Blob对象（文件对象）
   return new Blob([byteArray], { type: imgtype })
 }
+
 export default function useTools() {
+  /**
+   *
+   * @param curCode any
+   * @description 跳转到引用页面
+   */
   function pushToCitePage(curCode: any) {
     window.open(curCode.raw, '_blank')
   }
 
+  /**
+   *
+   * @param curCode any
+   * @description 下载代码文件
+   */
   function downloadCodeFile(curCode: any) {
     aTagDownloadAction(curCode.content, curCode.title + langToExtname.get(curCode.lang) as string)
   }
 
+  /**
+   *
+   * @returns 自定义指令的声明对象
+   * @description 一键复制的自定义指令声明参数
+   */
   function copyCodeToClipboard() {
     return {
       beforeMount(el: ElType, binding: DirectiveBinding) {
@@ -74,17 +92,40 @@ export default function useTools() {
     } as Directive
   }
 
+  /**
+   * @description 代码导出为图片
+   */
   async function exportAsImage() {
-    const scale = window.devicePixelRatio
-    const canvas = await html2canvas(document.querySelector('.code-block') as HTMLElement, {
-      useCORS: true,
-      scale,
-      width: 1300,
-      backgroundColor: '#23241f',
-      removeContainer: true,
+    // const scale = window.devicePixelRatio
+    // const canvas = await html2canvas(document.querySelector('.code-block') as HTMLElement, {
+    //   useCORS: true,
+    //   scale,
+    //   width: 1300,
+    //   backgroundColor: '#23241f',
+    //   removeContainer: true,
+    // })
+
+    const content = document.querySelector('#code-block code.hljs') as HTMLElement
+    const pre = document.querySelector('#code-block') as HTMLElement
+    const image = dom2Image(pre, {
+      width: content?.scrollWidth,
+      height: content?.scrollHeight,
     })
-    const base64Img = canvas.toDataURL('image/png')
-    aTagDownloadAction(convertBase64ToBlob(base64Img), 'code.png')
+
+    document.body.appendChild(image)
+
+    image.style.position = 'fixed'
+    image.style.top = '-99999px'
+    nextTick(() => {
+      const width = image.clientWidth
+      const height = image.clientHeight
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      canvas.getContext('2d')?.drawImage(image as CanvasImageSource, 0, 0)
+      const base64Img = canvas.toDataURL('image/png')
+      aTagDownloadAction(convertBase64ToBlob(base64Img), 'code.png')
+    })
   }
 
   return {

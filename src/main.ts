@@ -9,10 +9,13 @@ import {
 } from 'ant-design-vue'
 
 import 'ant-design-vue/dist/reset.css'
+import hljsVuePlugin from '@highlightjs/vue-plugin'
 import { setupDirective } from './utils/directive'
 import { setupStore } from '@/store'
 import { setupRouter } from '@/router'
 import App from '@/App.vue'
+import 'highlight.js/styles/stackoverflow-light.css'
+import 'highlight.js/lib/common'
 
 function bootstrap() {
   const app = createApp(App)
@@ -31,6 +34,7 @@ function bootstrap() {
     .use(List).use(Table).use(Tabs).use(Tag).use(Timeline).use(Tooltip).use(Drawer)
     .use(Modal).use(Input).use(Checkbox).use(Col).use(Row).use(Cascader).use(Upload)
     .use(Popconfirm).use(Skeleton).use(Spin)
+  app.use(hljsVuePlugin)
   app.mount('#app')
 }
 

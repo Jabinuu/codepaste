@@ -8,6 +8,12 @@ dependencies:
   '@ant-design/icons-vue':
     specifier: ^6.1.0
     version: 6.1.0(vue@3.3.4)
+  '@highlightjs/vue-plugin':
+    specifier: ^2.1.0
+    version: 2.1.0(highlight.js@11.8.0)(vue@3.3.4)
+  '@jiabinuu/dom-to-image':
+    specifier: ^1.0.9
+    version: 1.0.9
   ant-design-vue:
     specifier: ^4.0.2
     version: 4.0.2(vue@3.3.4)
@@ -802,6 +808,16 @@ packages:
       '@hapi/hoek': 9.3.0
     dev: true
 
+  /@highlightjs/vue-plugin@2.1.0(highlight.js@11.8.0)(vue@3.3.4):
+    resolution: {integrity: sha512-E+bmk4ncca+hBEYRV2a+1aIzIV0VSY/e5ArjpuSN9IO7wBJrzUE2u4ESCwrbQD7sAy+jWQjkV5qCCWgc+pu7CQ==}
+    peerDependencies:
+      highlight.js: ^11.0.1
+      vue: ^3
+    dependencies:
+      highlight.js: 11.8.0
+      vue: 3.3.4
+    dev: false
+
   /@humanwhocodes/config-array@0.11.10:
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==}
     engines: {node: '>=10.10.0'}
@@ -838,6 +854,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@jiabinuu/dom-to-image@1.0.9:
+    resolution: {integrity: sha512-G6imKQ+rswfY/VBZNSdhDD50ygtAGrr+dHdj7cr136tIpPPPuG4AlGlG/9+uCY6E+GYMgH2pjsHg6VFxYYGrdg==}
+    dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}

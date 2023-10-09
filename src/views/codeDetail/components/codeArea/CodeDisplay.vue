@@ -1,35 +1,27 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { inject, nextTick, toRef, watch } from 'vue'
-import hljs from 'highlight.js'
+import { computed, inject } from 'vue'
 
 import type { CodeList } from '@/types/codeContentInfo.type'
 
 import 'highlight.js/styles/monokai-sublime.css' // 导入代码高亮样式
 
 const currentCode = inject<Ref<CodeList>>('currentCode')
-
-watch(toRef(currentCode), () => {
-  // 涉及dom操作，需要在dom获得数据并更新之后再做逻辑处理
-  nextTick(() => {
-    const blocks = document.querySelectorAll('pre code')
-    blocks.forEach((block: any) => {
-      hljs.highlightBlock(block)
-    })
-  })
-})
+const code = computed(() => currentCode?.value ? currentCode.value.content : '')
 </script>
 
 <template>
   <div>
-    <pre class="code-block">
-      <code>{{ currentCode?.content }}</code>
-    </pre>
+    <highlightjs id="code-block" autodetect :code="code" />
   </div>
 </template>
 
 <style lang="less" scoped>
-pre code.hljs{
+:deep(pre code.hljs) {
   line-height: 1.5;
+}
+
+#code-block {
+  margin-top: 20px;
 }
 </style>
