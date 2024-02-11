@@ -38,4 +38,5 @@ export interface CodeList extends Pick<SettingOption, 'title' | 'expiration' | '
   isFilled?: boolean
   uid?: number
   codeId: string
+  loading?: boolean
 }

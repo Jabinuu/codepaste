@@ -1,13 +1,19 @@
 import type { CurrentUser } from '@/types/user.type'
 
 const TOKEN_NAME = 'token'
+const REFRESH_TOKEN = 'refresh_token'
 export const INFO_NAME = 'user_store'
 export function getToken() {
-  return localStorage.getItem('token')
+  return {
+    token: localStorage.getItem('token'),
+    refreshToken: localStorage.getItem('refresh_token'),
+  }
 }
 
-export function setToken(token: string) {
+export function setToken(token: string, refreshToken: string) {
   localStorage.setItem(TOKEN_NAME, token)
+  if (refreshToken)
+    localStorage.setItem(REFRESH_TOKEN, refreshToken)
 }
 
 export function deleteToken() {

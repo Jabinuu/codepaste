@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { getToken, getUserInfoFromLocal, persistStoreUserInfo } from '@/utils/auth'
+import { getToken, getUserInfoFromLocal, persistStoreUserInfo, setToken } from '@/utils/auth'
 import { LogincComponent } from '@/enums/loginCompEnum'
-import { reqChangePassword, reqLogin, reqRegister } from '@/services/api/auth'
+import { reqChangePassword, reqLogin, reqRegister, reqUpdateToken } from '@/services/api/auth'
 import { reqChangeProfile, reqGetUserInfo, reqGetUserInfoById } from '@/services/api/user'
 import { reqChangeUserCode, reqDeleteUserCode, reqGetFavorite, reqGetUserCode } from '@/services/api/code'
 import useFootmark from '@/hooks/useFootmark'
@@ -18,6 +18,7 @@ interface userStoreState {
   loginComponentId: number
   current: CurrentUser | null
   token: string | undefined
+  refreshToken: string | undefined
   userCode: UserCode | {}
 }
 
@@ -25,6 +26,7 @@ export default defineStore('user', {
   state: (): userStoreState => {
     return {
       token: undefined,
+      refreshToken: undefined,
       loginComponentId: LogincComponent.LOGINGROUP,
       current: null,
       userCode: {},
@@ -38,7 +40,14 @@ export default defineStore('user', {
     async userLogin(data: LoginFormState) {
       const res: any = await reqLogin(data)
       this.token = res.data.token || ''
+      this.refreshToken = res.data.refreshToken || ''
       return res
+    },
+
+    async updateToken() {
+      const res: any = await reqUpdateToken({ username: this.current?.username as string })
+      this.token = res.data.token || ''
+      setToken(this.token as string, this.refreshToken as string)
     },
 
     async changePassword(data: ChangePasswordFormState) {
@@ -55,7 +64,7 @@ export default defineStore('user', {
       const res: any = await reqGetUserInfo()
       return new Promise((resolve, reject) => {
         // 如果请求到用户信息
-        if (Object.keys(res.data).length !== 0) {
+        if (res.code !== '10009') {
           this.current = res.data
           persistStoreUserInfo(this.getUserInfo())
           resolve(res)
@@ -129,7 +138,7 @@ export default defineStore('user', {
     // pinia的getters属性只能感知到这个仓库的状态的更新
     // 缓存大坑！！！！若返回的是一个get函数，则不缓存
     getToken(state) {
-      return () => state.token || getToken()
+      return () => state.token || getToken().token
     },
 
     getUserInfo(state) {

@@ -69,7 +69,7 @@ onMounted(() => {
 
 async function getUserCode() {
   await loadingWrapper(userStore.getUserCode({
-    id: userStore.getCurUserId,
+    id: userStore.current?.id as number,
     languages: [],
     kw: '',
     ps: props.publicData.ps,

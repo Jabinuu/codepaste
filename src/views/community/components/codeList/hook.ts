@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import { message } from 'ant-design-vue'
 import { StarFilled } from '@ant-design/icons-vue'
 import useCodesStore from '@/store/modules/codes'
@@ -11,6 +11,7 @@ import useUserStore from '@/store/modules/user'
 import useLoading from '@/hooks/useLoading'
 
 export function useShowCodeList() {
+  const placeholderDiv = ref()
   const { addFavorite, quitFavorite } = useFavorite()
   const codeStore = useCodesStore()
   const { isLoading, loadingWrapper } = useLoading()
@@ -25,12 +26,12 @@ export function useShowCodeList() {
     }
   })
   // 当前所在代码分类tab
-  let curTab = 'hot'
+  let curTab: 'hot' | 'new' | 'qulity' = 'hot'
   // 分页器数据
   const pagination = ref({
     current: 1,
     total: computed(() => codeStore.listData?.total),
-    pageSize: 3,
+    pageSize: 5,
     onChange(page: number) {
       pagination.value.current = page
       getCodeList(curTab, queryParam, loadingWrapper)
@@ -43,6 +44,16 @@ export function useShowCodeList() {
     pn: pagination.value.current,
     ps: pagination.value.pageSize,
   }
+
+  const observer = new IntersectionObserver((entries) => {
+    const isReq = entries[0].intersectionRatio <= 0 || pagination.value.total <= codeStore.listData.codeList.length || codeStore.isRequesting
+    if (isReq)
+      return
+    pagination.value.current += 1
+    getCodeList(curTab, queryParam, loadingWrapper)
+  }, {
+    rootMargin: '160px 0px',
+  })
 
   // 监听页码变化，并更新queryParam的pn值
   watchEffect(() => {
@@ -59,19 +70,24 @@ export function useShowCodeList() {
       pagination.value.current = 1
       getCodeList(curTab, queryParam, loadingWrapper)
     })
-    getCodeList(curTab, queryParam, loadingWrapper)
+    getCodeList(curTab, queryParam, loadingWrapper).then(() => {
+      nextTick(() => {
+        observer.observe(placeholderDiv.value)
+      })
+    })
   })
 
   onUnmounted(() => {
     mitt.off('search')
     mitt.off('langFilter')
+    observer.disconnect()
   })
 
   function getCodeDesc(item: CodeList) {
     return item.content?.slice(0, 100)
   }
 
-  function onSwitchList(tab: string) {
+  function onSwitchList(tab: 'hot' | 'new' | 'qulity') {
     codeStore.listData.codeList = []
     curTab = tab
     pagination.value.current = 1
@@ -104,6 +120,7 @@ export function useShowCodeList() {
     pagination,
     queryParam,
     isLoading,
+    placeholderDiv,
     loadingWrapper,
     getCodeDesc,
     onSwitchList,

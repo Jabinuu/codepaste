@@ -4,7 +4,7 @@ import type { CodeRequestBody } from '@/types/http.type'
 import { reqAddFavorite, reqCreateCode, reqDownloadCode, reqGetDetailById, reqGetHotlist, reqGetNewlist, reqGetQualitylist, reqGetRecommedlist, reqQuitFavorite, reqVerifyCodepw } from '@/services/api/code'
 
 interface CodeResponse {
-  codeList: CodeList[]
+  codeList: CodeList[] | any
   total: number
 }
 export default defineStore('codes', {
@@ -12,6 +12,7 @@ export default defineStore('codes', {
     return {
       listData: { total: 0, codeList: [] } as CodeResponse,
       recommendlist: [] as CodeList[],
+      isRequesting: false,
     }
   },
   actions: {
@@ -20,18 +21,61 @@ export default defineStore('codes', {
     },
 
     async getHotlist(body: CodeRequestBody) {
+      this.isRequesting = true
+      let newData = [...new Array(body.ps)].map(() => {
+        return { loading: true }
+      })
+      this.listData.codeList = this.listData.codeList.concat(newData)
       const { data }: any = await reqGetHotlist(body) // fix：泛型约束，要配置不同请求响应的类型
-      this.listData = data
+      this.isRequesting = false
+      newData = data.codeList.map((item: CodeList) => {
+        item.loading = false
+        return item
+      })
+      if (body.pn > 1) {
+        this.listData.codeList = this.listData.codeList.slice(0, -body.ps)
+        this.listData.codeList = this.listData.codeList.concat(newData)
+      }
+
+      else { this.listData = data }
     },
 
     async getNewlist(body: CodeRequestBody) {
+      this.isRequesting = true
+      let newData = [...new Array(body.ps)].map(() => {
+        return { loading: true }
+      })
+      this.listData.codeList = this.listData.codeList.concat(newData)
       const { data }: any = await reqGetNewlist(body)
-      this.listData = data
+      this.isRequesting = false
+      newData = data.codeList.map((item: CodeList) => {
+        item.loading = false
+        return item
+      })
+      if (body.pn > 1) {
+        this.listData.codeList = this.listData.codeList.slice(0, -body.ps)
+        this.listData.codeList = this.listData.codeList.concat(newData)
+      }
+      else { this.listData = data }
     },
 
     async getQualitylist(body: CodeRequestBody) {
+      this.isRequesting = true
+      let newData = [...new Array(body.ps)].map(() => {
+        return { loading: true }
+      })
+      this.listData.codeList = this.listData.codeList.concat(newData)
       const { data }: any = await reqGetQualitylist(body)
-      this.listData = data
+      this.isRequesting = false
+      newData = data.codeList.map((item: CodeList) => {
+        item.loading = false
+        return item
+      })
+      if (body.pn > 1) {
+        this.listData.codeList = this.listData.codeList.slice(0, -body.ps)
+        this.listData.codeList = this.listData.codeList.concat(newData)
+      }
+      else { this.listData = data }
     },
 
     async getRecommendlist() {

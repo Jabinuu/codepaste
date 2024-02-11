@@ -39,7 +39,7 @@ async function onClickLogin() {
       return message.error(res.msg)
     // 登录成功，持久化存储token,并跳转首页
     message.success(res.msg)
-    setToken(userStore.token as string)
+    setToken(userStore.token as string, userStore.refreshToken as string)
     if (route.query.redirect)
       router.push(route.query.redirect as string)
     else

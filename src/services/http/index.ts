@@ -13,23 +13,37 @@ const defHttp = axios.create({
 
 // 请求拦截器
 defHttp.interceptors.request.use((config) => {
-  const token = getToken()
-  if (token)
+  const { token, refreshToken } = getToken()
+  if (token) {
     config.headers.Authorization = token
+    config.headers.__authorization = refreshToken
+  }
 
   nprogress.configure({ showSpinner: false })
   nprogress.start()
+
   return config
 })
 
-// 相应拦截器
-defHttp.interceptors.response.use((response) => {
+// 响应拦截器
+defHttp.interceptors.response.use(async (response) => {
   nprogress.done()
   const { data } = response
 
   if (data instanceof Blob)
     return downloadFile(response)
 
+  if (data.code === '10009') {
+    // 更新短效token
+    const useUserStore = await import('@/store/modules/user')
+    const userStore = useUserStore.default()
+    await userStore.updateToken()
+    await userStore.getUserInfoAction()
+    // 重新发起请求
+    const { data: res } = await defHttp.request(response.config)
+
+    return res
+  }
   return data
 }, (err) => {
   message.error('请求失败! 请检查网络设置')

@@ -7,10 +7,11 @@ import { actions } from './constant'
 import { useShowCodeList } from './hook'
 
 const {
-  pagination,
+  // pagination,
   listData,
   queryParam,
-  isLoading,
+  // isLoading,
+  placeholderDiv,
   loadingWrapper,
   getCodeDesc,
   onSwitchList,
@@ -25,7 +26,7 @@ const {
     <a-list item-layout="vertical" size="large" :data-source="listData?.codeList">
       <template #renderItem="{ item }">
         <a-list-item :key="item?.id">
-          <a-skeleton :paragraph="{ rows: 3 }" active :loading="isLoading">
+          <a-skeleton :paragraph="{ rows: 3 }" active :loading="item.loading">
             <ItemProperty :encrypt="item?.encrypt" :author="item?.author" :exposure="item?.exposure" />
             <a-list-item-meta>
               <template #title>
@@ -50,10 +51,11 @@ const {
         </a-list-item>
       </template>
     </a-list>
-    <a-pagination
+    <div ref="placeholderDiv" style="height: 1px;" />
+    <!-- <a-pagination
       v-model:current="pagination.current" :total="pagination.total"
       :page-size="pagination.pageSize" class="flex justify-end" @change="pagination.onChange"
-    />
+    /> -->
   </div>
 </template>
 
