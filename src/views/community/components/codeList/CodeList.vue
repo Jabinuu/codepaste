@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { EyeOutlined, MessageOutlined } from '@ant-design/icons-vue'
+import { computed, ref, watch } from 'vue'
 import ItemProperty from './components/ItemProperty.vue'
 import ListMenu from './components/ListMenu.vue'
 import CodeInfoBar from './components/CodeInfoBar.vue'
@@ -18,12 +19,46 @@ const {
   handleClickStar,
   computedIconType,
 } = useShowCodeList()
+
+const start = ref(0)
+const over = ref(0)
+
+const vVirtualList = {
+  mounted: (el: HTMLElement) => {
+    const header = document.querySelector('.ant-layout-header') as HTMLElement
+    const headerHeight = header.clientHeight
+    const elTop = el.getBoundingClientRect().top
+    const offset = elTop - headerHeight
+    const itemHeight = 166
+    const visibleHeight = document.body.clientHeight - headerHeight
+    const visibleCount = Math.ceil(visibleHeight / itemHeight) + 1
+
+    over.value = visibleCount
+    const scrollHeight = computed(() => listData.value.codeList.length * itemHeight)
+    watch(scrollHeight, () => {
+      el.style.height = `${scrollHeight.value}px`
+    }, { immediate: true })
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY - offset
+      if (scrollTop > scrollHeight.value)
+        return
+
+      const scrollItemCount = Math.floor((scrollTop / itemHeight))
+      start.value = Math.max(scrollItemCount, 0)
+      over.value = start.value + visibleCount
+      const computedOffset = scrollTop > 0 ? scrollTop - (scrollTop % itemHeight) : 0
+      el.style.willChange = 'transform'
+      el.style.transform = `translateY(${computedOffset}px)`
+    })
+  },
+}
 </script>
 
 <template>
-  <div class="list-container bg-w p-24">
+  <div class="list-container bg-w p-24 overflow-hidden">
     <ListMenu :query="queryParam" :loading-wrapper="loadingWrapper" @switch-list="onSwitchList" />
-    <a-list item-layout="vertical" size="large" :data-source="listData?.codeList">
+    <a-list v-virtual-list item-layout="vertical" size="large" :data-source="listData?.codeList.slice(start, over)">
       <template #renderItem="{ item }">
         <a-list-item :key="item?.id">
           <a-skeleton :paragraph="{ rows: 3 }" active :loading="item.loading">
