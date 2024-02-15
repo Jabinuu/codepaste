@@ -40,10 +40,11 @@ defHttp.interceptors.response.use(async (response) => {
     await userStore.updateToken()
     await userStore.getUserInfoAction()
     // 重新发起请求
-    const { data: res } = await defHttp.request(response.config)
+    const res = await defHttp.request(response.config)
 
     return res
   }
+  console.log(data)
   return data
 }, (err) => {
   message.error('请求失败! 请检查网络设置')

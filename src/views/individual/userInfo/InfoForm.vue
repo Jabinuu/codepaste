@@ -7,6 +7,8 @@ import { message } from 'ant-design-vue'
 import type { UploadChangeParam } from 'ant-design-vue'
 import type { ChangeProfileFormState } from '@/types/user.type'
 import useUserStore from '@/store/modules/user'
+import Authority from '@/components/Authority.vue'
+import { PermsEnum } from '@/types/auth.type'
 
 const emit = defineEmits(['change'])
 const userStore = useUserStore()
@@ -20,6 +22,7 @@ const formState: UnwrapRef<ChangeProfileFormState> = reactive({
   email: defaultInfo.value.email,
   introduction: defaultInfo.value.introduction,
   avatarUrl: defaultInfo.value.avatarUrl,
+  registerTime: defaultInfo.value.registerTime,
 })
 const formItemLayout = {
   labelCol: { span: 2 },
@@ -103,6 +106,11 @@ function beforeUpload(file: any) {
         <a-form-item label="简介">
           <a-textarea v-model:value="formState.introduction" show-count :maxlength="100" placeholder="输入简介" />
         </a-form-item>
+        <Authority :permissions="PermsEnum.UPDATE_REGISTER_TIME">
+          <a-form-item label="注册时间">
+            <a-textarea v-model:value="formState.registerTime" :maxlength="100" placeholder="输入注册时间" />
+          </a-form-item>
+        </Authority>
         <a-form-item label="更换头像">
           <a-upload
             v-model:file-list="fileList" name="avatar" list-type="picture-card" class="avatar-uploader"

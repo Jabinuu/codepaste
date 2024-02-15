@@ -6,6 +6,8 @@ import CodeSettingForm from '@/components/CodeSettingForm/CodeSettingForm.vue'
 import type { CodeEditerForm } from '@/types/codeContentInfo.type'
 import useUserStore from '@/store/modules/user'
 import { codeTitleInputRules, codepwInputeRules } from '@/utils/constant'
+import Authority from '@/components/Authority.vue'
+import { PermsEnum } from '@/types/auth.type'
 
 const props = defineProps(['publicData'])
 const rules = {
@@ -26,6 +28,7 @@ const formState = ref<CodeEditerForm>({
   encrypt: 0,
   content: '',
   codeId: '',
+  date: 0,
 })
 onMounted(() => {
   mitt.on('openEditor', (e: any) => {
@@ -82,9 +85,16 @@ async function handleSubmitChange() {
         :wrapper-col="{ span: 19 }"
         :model="formState"
       >
-        <a-form-item label="代码编号">
-          <a-input v-model:value="formState.codeId" disabled />
-        </a-form-item>
+        <Authority v-slot="{ userPerms }">
+          <a-form-item label="代码编号">
+            <a-input v-model:value="formState.codeId" :disabled="(userPerms & PermsEnum.UPDATE_CID) === 0" />
+          </a-form-item>
+        </Authority>
+        <Authority :permissions="PermsEnum.UPDATE_DATE">
+          <a-form-item label="创建时间">
+            <a-input v-model:value="formState.date" />
+          </a-form-item>
+        </Authority>
         <CodeSettingForm :form-state="formState" :is-edit="isEdit" />
         <a-form-item label="代码详情">
           <a-textarea v-model:value="formState.content" :rows="20" :disabled="!isEdit" />

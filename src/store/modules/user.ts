@@ -145,7 +145,8 @@ export default defineStore('user', {
       const cur = state.current || getUserInfoFromLocal()
       if (!state.current)
         state.current = cur
-      return () => cur && (cur.exp * 1000 < Date.now() ? null : cur)
+      // return () => cur && (cur.exp * 1000 < Date.now() ? null : cur)
+      return () => cur
     },
 
     getLoginComponentId(): number {
@@ -175,6 +176,11 @@ export default defineStore('user', {
 
     getUserAvatar(): string {
       return this.getUserInfo()?.avatarUrl
+    },
+
+    getUserPermissions(): number {
+      // return this.getUserInfo()?.role
+      return 0
     },
   },
 })

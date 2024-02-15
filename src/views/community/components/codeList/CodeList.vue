@@ -29,7 +29,7 @@ const vVirtualList = {
     const headerHeight = header.clientHeight
     const elTop = el.getBoundingClientRect().top
     const offset = elTop - headerHeight
-    const itemHeight = 166
+    const itemHeight = 188
     const visibleHeight = document.body.clientHeight - headerHeight
     const visibleCount = Math.ceil(visibleHeight / itemHeight) + 1
 
@@ -74,14 +74,15 @@ const vVirtualList = {
               </template>
             </a-list-item-meta>
             <CodeInfoBar :lang="item?.lang" :date="item?.date" :size="item?.size" />
-            <template #actions>
-              <span v-for="{ type, id } in actions" :key="id" class="hover" @click="handleClickStar(id, item)">
-                <component :is="computedIconType(type, id, item?.isFilled)" class="mr-4" :class="[{ filled: id === 3 && item?.isFilled }]" />
-                <span v-if="type === EyeOutlined">{{ item?.viewNum }}</span>
-                <span v-else-if="type === MessageOutlined">{{ item?.commentNum || '评论' }}</span>
-                <span v-else>收藏</span>
-              </span>
-            </template>
+            <span v-for="{ type, id } in actions" :key="id" class="hover mr-8 color-#696969 " @click="handleClickStar(id, item)">
+              <component :is="computedIconType(type, id, item?.isFilled)" class="mr-4" :class="[{ filled: id === 3 && item?.isFilled }]" />
+              <span v-if="type === EyeOutlined">{{ item?.viewNum }}</span>
+              <span v-else-if="type === MessageOutlined">{{ item?.commentNum || '评论' }}</span>
+              <span v-else>收藏</span>
+            </span>
+            <!-- <template #actions>
+
+            </template> -->
           </a-skeleton>
         </a-list-item>
       </template>

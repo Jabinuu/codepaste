@@ -14,6 +14,7 @@ export interface ChangeProfileFormState {
   email: string
   introduction: string
   avatarUrl: string
+  registerTime: number
 }
 
 export interface ChangeProfileReq extends ChangeProfileFormState {

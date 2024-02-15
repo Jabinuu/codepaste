@@ -16,6 +16,7 @@ export interface CodeFromData extends SettingOption {
 export interface CodeEditerForm extends SettingOption {
   codeId: string
   content: string
+  date: number
 }
 
 export interface CodeSet {
