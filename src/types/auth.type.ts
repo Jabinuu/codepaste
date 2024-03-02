@@ -15,6 +15,8 @@ export enum PermsEnum {
   UPDATE_DATE = 1 << 1, // 00000010
   UPDATE_REF = 1 << 2, // 00000100
   UPDATE_REGISTER_TIME = 1 << 3, // 00001000
+  ALL_USERS_ROUTE = 1 << 4, // 00010000
+  CONSTANT_ROUTES = 1 << 5, // 00100000
 }
 
 export interface ChangePasswordFormState extends RegisterFormState {}

@@ -44,7 +44,6 @@ defHttp.interceptors.response.use(async (response) => {
 
     return res
   }
-  console.log(data)
   return data
 }, (err) => {
   message.error('请求失败! 请检查网络设置')

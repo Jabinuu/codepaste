@@ -179,8 +179,7 @@ export default defineStore('user', {
     },
 
     getUserPermissions(): number {
-      // return this.getUserInfo()?.role
-      return 0
+      return this.getUserInfo()?.role
     },
   },
 })
