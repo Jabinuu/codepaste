@@ -20,7 +20,7 @@ const showSlot = computed(() => {
     return false
 
   if (Array.isArray(props.permissions)) {
-    return props.permissions.every((item: number) => {
+    return (props.permissions as number[]).every((item: number) => {
       return (item & userPerms) > 0
     })
   }

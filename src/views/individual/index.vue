@@ -8,7 +8,7 @@ const route = useRoute()
 const collapsed = ref<boolean>(true)
 const selectedKeys = ref<string[]>([route.path.replace('/individual/', '')])
 
-const individualRoutes: RouteRecordRaw[] = ref()
+const individualRoutes = ref<RouteRecordRaw[] >()
 
 onMounted(() => {
   changeLayoutContent()

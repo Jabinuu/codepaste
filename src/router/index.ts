@@ -1,4 +1,5 @@
 import type { App } from 'vue'
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { message } from 'ant-design-vue'
 import {
@@ -39,7 +40,7 @@ export const constantRoutesMap = [{
   name: 'post',
   component: () => import('@/views/codeDetail/index.vue'),
   meta: { codepw: '' },
-  beforeEnter: async (to, from, next) => {
+  beforeEnter: async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const isFromEncrypt = from.name === 'encrypt'
     const codeStore = useCodeStore()
     const verifyCodepw = async (codeId: string, codepw: string) => {

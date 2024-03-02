@@ -13,7 +13,8 @@ export default defineStore('permission', {
     generatePermissionRoutes(targetRoutes: RouteRecordRaw[], perm: number) {
       this.addRouters = targetRoutes.filter((route) => {
         if (route.meta) {
-          if (Object.hasOwn(route.meta, 'role')) {
+          // eslint-disable-next-line no-prototype-builtins
+          if (route.meta.hasOwnProperty('role')) {
             const res = (route.meta.role as number) & perm
             return res
           }
