@@ -18,6 +18,7 @@ export function setToken(token: string, refreshToken: string) {
 
 export function deleteToken() {
   localStorage.removeItem(TOKEN_NAME)
+  localStorage.removeItem(REFRESH_TOKEN)
 }
 
 export function persistStoreUserInfo(cur: CurrentUser) {

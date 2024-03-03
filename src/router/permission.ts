@@ -29,8 +29,6 @@ export function createPermissionGuard(router: Router) {
   const { recordFootmark } = useFootmark()
 
   router.beforeEach(async (to, from, next) => {
-    console.log(to)
-
     const isPost = computed(() => to.path.startsWith('/post'))
     const isEncryptPage = computed(() => to.path.startsWith('/encrypt'))
     const token = userStore.getToken()

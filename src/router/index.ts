@@ -176,7 +176,7 @@ export const asyncRoutesMap = [
   },
 ]
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: constantRoutesMap,
   scrollBehavior: () => ({ top: 0 }),
