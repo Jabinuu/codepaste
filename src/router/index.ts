@@ -3,6 +3,7 @@ import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { message } from 'ant-design-vue'
 import {
+  CloudUploadOutlined,
   CodeOutlined,
   CommentOutlined,
   HistoryOutlined,
@@ -158,6 +159,16 @@ export const individualChidRouteMap = [
       role: PermsEnum.ALL_USERS_ROUTE,
       title: '用户管理',
       icon: UsergroupAddOutlined,
+    },
+  },
+  {
+    path: 'visitorCode',
+    name: 'visitorCode',
+    component: () => import('@/views/individual/visitorCode/index.vue'),
+    meta: {
+      role: PermsEnum.VISITOR_CODE,
+      title: '游客管理',
+      icon: CloudUploadOutlined,
     },
   },
 ]

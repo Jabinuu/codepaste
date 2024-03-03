@@ -1,6 +1,17 @@
 import defHttp from '@/services/http'
 import type { CodeCommentList, UserCommentList } from '@/types/comment.type'
 
-export const reqGetCodeComment = async (data: { cid: string }): Promise<CodeCommentList[]> => defHttp.post('/comment/codeComment', data)
-export const reqGetUserComment = async (data: { uid: number }): Promise<UserCommentList[]> => defHttp.post('/comment/userComment', data)
-export const reqDeleteUserComment = async (data: { id: number }) => defHttp.post('/comment/deleteComment', data)
+export async function reqGetCodeComment(data: { cid: string }):
+Promise<CodeCommentList[]> {
+  return defHttp.post('/comment/codeComment', data)
+}
+export async function reqGetUserComment(data: { uid: number }):
+Promise<UserCommentList[]> {
+  return defHttp.post('/comment/userComment', data)
+}
+export async function reqDeleteUserComment(data: { id: number }) {
+  return defHttp.post('/comment/deleteComment', data)
+}
+export async function reqAddCodeComment(data: { uid: number;cid: number;content: string }) {
+  return defHttp.post('/comment/addComment', data)
+}

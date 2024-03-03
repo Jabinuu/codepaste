@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, createVNode, onMounted } from 'vue'
+import { computed, createVNode, inject, onMounted } from 'vue'
 import { Modal, message } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import Icon from '@/components/Icon/Icon.vue'
@@ -11,6 +11,7 @@ import useLoading from '@/hooks/useLoading'
 
 const props = defineProps(['publicData'])
 const emit = defineEmits(['sendPage'])
+const visitor = inject('visitor')
 const { isLoading, loadingWrapper } = useLoading()
 const userStore = useUserStore()
 const columns = [
@@ -69,7 +70,7 @@ onMounted(() => {
 
 async function getUserCode() {
   await loadingWrapper(userStore.getUserCode({
-    id: userStore.current?.id as number,
+    id: visitor ? 0 : userStore.current?.id as number,
     languages: [],
     kw: '',
     ps: props.publicData.ps,

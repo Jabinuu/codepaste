@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { Ref } from 'vue'
+import { inject, ref } from 'vue'
+import useCommentStore from '@/store/modules/comment'
+import useUserStore from '@/store/modules/user'
+import type { CodeList } from '@/types/codeContentInfo.type'
 
+const userStore = useUserStore()
+const currentCode = inject<Ref<CodeList>>('currentCode')
 const isFocused = ref(false)
 const isEmpty = ref(true)
+const commentStore = useCommentStore()
 
 function changeInputBox(e: any) {
   if (e.target.textContent === '')
@@ -16,10 +23,18 @@ function onBlur() {
     isFocused.value = false
 }
 
-function submitComment() {
+async function submitComment() {
   const inputBox = document.querySelector('.input-box') as Element
+  if (currentCode) {
+    await commentStore.addCodeComment({
+      cid: currentCode.value.id,
+      uid: userStore.getCurUserId,
+      content: inputBox.textContent || '',
+    })
+  }
   inputBox.textContent = ''
   isEmpty.value = true
+  await commentStore.getCodeComment(currentCode?.value.codeId as string)
 }
 </script>
 

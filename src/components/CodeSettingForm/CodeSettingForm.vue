@@ -29,7 +29,7 @@ const encrypt = computed({
   <a-form-item v-if="route.path === '/add'" label="有效时长">
     <a-select v-model:value="_formState.expiration" :options="expirations" />
   </a-form-item>
-  <a-form-item label="公开状态">
+  <!-- <a-form-item label="公开状态">
     <a-radio-group v-model:value="_formState.exposure" :disabled="!isEdit">
       <a-radio :value="1">
         公开的
@@ -38,7 +38,7 @@ const encrypt = computed({
         私有的
       </a-radio>
     </a-radio-group>
-  </a-form-item>
+  </a-form-item> -->
   <a-form-item label="是否加密">
     <a-switch v-model:checked="encrypt" :disabled="!isEdit" />
   </a-form-item>

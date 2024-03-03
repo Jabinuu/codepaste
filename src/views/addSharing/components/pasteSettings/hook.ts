@@ -8,14 +8,14 @@ import mitt from '@/utils/mitt'
 import useUseStore from '@/store/modules/user'
 import { codeTitleInputRules, codepwInputeRules, selectLangRules } from '@/utils/constant'
 
+const content = ref<string>('')
+
 export const rules: Record<string, Rule[]> = {
   title: codeTitleInputRules,
   codepw: codepwInputeRules,
   languages: selectLangRules,
 }
-export const formRef = ref()
-const content = ref<string>('')
-const codeStore = useCodeStore()
+
 export const settingsState = ref<SettingOption>({
   title: '',
   lang: undefined,
@@ -26,7 +26,12 @@ export const settingsState = ref<SettingOption>({
   encrypt: 0,
 })
 
-export function useMitt() {
+// TODO: 未登录状态时添加代码
+export function useCreateNewPaste() {
+  const formRef = ref()
+  const router = useRouter()
+  const codeStore = useCodeStore()
+
   onMounted(() => {
     mitt.on('jiabin', (val: string) => content.value = val)
   })
@@ -44,25 +49,8 @@ export function useMitt() {
       encrypt: 0,
     }
   })
-}
 
-// TODO: 未登录状态时添加代码
-export function useCreateNewPaste() {
-  const router = useRouter()
-  onUnmounted(() => {
-    // 清空表单
-    settingsState.value = {
-      title: '',
-      lang: undefined,
-      expiration: 'never',
-      codepw: '',
-      category: 'code',
-      exposure: 1,
-      encrypt: 0,
-    }
-  })
-
-  return async () => {
+  async function createNewCode() {
     try {
       await formRef.value.validate()
       const userStore = useUseStore()
@@ -79,6 +67,12 @@ export function useCreateNewPaste() {
       else { message.error('创建代码失败!') }
     }
     catch (error) {
+      console.warn(error)
     }
+  }
+
+  return {
+    createNewCode,
+    formRef,
   }
 }

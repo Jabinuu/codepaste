@@ -1,6 +1,13 @@
 import defHttp from '../http'
 import type { ChangeProfileReq } from '@/types/user.type'
 
-export const reqGetUserInfo = () => defHttp.get('/user/userInfo')
-export const reqChangeProfile = (data: ChangeProfileReq) => defHttp.patch('/user/changeProfile', data)
-export const reqGetUserInfoById = (data: { id: number }) => defHttp.post('/user/userInfoById', data)
+export function reqGetUserInfo() {
+  return defHttp.get('/user/userInfo')
+}
+export function reqChangeProfile(data: ChangeProfileReq) {
+  return defHttp.patch('/user/changeProfile', data)
+}
+
+export function reqGetUserInfoById(data: { id: number }) {
+  return defHttp.post('/user/userInfoById', data)
+}

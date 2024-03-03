@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { formRef, rules, settingsState, useCreateNewPaste } from './hook'
+import { rules, settingsState, useCreateNewPaste } from './hook'
 import CodeSettingForm from '@/components/CodeSettingForm/CodeSettingForm.vue'
 
-const createNewPaste = useCreateNewPaste()
+const { createNewCode, formRef } = useCreateNewPaste()
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const createNewPaste = useCreateNewPaste()
   >
     <CodeSettingForm :form-state="settingsState" :is-edit="true" />
     <a-form-item :wrapper-col="{ span: 10, offset: 3 }">
-      <a-button type="primary" html-type="submit" @click="createNewPaste">
+      <a-button type="primary" html-type="submit" @click="createNewCode">
         创建粘贴文本
       </a-button>
     </a-form-item>

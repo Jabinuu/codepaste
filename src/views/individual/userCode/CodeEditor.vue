@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { inject, onMounted, onUnmounted, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import mitt from '@/utils/mitt'
 import CodeSettingForm from '@/components/CodeSettingForm/CodeSettingForm.vue'
@@ -10,6 +10,7 @@ import Authority from '@/components/Authority.vue'
 import { PermsEnum } from '@/types/auth.type'
 
 const props = defineProps(['publicData'])
+const visitor = inject('visitor')
 const rules = {
   title: codeTitleInputRules,
   codepw: codepwInputeRules,
@@ -57,7 +58,7 @@ async function handleSubmitChange() {
         ps: props.publicData.ps,
         kw: props.publicData.kw,
         languages: props.publicData.languages,
-        id: userStore.getCurUserId,
+        id: visitor ? 0 : userStore.getCurUserId,
       })
     }
   }

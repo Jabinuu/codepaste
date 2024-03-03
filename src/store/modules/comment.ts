@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { reqDeleteUserComment, reqGetCodeComment, reqGetUserComment } from '@/services/api/comment'
+import { reqAddCodeComment, reqDeleteUserComment, reqGetCodeComment, reqGetUserComment } from '@/services/api/comment'
 import type { CodeCommentList, UserCommentList } from '@/types/comment.type'
 
 export default defineStore('comment', {
@@ -36,6 +36,16 @@ export default defineStore('comment', {
           resolve()
         else
           reject(data)
+      })
+    },
+
+    async addCodeComment(data: { uid: number;cid: number;content: string }) {
+      const res: any = await reqAddCodeComment(data)
+      return new Promise((resolve, reject) => {
+        if (res.code === 100)
+          resolve(res)
+        else
+          reject(res.msg)
       })
     },
   },
