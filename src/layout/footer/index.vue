@@ -4,7 +4,7 @@
 
 <template>
   <div class="text-center footer-wrap">
-    PasteCode ©2023 Created by Jabinuu
+    PasteCode ©2023 Created by <a href="https://github.com/Jabinuu">Jabinuu</a>
   </div>
 </template>
 

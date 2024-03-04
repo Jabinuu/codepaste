@@ -1,9 +1,11 @@
 // import { fileURLToPath } from 'node:url'
-import { resolve } from 'node:path'
+import path from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { svgBuilder } from './src/plugins/svgBuilder'
+
+// import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,6 +14,10 @@ export default defineConfig({
     vue(),
     UnoCSS(),
     svgBuilder('./src/assets/icons/'),
+    // addCDNsPlugin({
+    //   cdnUrls: ['https://cdn.jsdelivr.net/gh/Jabinuu/xmutjb/asset/component-hook-15fdde01.js'],
+    // }),
+    // visualizer(),
   ],
 
   server: {
@@ -28,17 +34,27 @@ export default defineConfig({
 
   build: {
     rollupOptions: {
-      manualChunks: {
-        highlight: ['highlight.js'],
-        hljsVuePlugin: ['@highlightjs/vue-plugin'],
+      // manualChunks: {
+      //   'highlight': ['highlight.js'],
+      //   'hljsVuePlugin': ['@highlightjs/vue-plugin'],
+      //   'component-hook': [path.resolve(__dirname, '/src/components/Authority.vue'), path.resolve(__dirname, '/src/hooks/useComputeSize.ts')],
+      // },
+      manualChunks(id) {
+        if (id.includes('highlight.js') || id.includes('@highlightjs/vue-plugin'))
+          return 'highlight'
+
+        if (id.includes('src/components') || id.includes('src/hooks/'))
+          return 'component-hook'
       },
+      // external(id) {},
     },
+
   },
 
   resolve: {
     alias: {
       // '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@/': `${resolve(process.cwd(), '.', 'src')}/`,
+      '@/': `${path.resolve(process.cwd(), '.', 'src')}/`,
     },
   },
 })
