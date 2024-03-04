@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "https://pastecode-server-72997-5-1321247427.sh.run.tcloudbase.com/"
+      "dest": "https://pastecode-server-72997-5-1321247427.sh.run.tcloudbase.com/$1"
     },
     {
       "src": "/:path*",
